@@ -11,10 +11,22 @@ const generateToken = () => {
   return sessionId;
 };
 
-const sessions = [] as { id: string; userId: number }[];
 const database = {
-  users: [] as Profile[]
+  users: [
+    {
+      id: 0,
+      role: 'user',
+      email: 'dima@gmail.com',
+      password: '123123',
+      firstName: '123',
+      lastName: '123'
+    }
+  ] as Profile[],
+  sessions: [] as { id: string; userId: number }[],
+  refreshTokens: [] as { id: string; userId: number }[]
 };
+
+// Function to generate a refresh token
 
 const mockServerConfig: MockServerConfig = {
   baseUrl: '/api',
@@ -60,6 +72,11 @@ const mockServerConfig: MockServerConfig = {
             data: null,
             interceptors: {
               response: (_, { request, setCookie, setStatusCode }) => {
+                // const needConfirmation = Math.round(Math.random());
+                // if (needConfirmation) {
+                //   return { needConfirmation: true };
+                // }
+
                 const user = database.users.find(
                   (user) =>
                     user.email === request.body.email && user.password === request.body.password
@@ -71,12 +88,12 @@ const mockServerConfig: MockServerConfig = {
                 }
 
                 const sessionId = generateToken();
+                database.sessions.push({ id: sessionId, userId: user.id });
                 setCookie(COOKIE.SESSION_ID, sessionId, {
                   httpOnly: true,
                   maxAge: 360000,
                   path: '/'
                 });
-                sessions.push({ id: sessionId, userId: user.id });
 
                 return user;
               }
@@ -92,10 +109,9 @@ const mockServerConfig: MockServerConfig = {
             data: null,
             interceptors: {
               response: (_, { setStatusCode, getCookie }) => {
+                // session
                 const sessionId = getCookie(COOKIE.SESSION_ID);
-
-                const session = sessions.find((session) => session.id === sessionId);
-
+                const session = database.sessions.find((session) => session.id === sessionId);
                 if (!session) {
                   setStatusCode(401);
                   return { success: false, message: 'Session not found' };
@@ -109,6 +125,67 @@ const mockServerConfig: MockServerConfig = {
                 }
 
                 return user;
+              }
+            }
+          }
+        ]
+      },
+      {
+        method: 'get',
+        path: '/logout',
+        routes: [
+          {
+            data: { success: true },
+            interceptors: {
+              response: (data, { getCookie, setStatusCode, setCookie }) => {
+                const sessionId = getCookie(COOKIE.SESSION_ID);
+                const session = database.sessions.find((session) => session.id === sessionId);
+                if (!session) {
+                  setStatusCode(401);
+                  return { success: false, message: 'Session not found' };
+                }
+                database.sessions = database.sessions.filter((session) => session.id !== sessionId);
+                setCookie(COOKIE.SESSION_ID, '', {
+                  httpOnly: true,
+                  maxAge: 0,
+                  path: '/'
+                });
+                return data;
+              }
+            }
+          }
+        ]
+      },
+      {
+        method: 'get',
+        path: '/database',
+        routes: [
+          {
+            data: () => database
+          }
+        ]
+      },
+      {
+        method: 'delete',
+        path: '/session/:id',
+        routes: [
+          {
+            data: { success: true },
+            interceptors: {
+              response: (data, { request, setStatusCode, setCookie }) => {
+                const sessionId = request.params.id;
+                const session = database.sessions.find((session) => session.id === sessionId);
+                if (!session) {
+                  setStatusCode(401);
+                  return { success: false, message: 'Session not found' };
+                }
+                database.sessions = database.sessions.filter((session) => session.id !== sessionId);
+                setCookie(COOKIE.SESSION_ID, '', {
+                  httpOnly: true,
+                  maxAge: 0,
+                  path: '/'
+                });
+                return data;
               }
             }
           }

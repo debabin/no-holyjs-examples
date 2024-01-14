@@ -19,12 +19,19 @@ export const metadata: Metadata = {
 
 const TOASTER_DURATION = 5000;
 
-const RootLayout = ({ children }: { children: React.ReactNode }) => {
-  const cookieTheme = cookies().get(COOKIE.THEME);
-  const defaultTheme = (cookieTheme?.value as Theme) ?? 'dark';
+interface RootLayoutProps {
+  children: React.ReactNode;
+}
+
+const RootLayout = async ({ children }: RootLayoutProps) => {
+  const themeCookie = cookies().get(COOKIE.THEME);
+  const defaultTheme = (themeCookie?.value as Theme) ?? 'dark';
 
   return (
     <html className={defaultTheme} lang='en'>
+      <head>
+        <script src='https://accounts.google.com/gsi/client' />
+      </head>
       <body className={`min-h-screen bg-background font-sans antialiased ${inter.className}`}>
         <Providers theme={{ defaultTheme }}>{children}</Providers>
         <Toaster duration={TOASTER_DURATION} />

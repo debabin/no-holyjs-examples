@@ -13,3 +13,7 @@ interface Profile {
     code: string;
   };
 }
+
+interface Confirmation {
+  needConfirmation: boolean;
+}

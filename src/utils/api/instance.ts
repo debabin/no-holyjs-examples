@@ -14,9 +14,18 @@ api.interceptors.request.use(async (config) => {
   if (isSSR) {
     const { cookies } = await import('next/headers');
     const sessionId = cookies().get(`${COOKIE.SESSION_ID}`)?.value;
+    const accessToken = cookies().get(COOKIE.ACCESS_TOKEN)?.value;
+    const refreshToken = cookies().get(COOKIE.REFRESH_TOKEN)?.value;
 
     if (sessionId) {
       config.headers.set('cookie', `${COOKIE.SESSION_ID}=${sessionId};`);
+    }
+
+    if (accessToken) {
+      config.headers.set(
+        'cookie',
+        `${COOKIE.ACCESS_TOKEN}=${accessToken};${COOKIE.REFRESH_TOKEN}=${refreshToken}`
+      );
     }
   }
 

@@ -3,7 +3,8 @@
 import React from 'react';
 
 import { useStage } from '../../contexts';
-import { SignInForm } from '../AuthForm/SignInForm';
+import { ConfirmationForm } from '../ConfirmationForm/ConfirmationForm';
+import { SignInForm } from '../SignInForm/SignInForm';
 import { SignUpForm } from '../SignUpForm/SignUpForm';
 
 export const FormContainer = () => {
@@ -13,6 +14,7 @@ export const FormContainer = () => {
     <>
       {stage === 'signIn' && <SignInForm />}
       {stage === 'signUp' && <SignUpForm />}
+      {stage === 'confirmation' && <ConfirmationForm />}
     </>
   );
 };

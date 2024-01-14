@@ -17,21 +17,23 @@ export const useSignInForm = () => {
   const router = useRouter();
   const { setStage } = useStage();
 
-  const authForm = useForm<SingUpForm>({
+  const signInForm = useForm<SingUpForm>({
     resolver: zodResolver(signInSchema)
   });
-  const postSignInMutation = usePostSignInMutation({
-    options: {
-      onSuccess: () =>
-        toast.success('Sign in is successful 👍', {
-          cancel: { label: 'Close' },
-          description: 'We are very glad to see you, have fun'
-        })
-    }
-  });
+  const postSignInMutation = usePostSignInMutation();
 
-  const onSubmit = authForm.handleSubmit(async (values) => {
-    await postSignInMutation.mutate(values);
+  const onSubmit = signInForm.handleSubmit(async (values) => {
+    const postSignInResponse = await postSignInMutation.mutateAsync(values);
+
+    if ('needConfirmation' in postSignInResponse.data && postSignInResponse.data.needConfirmation) {
+      return setStage('confirmation');
+    }
+
+    toast.success('Sign in is successful 👍', {
+      cancel: { label: 'Close' },
+      description: 'We are very glad to see you, have fun'
+    });
+
     router.replace('/profile');
   });
 
@@ -39,7 +41,7 @@ export const useSignInForm = () => {
 
   return {
     state: { loading: postSignInMutation.isPending },
-    form: authForm,
+    form: signInForm,
     functions: { onSubmit, goToSignUp }
   };
 };

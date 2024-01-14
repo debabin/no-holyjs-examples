@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type Stage = 'signIn' | 'signUp' | 'emailConfirmation';
+export type Stage = 'signIn' | 'signUp' | 'confirmation';
 
 export interface StageContextProps {
   stage: Stage;
