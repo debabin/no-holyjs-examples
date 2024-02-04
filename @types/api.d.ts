@@ -10,11 +10,14 @@ interface MutationSettings<Params = void, Func = unknown> {
 
 interface QuerySettings<Func = unknown> {
   config?: ApiRequestConfig;
-  options?: import('@tanstack/react-query').UseQueryOptions<
-    Awaited<ReturnType<Func>>,
-    any,
-    Awaited<ReturnType<Func>>,
-    any
+  options?: Omit<
+    import('@tanstack/react-query').UseQueryOptions<
+      Awaited<ReturnType<Func>>,
+      any,
+      Awaited<ReturnType<Func>>,
+      any
+    >,
+    'queryKey'
   >;
 }
 

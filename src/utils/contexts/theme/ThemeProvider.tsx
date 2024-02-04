@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import type { Theme } from './ThemeContext';
 import { ThemeContext } from './ThemeContext';
@@ -14,7 +14,17 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
 }) => {
   const [theme, setTheme] = React.useState<Theme>(defaultTheme);
 
-  const value = useMemo(() => ({ theme, setTheme }), [theme]);
+  React.useLayoutEffect(() => {
+    const root = window.document.documentElement;
+    root.classList.remove('light', 'dark');
+    root.classList.add(theme);
+  }, [theme]);
 
-  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
+  const value = React.useMemo(() => ({ theme, setTheme }), [theme]);
+
+  return (
+    <ThemeContext.Provider value={value}>
+      <div className={theme}>{children}</div>
+    </ThemeContext.Provider>
+  );
 };
