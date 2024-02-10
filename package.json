@@ -66,7 +66,7 @@
     "husky": "^9.0.10",
     "jsonwebtoken": "^9.0.2",
     "lint-staged": "^15.2.1",
-    "mock-config-server": "3.3.3",
+    "mock-config-server": "3.3.4",
     "postcss": "^8.4.33",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.11",

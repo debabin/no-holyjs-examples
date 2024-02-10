@@ -5881,10 +5881,10 @@ mkdirp@^1.0.3:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
-mock-config-server@3.3.3:
-  version "3.3.3"
-  resolved "https://registry.yarnpkg.com/mock-config-server/-/mock-config-server-3.3.3.tgz#cec8f267d0e617ee1d76699d87761dbf50835624"
-  integrity sha512-jJHAlK+2ExlH1/EPrw4XZba1K6zzyV8LrAEfMaKwmDwTlt+TkBkkkWrOtHILTocwkqriDZlaaSDiM2GkGr/Fig==
+mock-config-server@3.3.4:
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/mock-config-server/-/mock-config-server-3.3.4.tgz#77860268118178fef21fa6c6a4cf8c16bdc0a1a5"
+  integrity sha512-rPXzxOtHrKa/lVq4dETq6md9MLHYnySPQ71aTRq/Yzr0IVfFjhOiC1Arc2RcShF1kw3lpLTc6iIo68AVqteGtQ==
   dependencies:
     "@types/body-parser" "^1.19.2"
     "@types/express" "^4.17.17"

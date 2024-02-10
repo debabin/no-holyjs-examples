@@ -1,7 +1,7 @@
 import { MutationCache, QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 import type { AxiosError } from 'axios';
-import { toast } from 'sonner';
+import { Toaster, toast } from 'sonner';
 
 import type { ThemeProviderProps } from '@/utils/contexts';
 import { ThemeProvider } from '@/utils/contexts';
@@ -9,7 +9,6 @@ import { ThemeProvider } from '@/utils/contexts';
 import { routeTree } from './routeTree.gen';
 
 interface ProvidersProps {
-  children: React.ReactNode;
   theme: Omit<ThemeProviderProps, 'children'>;
 }
 
@@ -41,11 +40,13 @@ const queryClient = new QueryClient({
     }
   })
 });
+const TOASTER_DURATION = 5000;
 
 const Providers: React.FC<ProvidersProps> = ({ theme }) => (
   <ThemeProvider {...theme}>
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
+      <Toaster duration={TOASTER_DURATION} />
     </QueryClientProvider>
   </ThemeProvider>
 );

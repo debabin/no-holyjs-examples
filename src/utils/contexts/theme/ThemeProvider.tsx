@@ -22,9 +22,5 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
 
   const value = React.useMemo(() => ({ theme, setTheme }), [theme]);
 
-  return (
-    <ThemeContext.Provider value={value}>
-      <div className={theme}>{children}</div>
-    </ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 };

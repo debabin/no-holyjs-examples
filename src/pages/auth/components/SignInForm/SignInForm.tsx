@@ -35,18 +35,17 @@ export const SignInForm = () => {
           >
             <FormField
               control={form.control}
-              name='email'
+              name='login'
               render={({ field }) => (
                 <FormItem>
-                  <Label className='sr-only' htmlFor='email'>
-                    Email
+                  <Label className='sr-only' htmlFor='login'>
+                    {state.isEmail ? 'email' : 'login'}
                   </Label>
                   <FormControl>
                     <Input
-                      id='email'
-                      placeholder='email@example.com'
+                      id='login'
+                      placeholder='write login or email'
                       autoCapitalize='none'
-                      autoComplete='email'
                       autoCorrect='off'
                       disabled={state.loading}
                       {...field}
@@ -56,29 +55,32 @@ export const SignInForm = () => {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name='password'
-              render={({ field }) => (
-                <FormItem>
-                  <Label className='sr-only' htmlFor='password'>
-                    Password
-                  </Label>
-                  <FormControl>
-                    <PasswordInput
-                      id='password'
-                      placeholder='your very secret password'
-                      autoCapitalize='none'
-                      autoComplete='password'
-                      autoCorrect='off'
-                      disabled={state.loading}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            {!state.isEmail && (
+              <FormField
+                control={form.control}
+                name='password'
+                render={({ field }) => (
+                  <FormItem>
+                    <Label className='sr-only' htmlFor='password'>
+                      Password
+                    </Label>
+                    <FormControl>
+                      <PasswordInput
+                        id='password'
+                        placeholder='your very secret password'
+                        autoCapitalize='none'
+                        autoComplete='password'
+                        autoCorrect='off'
+                        disabled={state.loading}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
+
             <Button type='submit' className='w-full' disabled={state.loading}>
               {state.loading && <SpinnerIcon className='mr-2 h-4 w-4 animate-spin' />}
               Sign in
