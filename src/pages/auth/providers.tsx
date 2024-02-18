@@ -1,3 +1,4 @@
+import { OtpProvider } from './contexts/otp';
 import type { StageProviderProps } from './contexts/stage';
 import { StageProvider } from './contexts/stage';
 
@@ -7,7 +8,9 @@ interface ProvidersProps {
 }
 
 const Providers: React.FC<ProvidersProps> = ({ children, stage }) => (
-  <StageProvider {...stage}>{children}</StageProvider>
+  <StageProvider {...stage}>
+    <OtpProvider>{children}</OtpProvider>
+  </StageProvider>
 );
 
 export default Providers;

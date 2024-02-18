@@ -6,12 +6,15 @@ export const postSingInEmailConfig: RestRequestConfig = {
   path: '/signin/email',
   method: 'post',
   interceptors: {
-    response: (data, { setCookie }) => {
-      if (data.success) {
-        setCookie(COOKIE.ACCESS_TOKEN, 'test');
+    response: (_, { setCookie }) => {
+      const needConfirmation = Math.random() > 0.5;
+
+      if (needConfirmation) {
+        return { needConfirmation };
       }
 
-      return data;
+      setCookie(COOKIE.ACCESS_TOKEN, 'test');
+      return { needConfirmation };
     }
   },
   routes: [

@@ -21,7 +21,8 @@ module.exports = {
         '@typescript-eslint/unbound-method': 'off',
         '@typescript-eslint/no-var-requires': 'off',
         'no-restricted-syntax': 'off',
-        'promise/always-return': 'off'
+        'promise/always-return': 'off',
+        'jsx-a11y/label-has-associated-control': 'warn'
       }
     }
   ]

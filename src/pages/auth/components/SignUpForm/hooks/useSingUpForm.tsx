@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 
 import { usePostSingUpMutation } from '@/utils/api';
 
-import { useStage } from '../../../contexts';
+import { useStage } from '../../../contexts/stage';
 import { signUpSchema } from '../constants';
 
 interface SingUpForm {

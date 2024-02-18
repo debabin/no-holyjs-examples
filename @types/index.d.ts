@@ -17,3 +17,7 @@ interface Profile {
 interface Confirmation {
   needConfirmation: boolean;
 }
+
+interface RetryDelay {
+  retryDelay: number;
+}
