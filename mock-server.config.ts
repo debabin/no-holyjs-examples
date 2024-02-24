@@ -4,6 +4,10 @@ import * as requestConfigs from './mock';
 
 const mockServerConfig: MockServerConfig = {
   baseUrl: '/api',
+  staticPath: {
+    path: '/mock/static',
+    prefix: '/static'
+  },
   interceptors: {
     request: ({ setDelay }) => setDelay(1000)
   },

@@ -3,7 +3,7 @@ import { api } from '../../../instance';
 export interface PostOtpEmailParams {
   email: string;
 }
-export type PostOtpEmailConfig = RequestConfig<PostOtpEmailParams>;
+export type PostOtpEmailRequestConfig = RequestConfig<PostOtpEmailParams>;
 
-export const postOtpEmail = ({ params, config }: PostOtpEmailConfig) =>
+export const postOtpEmail = ({ params, config }: PostOtpEmailRequestConfig) =>
   api.post<RetryDelay>('otp/email', params, config);

@@ -24,7 +24,7 @@ export const SignInForm = () => {
         <h1 className='text-2xl font-semibold tracking-tight'>Login to your account</h1>
         <p className='text-sm text-muted-foreground'>Enter your email and password</p>
       </div>
-      <div className='grid gap-2'>
+      <div>
         <Form {...form}>
           <form
             onSubmit={(event) => {
@@ -87,7 +87,7 @@ export const SignInForm = () => {
             </Button>
           </form>
         </Form>
-        <div className='flex justify-center '>
+        <div className='flex justify-center'>
           <Button disabled={state.loading} variant='link' onClick={functions.goToSignUp}>
             <span className='bg-background px-2 text-muted-foreground'>create new account</span>
           </Button>

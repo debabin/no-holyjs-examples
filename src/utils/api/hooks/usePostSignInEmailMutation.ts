@@ -1,14 +1,14 @@
 import { useMutation } from '@tanstack/react-query';
 
-import type { PostSignInEmailConfig } from '../requests/signin/email';
+import type { PostSignInEmailRequestConfig } from '../requests/signin/email';
 import { postSignInEmail } from '../requests/signin/email';
 
 export const usePostSignInEmailMutation = (
-  settings?: MutationSettings<PostSignInEmailConfig, typeof postSignInEmail>
+  settings?: MutationSettings<PostSignInEmailRequestConfig, typeof postSignInEmail>
 ) =>
   useMutation({
     mutationKey: ['postSignInEmail'],
-    mutationFn: (params) =>
-      postSignInEmail({ ...params, ...(params?.config && { config: params.config }) }),
+    mutationFn: ({ params, config }) =>
+      postSignInEmail({ params, config: { ...settings?.config, ...config } }),
     ...settings?.options
   });

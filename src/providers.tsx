@@ -1,53 +1,27 @@
-import { MutationCache, QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { createRouter, RouterProvider } from '@tanstack/react-router';
-import type { AxiosError } from 'axios';
-import { Toaster, toast } from 'sonner';
+import type { ProfileProviderProps } from './utils/contexts/profile';
+import { ProfileProvider } from './utils/contexts/profile';
+import type { QueryProviderProps } from './utils/contexts/query';
+import { QueryProvider } from './utils/contexts/query';
+import type { SessionProviderProps } from './utils/contexts/session';
+import { SessionProvider } from './utils/contexts/session';
+import type { ThemeProviderProps } from './utils/contexts/theme';
+import { ThemeProvider } from './utils/contexts/theme';
 
-import type { ThemeProviderProps } from '@/utils/contexts';
-import { ThemeProvider } from '@/utils/contexts';
-
-import { routeTree } from './routeTree.gen';
-
-interface ProvidersProps {
+export interface ProvidersProps {
+  children: React.ReactNode;
   theme: Omit<ThemeProviderProps, 'children'>;
+  session: Omit<SessionProviderProps, 'children'>;
+  profile: Omit<ProfileProviderProps, 'children'>;
+  query: Omit<QueryProviderProps, 'children'>;
 }
 
-const router = createRouter({ routeTree });
-
-declare module '@tanstack/react-router' {
-  interface Register {
-    router: typeof router;
-  }
-}
-
-const DEFAULT_ERROR = 'Something went wrong';
-const queryClient = new QueryClient({
-  defaultOptions: { queries: { refetchOnWindowFocus: false } },
-  queryCache: new QueryCache({
-    onError: (cause) => {
-      const { response } = cause as AxiosError<BaseResponse>;
-      toast.error(response?.data.message ?? DEFAULT_ERROR, {
-        cancel: { label: 'Close' }
-      });
-    }
-  }),
-  mutationCache: new MutationCache({
-    onError: (cause) => {
-      const { response } = cause as AxiosError<BaseResponse>;
-      toast.error(response?.data.message ?? DEFAULT_ERROR, {
-        cancel: { label: 'Close' }
-      });
-    }
-  })
-});
-const TOASTER_DURATION = 5000;
-
-const Providers: React.FC<ProvidersProps> = ({ theme }) => (
+const Providers: React.FC<ProvidersProps> = ({ theme, session, profile, query, children }) => (
   <ThemeProvider {...theme}>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-      <Toaster duration={TOASTER_DURATION} />
-    </QueryClientProvider>
+    <SessionProvider {...session}>
+      <ProfileProvider {...profile}>
+        <QueryProvider {...query}>{children}</QueryProvider>
+      </ProfileProvider>
+    </SessionProvider>
   </ThemeProvider>
 );
 

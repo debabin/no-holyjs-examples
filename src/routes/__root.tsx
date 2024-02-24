@@ -1,22 +1,35 @@
-import { createRootRoute, Outlet } from '@tanstack/react-router';
+import { createRootRouteWithContext, Outlet } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
+import { Toaster } from 'sonner';
 
-import { GithubIcon } from '@/components/icons';
+import cftIcon from '@/assets/images/cft.svg';
+import sibericancodeIcon from '@/assets/images/sibericancode.svg';
 
 import { ThemeToggle } from '../components/ThemeToggle/ThemeToggle';
 
-export const Route = createRootRoute({
+interface RouterContext {
+  isAuthenticated: boolean;
+}
+
+const TOASTER_DURATION = 5000;
+
+export const Route = createRootRouteWithContext<RouterContext>()({
   component: () => (
     <>
-      <header className='flex items-center justify-between p-4'>
-        <div>
-          <GithubIcon className='size-6 text-gray-900 dark:text-gray-100' />
+      <header className='absolute flex w-full items-center justify-between p-4'>
+        <div className='flex items-center gap-2'>
+          <img className='size-10 rounded' src={sibericancodeIcon} alt='sibericancode icon' />
+          <div className='text-2xl font-bold'>+</div>
+          <img className='w-28 rounded' src={cftIcon} alt='cft icon' />
         </div>
         <div>
           <ThemeToggle />
         </div>
       </header>
-      <Outlet />
+      <div className='flex h-screen items-center justify-center p-4'>
+        <Outlet />
+      </div>
+      <Toaster duration={TOASTER_DURATION} />
       <TanStackRouterDevtools />
     </>
   )

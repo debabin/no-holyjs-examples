@@ -3,7 +3,7 @@ import { api } from '../../../instance';
 export interface PostOtpPhoneParams {
   phone: string;
 }
-export type PostOtpPhoneConfig = RequestConfig<PostOtpPhoneParams>;
+export type PostOtpPhoneRequestConfig = RequestConfig<PostOtpPhoneParams>;
 
-export const postOtpPhone = ({ params, config }: PostOtpPhoneConfig) =>
+export const postOtpPhone = ({ params, config }: PostOtpPhoneRequestConfig) =>
   api.post<RetryDelay>('otp/phone', params, config);

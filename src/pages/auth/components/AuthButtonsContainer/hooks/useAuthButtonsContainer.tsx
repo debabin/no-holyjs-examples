@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { useProfile } from '@/utils/contexts';
+import { useProfile } from '@/utils/contexts/profile';
 
 export const useAuthButtonsContainer = () => {
   // const router = useRouter();

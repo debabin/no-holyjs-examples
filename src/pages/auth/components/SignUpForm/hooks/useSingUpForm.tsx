@@ -6,13 +6,15 @@ import { usePostSingUpMutation } from '@/utils/api';
 
 import { useStage } from '../../../contexts/stage';
 import { signUpSchema } from '../constants';
+import { COUNTRIES } from '../constants/countries';
 
 interface SingUpForm {
   email: string;
   password: string;
   passwordConfirmation: string;
-  firstName: string;
-  lastName: string;
+  login: string;
+  firstName?: string;
+  lastName?: string;
   country: {
     id: number;
     label: string;
@@ -22,9 +24,14 @@ interface SingUpForm {
 
 export const useSignUpForm = () => {
   const { setStage } = useStage();
+
   const signUpForm = useForm<SingUpForm>({
+    defaultValues: {
+      country: COUNTRIES[0]
+    },
     resolver: zodResolver(signUpSchema)
   });
+
   const postSingUpMutation = usePostSingUpMutation({
     options: {
       onSuccess: () =>
@@ -37,8 +44,10 @@ export const useSignUpForm = () => {
 
   const goToSignIn = () => setStage('signIn');
 
-  const onSubmit = signUpForm.handleSubmit(async ({ passwordConfirmation, ...values }) => {
-    await postSingUpMutation.mutateAsync(values);
+  const onSubmit = signUpForm.handleSubmit(async () => {
+    const { passwordConfirmation, ...values } = signUpForm.getValues();
+
+    await postSingUpMutation.mutateAsync({ params: values });
     goToSignIn();
   });
 
@@ -46,7 +55,11 @@ export const useSignUpForm = () => {
     signUpForm.watch('password') === signUpForm.watch('passwordConfirmation');
 
   return {
-    state: { loading: postSingUpMutation.isPending, isPasswordsEqual },
+    state: {
+      loading: postSingUpMutation.isPending,
+      isPasswordsEqual,
+      countries: COUNTRIES
+    },
     form: signUpForm,
     functions: { onSubmit, goToSignIn }
   };

@@ -1,14 +1,14 @@
 import { useMutation } from '@tanstack/react-query';
 
-import type { PostSignInLoginConfig } from '../requests/signin/login';
-import { postSignInLogin } from '../requests/signin/login';
+import type { PostSignInLoginRequestConfig } from '../requests';
+import { postSignInLogin } from '../requests';
 
 export const usePostSignInLoginMutation = (
-  settings?: MutationSettings<PostSignInLoginConfig, typeof postSignInLogin>
+  settings?: MutationSettings<PostSignInLoginRequestConfig, typeof postSignInLogin>
 ) =>
   useMutation({
     mutationKey: ['postSignInLogin'],
-    mutationFn: (params) =>
-      postSignInLogin({ ...params, ...(params?.config && { config: params.config }) }),
+    mutationFn: ({ params, config }) =>
+      postSignInLogin({ params, config: { ...settings?.config, ...config } }),
     ...settings?.options
   });

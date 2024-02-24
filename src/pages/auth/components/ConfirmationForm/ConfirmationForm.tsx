@@ -10,6 +10,7 @@ import {
   PasswordInput
 } from '@/components/ui';
 
+import { hideResource } from './helpers/hideResource';
 import { useConfirmationForm } from './hooks/useConfirmation';
 
 export const ConfirmationForm = () => {
@@ -20,7 +21,8 @@ export const ConfirmationForm = () => {
       <div className='flex flex-col space-y-2 text-center'>
         <h1 className='text-2xl font-semibold tracking-tight'>Two factor authentication</h1>
         <p className='text-sm text-muted-foreground'>
-          We sent you a code to your {state.otp.type} {state.otp.resource}
+          We sent you a code to your {state.otp.type}{' '}
+          {hideResource(state.otp.resource, state.otp.type)}
         </p>
       </div>
       <div className='grid gap-2'>

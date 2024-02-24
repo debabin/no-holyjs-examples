@@ -20,6 +20,7 @@ module.exports = {
         '@typescript-eslint/no-unsafe-enum-comparison': 'off',
         '@typescript-eslint/unbound-method': 'off',
         '@typescript-eslint/no-var-requires': 'off',
+        '@typescript-eslint/no-throw-literal': 'off',
         'no-restricted-syntax': 'off',
         'promise/always-return': 'off',
         'jsx-a11y/label-has-associated-control': 'warn'

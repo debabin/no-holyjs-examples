@@ -6,15 +6,17 @@ interface AuthPageProps {
   searchParams?: { stage?: Stage };
 }
 
+// routing guards
+// registration profile more fields + registration password rules
+// o2auth github google
+
 const AuthPage = ({ searchParams }: AuthPageProps) => {
   const defaultStage = searchParams?.stage ?? 'signIn';
 
   return (
-    <div className='lg:p-8'>
-      <Providers stage={{ defaultStage }}>
-        <FormContainer />
-      </Providers>
-    </div>
+    <Providers stage={{ defaultStage }}>
+      <FormContainer />
+    </Providers>
   );
 };
 

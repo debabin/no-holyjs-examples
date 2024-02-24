@@ -1,6 +1,6 @@
 import type { RestRequestConfig } from 'mock-config-server';
 
-let emails: { value: string; endTime: number }[] = [];
+import { DATABASE } from './database';
 
 export const postOtpEmailConfig: RestRequestConfig = {
   path: '/otp/email',
@@ -8,18 +8,24 @@ export const postOtpEmailConfig: RestRequestConfig = {
   interceptors: {
     response: (_, { request }) => {
       const { body } = request;
-      const email = emails.find(({ value }) => body.email === value);
+      const email = DATABASE.otps.find(({ value }) => body.email === value);
 
       if (email && email.endTime > Date.now()) {
         return { retryDelay: email.endTime - Date.now() };
       }
 
       if (email && email.endTime < Date.now()) {
-        emails = emails.filter(({ value }) => value !== body.email);
+        DATABASE.otps = DATABASE.otps.filter(({ value }) => value !== body.email);
       }
 
       const retryDelay = 15_000;
-      emails.push({ value: body.phone, endTime: Date.now() + retryDelay });
+      DATABASE.otps.push({
+        id: Math.random(),
+        source: body.email,
+        value: '123456',
+        endTime: Date.now() + retryDelay
+      });
+
       return { retryDelay };
     }
   },

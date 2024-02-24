@@ -1,6 +1,13 @@
+import { Check, ChevronsUpDown } from 'lucide-react';
+
 import { SpinnerIcon } from '@/components/icons';
 import {
-  Button,
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  Flag,
   Form,
   FormControl,
   FormDescription,
@@ -9,15 +16,20 @@ import {
   FormMessage,
   Input,
   Label,
-  PasswordInput
+  PasswordInput,
+  Popover,
+  PopoverContent,
+  PopoverTrigger
 } from '@/components/ui';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 import { AuthButtonsContainer } from '../AuthButtonsContainer/AuthButtonsContainer';
 
 import { useSignUpForm } from './hooks/useSingUpForm';
 
 export const SignUpForm = () => {
-  const { form, functions, state } = useSignUpForm();
+  const { form, state, functions } = useSignUpForm();
 
   return (
     <div className='mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]'>
@@ -34,7 +46,7 @@ export const SignUpForm = () => {
               event.preventDefault();
               await functions.onSubmit();
             }}
-            className='space-y-4'
+            className='space-y-6'
           >
             <FormField
               control={form.control}
@@ -50,6 +62,28 @@ export const SignUpForm = () => {
                       placeholder='email@example.com'
                       autoCapitalize='none'
                       autoComplete='email'
+                      autoCorrect='off'
+                      disabled={state.loading}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='login'
+              render={({ field }) => (
+                <FormItem>
+                  <Label className='sr-only' htmlFor='login'>
+                    Login
+                  </Label>
+                  <FormControl>
+                    <Input
+                      id='login'
+                      placeholder='your login'
+                      autoCapitalize='none'
                       autoCorrect='off'
                       disabled={state.loading}
                       {...field}
@@ -101,6 +135,68 @@ export const SignUpForm = () => {
                       {...field}
                     />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='country'
+              render={({ field }) => (
+                <FormItem className='flex flex-col'>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant='outline'
+                          role='combobox'
+                          className={cn(
+                            'w-[200px] w-full justify-between',
+                            !field.value && 'text-muted-foreground'
+                          )}
+                        >
+                          <div className='flex items-center gap-2'>
+                            <Flag
+                              className='size-4'
+                              code={field.value.code as 'ru' | 'by' | 'kz' | 'uz'}
+                            />
+                            {
+                              state.countries.find((country) => country.id === field.value.id)!
+                                .label
+                            }
+                          </div>
+                          <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className='w-[280px] p-0'>
+                      <Command>
+                        <CommandInput placeholder='Search language...' />
+                        <CommandEmpty>No language found.</CommandEmpty>
+                        <CommandGroup>
+                          {state.countries.map((country) => (
+                            <CommandItem
+                              key={country.id}
+                              value={country.label}
+                              className='flex items-center  gap-2'
+                              onSelect={() => {
+                                form.setValue('country', country);
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  'mr-2 h-4 w-4',
+                                  country.id === field.value?.id ? 'opacity-100' : 'opacity-0'
+                                )}
+                              />
+                              <Flag className='size-4' code={country.code} />
+                              {country.label}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
                   <FormMessage />
                 </FormItem>
               )}
@@ -163,6 +259,7 @@ export const SignUpForm = () => {
             </Button>
           </form>
         </Form>
+
         <div className='flex justify-center '>
           <Button disabled={state.loading} variant='link' onClick={functions.goToSignIn}>
             <span className='bg-background px-2 text-muted-foreground'>have account already</span>

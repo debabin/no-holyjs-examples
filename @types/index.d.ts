@@ -3,6 +3,8 @@ type ProfileRole = 'admin' | 'user';
 interface Profile {
   id: number;
   email: string;
+  avatar: string;
+  login: string;
   password: string;
   firstName: string;
   lastName: string;
@@ -12,6 +14,13 @@ interface Profile {
     label: string;
     code: string;
   };
+}
+
+interface Otp {
+  id: number;
+  source: string;
+  value: string;
+  endTime: number;
 }
 
 interface Confirmation {

@@ -1,14 +1,19 @@
 import React from 'react';
+import { flushSync } from 'react-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useNavigate } from '@tanstack/react-router';
 import { toast } from 'sonner';
-import * as z from 'zod';
+import * as zod from 'zod';
 
+import { COOKIE } from '@/utils';
 import {
   usePostOtpEmailMutation,
   usePostSignInEmailMutation,
   usePostSignInLoginMutation
 } from '@/utils/api';
+import { useProfile } from '@/utils/contexts/profile';
+import { useSession } from '@/utils/contexts/session';
 
 import { useOtp } from '../../../contexts/otp';
 import { useStage } from '../../../contexts/stage';
@@ -20,22 +25,21 @@ interface SingInForm {
 }
 
 export const useSignInForm = () => {
+  const navigate = useNavigate();
   const { setOtp } = useOtp();
   const { setStage } = useStage();
+  const { setSession } = useSession();
+  const { setProfile } = useProfile();
 
   const [selectedResource, setSelectedResource] = React.useState<'login' | 'email'>('login');
 
   const signInForm = useForm<SingInForm>({
-    defaultValues: {
-      login: '',
-      password: ''
-    },
     resolver: zodResolver(selectedResource === 'email' ? signInEmailSchema : signInLoginSchema)
   });
 
   const login = signInForm.watch('login');
   React.useEffect(() => {
-    const email = z.string().email();
+    const email = zod.string().email();
     const isEmail = email.safeParse(login);
     setSelectedResource(isEmail.success ? 'email' : 'login');
   }, [login]);
@@ -49,14 +53,13 @@ export const useSignInForm = () => {
 
   const onSubmit = signInForm.handleSubmit(async (values) => {
     const postSignInMutationResponse = await postSignInMutation.mutateAsync({
-      params: { [selectedResource]: values.login } as Record<'email' | 'login', string>
+      params: {
+        [selectedResource]: values.login,
+        ...(selectedResource === 'login' && { password: values.password })
+      } as Record<'email' | 'login', string>
     });
 
-    if (
-      'needConfirmation' in postSignInMutationResponse.data &&
-      postSignInMutationResponse.data.needConfirmation &&
-      selectedResource === 'email'
-    ) {
+    if (selectedResource === 'email') {
       const postOtpEmailMutationResponse = await postOtpEmailMutation.mutateAsync({
         params: { email: values.login }
       });
@@ -81,19 +84,31 @@ export const useSignInForm = () => {
       return setStage('selectConfirmation');
     }
 
-    toast.success('Sign in is successful 👍', {
-      cancel: { label: 'Close' },
-      description: 'We are very glad to see you, have fun'
-    });
+    if ('profile' in postSignInMutationResponse.data) {
+      localStorage.setItem(COOKIE.ACCESS_TOKEN, postSignInMutationResponse.data.token);
+      setProfile(postSignInMutationResponse.data.profile);
+      flushSync(() => setSession(true));
 
-    // router.replace('/profile');
+      toast.success('Sign in is successful 👍', {
+        cancel: { label: 'Close' },
+        description: 'We are very glad to see you, have fun'
+      });
+
+      navigate({
+        to: '/',
+        replace: true
+      });
+    }
   });
 
   const goToSignUp = () => setStage('signUp');
 
   return {
     state: {
-      loading: postSignInEmailMutation.isPending || postSignInLoginMutation.isPending,
+      loading:
+        postSignInEmailMutation.isPending ||
+        postSignInLoginMutation.isPending ||
+        postOtpEmailMutation.isPending,
       isEmail: selectedResource === 'email'
     },
     form: signInForm,

@@ -3,15 +3,17 @@ import { PatternFormat } from 'react-number-format';
 import { SpinnerIcon } from '@/components/icons';
 import {
   Button,
+  Checkbox,
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
   Input,
-  Label
+  Label,
+  RadioGroup,
+  RadioGroupItem
 } from '@/components/ui';
-import { Checkbox } from '@/components/ui/checkbox';
 
 import { useSelectConfirmationForm } from './hooks/useSelectConfirmationForm';
 
@@ -26,26 +28,22 @@ export const SelectConfirmationForm = () => {
             <h1 className='text-2xl font-semibold tracking-tight'>Choose resource for otp code</h1>
             <p className='text-sm text-muted-foreground'>We sent you a code to your resource</p>
           </div>
-          <div className='grid gap-2'>
-            <Button
-              variant={
-                state.selectedResource && state.selectedResource === 'email' ? 'default' : 'outline'
-              }
-              type='button'
-              onClick={() => functions.setSelectedResource('email')}
-            >
-              Email
-            </Button>
-            <Button
-              variant={
-                state.selectedResource && state.selectedResource === 'phone' ? 'default' : 'outline'
-              }
-              type='button'
-              onClick={() => functions.setSelectedResource('phone')}
-            >
-              Phone
-            </Button>
-          </div>
+
+          <RadioGroup
+            className='flex flex-col space-y-2'
+            defaultValue={state.selectedResource}
+            onValueChange={(value: 'phone' | 'email') => functions.setSelectedResource(value)}
+          >
+            <div className='flex items-center space-x-2'>
+              <RadioGroupItem value='email' id='email' />
+              <Label htmlFor='email'>email</Label>
+            </div>
+            <div className='flex items-center space-x-2'>
+              <RadioGroupItem value='phone' id='phone' />
+              <Label htmlFor='phone'>phone</Label>
+            </div>
+          </RadioGroup>
+
           <div className='items-top flex space-x-2'>
             <Checkbox
               id='terms'
@@ -103,7 +101,7 @@ export const SelectConfirmationForm = () => {
                   render={({ field }) => (
                     <FormItem>
                       <Label className='sr-only' htmlFor='otp'>
-                        Password
+                        {state.selectedResource === 'email' ? 'Email' : 'Phone'}
                       </Label>
                       <FormControl>
                         <>

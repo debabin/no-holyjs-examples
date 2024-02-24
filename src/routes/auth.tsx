@@ -1,7 +1,8 @@
 import { lazy, Suspense } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, redirect } from '@tanstack/react-router';
 import * as zod from 'zod';
 
+import { AuthLoading } from '@/pages/auth/loading';
 import { ROUTES } from '@/utils/constants/routes';
 
 const authSearchSchema = zod.object({
@@ -12,9 +13,16 @@ const AuthPageLazy = lazy(() => import('@/pages/auth/page'));
 
 export const Route = createFileRoute(ROUTES.AUTH)({
   component: () => (
-    <Suspense>
+    <Suspense fallback={<AuthLoading />}>
       <AuthPageLazy />
     </Suspense>
   ),
-  validateSearch: authSearchSchema
+  validateSearch: authSearchSchema,
+  beforeLoad: ({ context }) => {
+    if (context.isAuthenticated) {
+      throw redirect({
+        to: '/'
+      });
+    }
+  }
 });
