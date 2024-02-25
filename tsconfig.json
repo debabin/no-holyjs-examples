@@ -20,7 +20,8 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@redux/*": ["./src/apps/redux-saga/redux/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],
