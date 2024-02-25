@@ -15,7 +15,7 @@ export interface ProvidersProps {
   query: Omit<QueryProviderProps, 'children'>;
 }
 
-const Providers: React.FC<ProvidersProps> = ({ theme, session, profile, query, children }) => (
+const Providers = ({ theme, session, profile, query, children }: ProvidersProps) => (
   <ThemeProvider {...theme}>
     <SessionProvider {...session}>
       <ProfileProvider {...profile}>

@@ -21,9 +21,7 @@ interface QuerySettings<Func = unknown> {
   >;
 }
 
-type ApiRequestConfig = Omit<import('axios').AxiosRequestConfig, 'headers'> & {
-  headers?: PlainObject;
-};
+type ApiRequestConfig = import('axios').AxiosRequestConfig;
 
 type RequestConfig<Params = undefined> = Params extends undefined
   ? { config?: ApiRequestConfig }
