@@ -1,4 +1,6 @@
 import { api } from '../../instance';
 
-export const getProfile = (params?: RequestConfig) =>
+type GetProfileRequestConfig = RequestConfig | void;
+
+export const getProfile = (params?: GetProfileRequestConfig) =>
   api.get<{ profile: Profile }>('profile', params?.config);
