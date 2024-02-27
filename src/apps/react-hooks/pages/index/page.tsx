@@ -1,13 +1,15 @@
-import { Button, Flag } from '@/components/ui';
-import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import {
+  Avatar,
+  AvatarImage,
+  Button,
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle
-} from '@/components/ui/card';
+  CardTitle,
+  Flag
+} from '@/components/ui';
 
 import { useIndexPage } from './hooks/useIndexPage';
 

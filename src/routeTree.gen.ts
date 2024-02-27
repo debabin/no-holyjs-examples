@@ -2,9 +2,9 @@
 
 // Import Routes
 
-import { Route as rootRoute } from './apps/react-hooks/routes/__root'
-import { Route as AuthImport } from './apps/react-hooks/routes/auth'
-import { Route as IndexImport } from './apps/react-hooks/routes/index'
+import { Route as rootRoute } from './apps/redux-variant/routes/__root'
+import { Route as AuthImport } from './apps/redux-variant/routes/auth'
+import { Route as IndexImport } from './apps/redux-variant/routes/index'
 
 // Create/Update Routes
 

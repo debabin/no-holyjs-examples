@@ -1,8 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { usePostSingUpMutation } from '@react-hooks/utils/api';
 import { toast } from 'sonner';
-
-import { usePostSingUpMutation } from '@/utils/api';
 
 import { useStage } from '../../../contexts/stage';
 import { signUpSchema } from '../constants';

@@ -2,8 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { CheckedState } from '@radix-ui/react-checkbox';
-
-import { usePostOtpEmailMutation, usePostOtpPhoneMutation } from '@/utils/api';
+import { usePostOtpEmailMutation, usePostOtpPhoneMutation } from '@react-hooks/utils/api';
 
 import { useOtp } from '../../../contexts/otp';
 import { useStage } from '../../../contexts/stage';

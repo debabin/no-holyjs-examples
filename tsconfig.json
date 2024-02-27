@@ -21,7 +21,8 @@
     "noFallthroughCasesInSwitch": true,
     "paths": {
       "@/*": ["./src/*"],
-      "@redux/*": ["./src/apps/redux-saga/redux/*"]
+      "@react-hooks/*": ["./src/apps/react-hooks/*"],
+      "@redux-variant/*": ["./src/apps/redux-variant/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],
