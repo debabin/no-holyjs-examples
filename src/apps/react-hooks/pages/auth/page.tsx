@@ -6,11 +6,7 @@ interface AuthPageProps {
   searchParams?: { stage?: Stage };
 }
 
-// routing guards
-// registration profile more fields + registration password rules
-// o2auth github google
-
-const AuthPage = ({ searchParams }: AuthPageProps) => {
+export const AuthPage = ({ searchParams }: AuthPageProps) => {
   const defaultStage = searchParams?.stage ?? 'signIn';
 
   return (
@@ -19,5 +15,3 @@ const AuthPage = ({ searchParams }: AuthPageProps) => {
     </Providers>
   );
 };
-
-export default AuthPage;

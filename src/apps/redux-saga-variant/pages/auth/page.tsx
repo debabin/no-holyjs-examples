@@ -14,10 +14,8 @@ const component: Record<Stage, React.ReactNode> = {
   confirmation: <ConfirmationForm />
 };
 
-const AuthPage = () => {
+export const AuthPage = () => {
   const stage = useSelector(authSelectors.getStage);
 
   return component[stage];
 };
-
-export default AuthPage;

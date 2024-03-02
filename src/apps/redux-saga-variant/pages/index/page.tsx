@@ -13,7 +13,7 @@ import {
 
 import { useIndexPage } from './hooks/useIndexPage';
 
-const IndexPage = () => {
+export const IndexPage = () => {
   const { state, functions } = useIndexPage();
 
   return (
@@ -60,5 +60,3 @@ const IndexPage = () => {
     </Card>
   );
 };
-
-export default IndexPage;

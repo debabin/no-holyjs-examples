@@ -9,4 +9,3 @@ export interface LazyLoadedSlices {}
 export const rootReducer = combineSlices(sessionSlice, themeSlice, profileSlice, {
   [apiSlice.reducerPath]: apiSlice.reducer
 }).withLazyLoadedSlices<LazyLoadedSlices>();
-console.log('@', apiSlice);

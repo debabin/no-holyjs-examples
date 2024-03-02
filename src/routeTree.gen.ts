@@ -11,12 +11,16 @@ import { Route as IndexImport } from './apps/redux-saga-variant/routes/index'
 const AuthRoute = AuthImport.update({
   path: '/auth',
   getParentRoute: () => rootRoute,
-} as any)
+} as any).lazy(() =>
+  import('./apps/redux-saga-variant/routes/auth.lazy').then((d) => d.Route),
+)
 
 const IndexRoute = IndexImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
-} as any)
+} as any).lazy(() =>
+  import('./apps/redux-saga-variant/routes/index.lazy').then((d) => d.Route),
+)
 
 // Populate the FileRoutesByPath interface
 
