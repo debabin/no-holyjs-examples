@@ -5,5 +5,6 @@ export interface PostOtpEmailParams {
 }
 export type PostOtpEmailRequestConfig = RequestConfig<PostOtpEmailParams>;
 
-export const postOtpEmail = ({ params, config }: PostOtpEmailRequestConfig) =>
-  api.post<RetryDelay>('otp/email', params, config);
+export const postOtpEmail = ({ params, config }: PostOtpEmailRequestConfig) => {
+  return api.post<RetryDelay>('otp/email', params, config);
+};

@@ -2,9 +2,9 @@
 
 // Import Routes
 
-import { Route as rootRoute } from './apps/redux-variant/routes/__root'
-import { Route as AuthImport } from './apps/redux-variant/routes/auth'
-import { Route as IndexImport } from './apps/redux-variant/routes/index'
+import { Route as rootRoute } from './apps/redux-saga-variant/routes/__root'
+import { Route as AuthImport } from './apps/redux-saga-variant/routes/auth'
+import { Route as IndexImport } from './apps/redux-saga-variant/routes/index'
 
 // Create/Update Routes
 

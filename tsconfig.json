@@ -22,7 +22,7 @@
     "paths": {
       "@/*": ["./src/*"],
       "@react-hooks/*": ["./src/apps/react-hooks/*"],
-      "@redux-variant/*": ["./src/apps/redux-variant/*"]
+      "@redux-saga-variant/*": ["./src/apps/redux-saga-variant/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],

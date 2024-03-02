@@ -1,2 +1,2 @@
 // import './apps/react-hooks/main';
-import './apps/redux-variant/main';
+import './apps/redux-saga-variant/main';
