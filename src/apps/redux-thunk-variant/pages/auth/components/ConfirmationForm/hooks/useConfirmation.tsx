@@ -1,10 +1,10 @@
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useDispatch } from '@redux-saga-variant/redux/hooks';
+import { useDispatch } from '@redux-thunk-variant/redux/hooks';
 
-import { authSagas } from '../../../sagas';
 import { authActions, authSelectors } from '../../../slices';
+import { authThunks } from '../../../thunks';
 import { confirmationSchema } from '../constants';
 
 interface ConfirmationFormForm {
@@ -23,10 +23,10 @@ export const useConfirmationForm = () => {
     reValidateMode: 'onSubmit'
   });
 
-  const onOtpResend = () => dispatch(authSagas.onOtpResend.action());
+  const onOtpResend = () => dispatch(authThunks.onOtpResend.thunk());
 
   const onSubmit = confirmationForm.handleSubmit((values) =>
-    dispatch(authSagas.onConfirmationSubmit.action({ values }))
+    dispatch(authThunks.onConfirmationSubmit.thunk({ values }))
   );
 
   const goToSignUp = () => dispatch(authActions.setStage('signUp'));

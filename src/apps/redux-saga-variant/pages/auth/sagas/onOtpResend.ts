@@ -2,8 +2,7 @@ import { createAction } from '@reduxjs/toolkit';
 import type { SagaReturnType } from 'redux-saga/effects';
 import { call, put, select } from 'redux-saga/effects';
 
-import { postOtpEmail } from '@/utils/api/requests/otp/email';
-import { postOtpPhone } from '@/utils/api/requests/otp/phone';
+import { apiSlice } from '@/apps/redux-saga-variant/redux/api';
 
 import { authActions, authSelectors } from '../slices';
 import { otpCountdownSlice } from '../slices/otpCountdown/slice';
@@ -16,9 +15,10 @@ export function* saga() {
   try {
     const otp: SagaReturnType<typeof authSelectors.getOtp> = yield select(authSelectors.getOtp);
 
-    const postOtp = otp.type === 'email' ? postOtpEmail : postOtpPhone;
+    const postOtp =
+      otp.type === 'email' ? apiSlice.endpoints.postOtpEmail : apiSlice.endpoints.postOtpPhone;
 
-    const postOtpResponse: SagaReturnType<typeof postOtp> = yield postOtp({
+    const postOtpResponse: SagaReturnType<typeof postOtp.call> = yield postOtp.call({
       params: { [otp.type]: otp.resource } as Record<'email' | 'phone', string>
     });
 

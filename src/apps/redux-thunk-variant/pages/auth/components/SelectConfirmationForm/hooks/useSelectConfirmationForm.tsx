@@ -6,8 +6,8 @@ import type { CheckedState } from '@radix-ui/react-checkbox';
 
 import { useDispatch } from '@/apps/redux-thunk-variant/redux/hooks';
 
-import { authSagas } from '../../../sagas';
 import { authSelectors } from '../../../slices';
+import { authThunks } from '../../../thunks';
 import { selectConfirmationEmailSchema, selectConfirmationPhoneSchema } from '../constants';
 
 interface SelectConfirmationForm {
@@ -37,7 +37,7 @@ export const useSelectConfirmationForm = () => {
   };
 
   const onSubmit = selectConfirmationForm.handleSubmit((values) =>
-    dispatch(authSagas.onSelectConfirmationSubmit.action({ values, selectedResource }))
+    dispatch(authThunks.onSelectConfirmationSubmit.thunk({ values, selectedResource }))
   );
 
   return {
