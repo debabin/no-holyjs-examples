@@ -27,7 +27,7 @@ export const thunk = createAsyncThunk<void, OnConfirmationSubmitPayload, { state
       const otp = authSelectors.getOtp(state);
 
       const postTwoFactorAuthenticationResponse = await dispatch(
-        apiSlice.endpoints.postTwoFactorAuthentication.thunk({
+        apiSlice.endpoints.postTwoFactorAuthentication.initiate({
           params: {
             otp: values.otp,
             source: otp.resource

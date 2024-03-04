@@ -30,8 +30,8 @@ export function* saga(action: OnConfirmationSubmitAction) {
     const otp: SagaReturnType<typeof authSelectors.getOtp> = yield select(authSelectors.getOtp);
 
     const postTwoFactorAuthenticationResponse: SagaReturnType<
-      typeof apiSlice.endpoints.postTwoFactorAuthentication.call
-    > = yield call(apiSlice.endpoints.postTwoFactorAuthentication.call, {
+      typeof apiSlice.endpoints.postTwoFactorAuthentication.initiate
+    > = yield call(apiSlice.endpoints.postTwoFactorAuthentication.initiate, {
       params: {
         otp: values.otp,
         source: otp.resource

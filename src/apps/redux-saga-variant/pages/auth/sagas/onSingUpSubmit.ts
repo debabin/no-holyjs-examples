@@ -32,7 +32,7 @@ export function* saga(action: OnSignUpSubmitAction) {
       values: { passwordConfirmation, ...values }
     } = action.payload;
 
-    yield call(apiSlice.endpoints.postSignUp.call, { params: values });
+    yield call(apiSlice.endpoints.postSignUp.initiate, { params: values });
 
     yield toast.success('Your account has been created 👍', {
       cancel: { label: 'Close' },

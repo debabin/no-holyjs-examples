@@ -21,14 +21,14 @@ export const thunk = createAsyncThunk<void, OnSelectConfirmationSubmitPayload>(
     try {
       const { values, selectedResource } = payload;
 
-      const postOtpMutation =
+      const postOtp =
         selectedResource === 'email'
           ? apiSlice.endpoints.postOtpEmail
           : apiSlice.endpoints.postOtpPhone;
 
       const postOtpApiResponse = await dispatch(
-        postOtpMutation.thunk({
-          params: { [selectedResource]: values.resource } as Record<'email' | 'phone', string>
+        postOtp.initiate({
+          params: { phone: values.resource }
         })
       ).unwrap();
 

@@ -1,5 +1,5 @@
-import type { Draft, PayloadAction } from '@reduxjs/toolkit';
-import { combineReducers, createSlice } from '@reduxjs/toolkit';
+import type { Draft, PayloadAction, Reducer } from '@reduxjs/toolkit';
+import { combineSlices, createSlice } from '@reduxjs/toolkit';
 
 import { store } from './store';
 
@@ -10,83 +10,87 @@ interface ApiEndpointState<Data> {
   error: string | null;
 }
 
-interface CreateApiSliceParams<Name, Endpoints> {
+interface CreateApiParams<Name extends string, EndpointsDefinitions extends Record<string, any>> {
   name: Name;
-  endpoints: Endpoints;
+  endpoints: (builder: Builder) => EndpointsDefinitions;
   onError?: (cause: Error) => void;
 }
 
-export const createApiSlice = <const Name, const Endpoints extends Record<string, any>>({
-  name,
-  endpoints,
-  onError
-}: CreateApiSliceParams<Name, Endpoints>) => {
-  const apiSlices = Object.entries(endpoints).map(
-    ([key, endpoint]: [keyof Endpoints, Endpoints[keyof Endpoints]]) => {
-      const initialState: ApiEndpointState<Awaited<ReturnType<typeof endpoint>>> = {
-        data: null,
-        status: 'idle',
-        error: null
-      };
+interface Builder {
+  mutation: <Request extends (...args: any[]) => any>(
+    request: Request
+  ) => { initiate: (...params: Parameters<Request>) => ReturnType<Request> } & Omit<
+    ReturnType<typeof createEndpointSlice>,
+    'initiate'
+  >;
+  query: <Request extends (...args: any[]) => any>(
+    request: Request
+  ) => { initiate: (...params: Parameters<Request>) => ReturnType<Request> } & Omit<
+    ReturnType<typeof createEndpointSlice>,
+    'initiate'
+  >;
+}
 
-      const apiEndpointSlice = createSlice({
-        name: key.toString(),
-        initialState,
-        reducers: {
-          setStatus: (state, action: PayloadAction<ApiEndpointStatus>) => {
-            state.status = action.payload;
-          },
-          setData: (state, action: PayloadAction<Draft<Awaited<ReturnType<typeof endpoint>>>>) => {
-            state.data = action.payload;
-          }
-        }
+const createEndpointSlice = <const E extends (...args: any) => any>(endpoint: E) => {
+  const initialState: ApiEndpointState<Awaited<ReturnType<E>>> = {
+    data: null,
+    status: 'idle',
+    error: null
+  };
+
+  const apiEndpointSlice = createSlice({
+    name: endpoint.name.toString(),
+    initialState,
+    reducers: {
+      setStatus: (state, action: PayloadAction<ApiEndpointStatus>) => {
+        state.status = action.payload;
+      },
+      setData: (state, action: PayloadAction<Draft<Awaited<ReturnType<typeof endpoint>>>>) => {
+        state.data = action.payload;
+      }
+    }
+  });
+
+  const initiate = (...params: Parameters<E>) => {
+    store.dispatch(apiEndpointSlice.actions.setStatus('pending'));
+
+    const response = endpoint(params)
+      .catch((error: any) => {
+        store.dispatch(apiEndpointSlice.actions.setStatus('rejected'));
+        throw error;
+      })
+      .finally(() => {
+        store.dispatch(apiEndpointSlice.actions.setStatus('fulfilled'));
+        store.dispatch(apiEndpointSlice.actions.setData(response));
       });
 
-      const call = (async (params: any) => {
-        store.dispatch(apiEndpointSlice.actions.setStatus('pending'));
-
-        try {
-          const response = await endpoint(params);
-          store.dispatch(apiEndpointSlice.actions.setStatus('fulfilled'));
-          store.dispatch(apiEndpointSlice.actions.setData(response));
-          return response;
-        } catch (error) {
-          store.dispatch(apiEndpointSlice.actions.setStatus('rejected'));
-          onError?.(error as Error);
-          throw error;
-        }
-      }) as Endpoints[keyof Endpoints];
-
-      return {
-        key,
-        call,
-        ...apiEndpointSlice
-      };
-    }
-  );
-
-  const slices = apiSlices.reduce(
-    (acc, slice) => {
-      acc[slice.key] = slice;
-      return acc;
-    },
-    {} as Record<keyof typeof endpoints, (typeof apiSlices)[number]>
-  );
-
-  const reducerMap = apiSlices.reduce(
-    (acc, { reducer, reducerPath }) => {
-      // @ts-ignore
-      acc[reducerPath] = reducer;
-      return acc;
-    },
-    {} as Record<keyof Endpoints, (typeof apiSlices)[number]['reducer']>
-  );
-
-  const apiReducer = combineReducers(reducerMap);
-
-  return {
-    endpoints: slices,
-    reducer: apiReducer,
-    reducerPath: name
+    return response as Awaited<ReturnType<E>>;
   };
+
+  return { ...apiEndpointSlice, initiate };
+};
+
+export const createApi = <
+  const Name extends string,
+  EndpointsDefinitions extends Record<string, any>
+>({
+  name,
+  endpoints
+}: CreateApiParams<Name, EndpointsDefinitions>): {
+  endpoints: EndpointsDefinitions;
+  name: Name;
+  reducer: Reducer;
+} => {
+  const builder: Builder = {
+    mutation: <Request extends (...args: any[]) => any>(request: Request) =>
+      createEndpointSlice<Request>(request),
+    query: <Request extends (...args: any[]) => any>(request: Request) =>
+      createEndpointSlice<Request>(request)
+  };
+
+  const endpointsDefinitions = endpoints(builder);
+
+  const apiReducer = combineSlices(...Object.values(endpointsDefinitions));
+
+  return { endpoints: endpointsDefinitions, name, reducer: apiReducer };
 };

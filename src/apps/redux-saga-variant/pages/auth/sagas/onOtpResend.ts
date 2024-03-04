@@ -18,9 +18,11 @@ export function* saga() {
     const postOtp =
       otp.type === 'email' ? apiSlice.endpoints.postOtpEmail : apiSlice.endpoints.postOtpPhone;
 
-    const postOtpResponse: SagaReturnType<typeof postOtp.call> = yield postOtp.call({
+    const postOtpResponse: SagaReturnType<typeof postOtp.initiate> = yield postOtp.initiate({
       params: { [otp.type]: otp.resource } as Record<'email' | 'phone', string>
     });
+
+    apiSlice.test.postOtpEmail.initiate;
 
     if (postOtpResponse.data.retryDelay) {
       yield call(otpCountdownSlice.startCountdown, postOtpResponse.data.retryDelay / 1000);

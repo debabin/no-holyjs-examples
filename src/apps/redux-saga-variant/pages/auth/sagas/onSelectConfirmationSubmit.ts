@@ -26,24 +26,21 @@ export function* saga(action: OnSelectConfirmationSubmitAction) {
   try {
     const { values, selectedResource } = action.payload;
 
-    const postOtpMutation =
+    const postOtp =
       selectedResource === 'email'
         ? apiSlice.endpoints.postOtpEmail
         : apiSlice.endpoints.postOtpPhone;
 
-    const postOtpApiResponse: SagaReturnType<typeof postOtpMutation.call> = yield call(
-      postOtpMutation.call,
-      {
-        params: { [selectedResource]: values.resource } as Record<'email' | 'phone', string>
-      }
-    );
+    const postOtpResponse: SagaReturnType<typeof postOtp.initiate> = yield call(postOtp.initiate, {
+      params: { [selectedResource]: values.resource } as Record<'email' | 'phone', string>
+    });
 
-    if (postOtpApiResponse.data.retryDelay) {
+    if (postOtpResponse.data.retryDelay) {
       yield put(
         authActions.setOtp({
           type: selectedResource,
           resource: values.resource,
-          retryDelay: postOtpApiResponse.data.retryDelay
+          retryDelay: postOtpResponse.data.retryDelay
         })
       );
 

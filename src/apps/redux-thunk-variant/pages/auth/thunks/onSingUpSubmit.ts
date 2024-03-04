@@ -30,7 +30,7 @@ export const thunk = createAsyncThunk<void, OnSignUpSubmitPayload>(
       values: { passwordConfirmation, ...values }
     } = payload;
 
-    await dispatch(apiSlice.endpoints.postSignUp.thunk({ params: values }));
+    await dispatch(apiSlice.endpoints.postSignUp.initiate({ params: values }));
 
     toast.success('Your account has been created 👍', {
       cancel: { label: 'Close' },

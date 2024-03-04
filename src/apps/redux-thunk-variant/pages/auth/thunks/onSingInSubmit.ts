@@ -27,30 +27,30 @@ export const thunk = createAsyncThunk<void, OnSignInSubmitPayload>(
       const { resource, values } = payload;
 
       if (resource === 'email') {
-        const postOtpEmailApiResponse = await dispatch(
-          apiSlice.endpoints.postOtpEmail.thunk({
+        const postOtpEmailResponse = await dispatch(
+          apiSlice.endpoints.postOtpEmail.initiate({
             params: { email: values.login }
           })
         ).unwrap();
 
-        if (!postOtpEmailApiResponse.data.retryDelay) return;
+        if (!postOtpEmailResponse.data.retryDelay) return;
 
         dispatch(
           authActions.setOtp({
             type: 'email',
             resource: values.login,
-            retryDelay: postOtpEmailApiResponse.data.retryDelay
+            retryDelay: postOtpEmailResponse.data.retryDelay
           })
         );
 
-        otpCountdownSlice.startCountdown(postOtpEmailApiResponse.data.retryDelay / 1000);
+        otpCountdownSlice.startCountdown(postOtpEmailResponse.data.retryDelay / 1000);
 
         dispatch(authActions.setStage('confirmation'));
         return;
       }
 
-      const postSignInLoginApiResponse = await dispatch(
-        apiSlice.endpoints.postSignInLogin.thunk({
+      const postSignInLoginResponse = await dispatch(
+        apiSlice.endpoints.postSignInLogin.initiate({
           params: {
             [resource]: values.login,
             ...(resource === 'login' && { password: values.password })
@@ -59,18 +59,18 @@ export const thunk = createAsyncThunk<void, OnSignInSubmitPayload>(
       ).unwrap();
 
       if (
-        'needConfirmation' in postSignInLoginApiResponse.data &&
-        postSignInLoginApiResponse.data.needConfirmation &&
+        'needConfirmation' in postSignInLoginResponse.data &&
+        postSignInLoginResponse.data.needConfirmation &&
         resource === 'login'
       ) {
         dispatch(authActions.setStage('selectConfirmation'));
         return;
       }
 
-      if ('profile' in postSignInLoginApiResponse.data) {
-        localStorage.setItem(COOKIE.ACCESS_TOKEN, postSignInLoginApiResponse.data.token);
+      if ('profile' in postSignInLoginResponse.data) {
+        localStorage.setItem(COOKIE.ACCESS_TOKEN, postSignInLoginResponse.data.token);
 
-        dispatch(profileSlice.actions.setProfile(postSignInLoginApiResponse.data.profile));
+        dispatch(profileSlice.actions.setProfile(postSignInLoginResponse.data.profile));
         dispatch(sessionSlice.actions.setSession(true));
 
         toast.success('Sign in is successful 👍', {

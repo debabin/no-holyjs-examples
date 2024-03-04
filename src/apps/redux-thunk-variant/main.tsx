@@ -20,7 +20,7 @@ const init = async () => {
 
   if (token) {
     const getProfileApiResponse = await store
-      .dispatch(apiSlice.endpoints.getProfile.thunk())
+      .dispatch(apiSlice.endpoints.getProfile.initiate())
       .unwrap();
 
     store.dispatch(sessionSlice.actions.setSession(true));

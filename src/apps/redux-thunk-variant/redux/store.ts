@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 
+import { apiSlice } from './api';
 import { rootReducer } from './reducer';
 
 export const baseStore = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }).concat(apiSlice.middleware)
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

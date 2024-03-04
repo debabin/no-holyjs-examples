@@ -29,30 +29,30 @@ export function* saga(action: OnSignInSubmitAction) {
     const { resource, values } = action.payload;
 
     if (resource === 'email') {
-      const postOtpEmailApiResponse: SagaReturnType<typeof apiSlice.endpoints.postOtpEmail.call> =
-        yield call(apiSlice.endpoints.postOtpEmail.call, {
+      const postOtpEmailResponse: SagaReturnType<typeof apiSlice.endpoints.postOtpEmail.initiate> =
+        yield call(apiSlice.endpoints.postOtpEmail.initiate, {
           params: { email: values.login }
         });
 
-      if (!postOtpEmailApiResponse.data.retryDelay) return;
+      if (!postOtpEmailResponse.data.retryDelay) return;
 
       yield put(
         authActions.setOtp({
           type: 'email',
           resource: values.login,
-          retryDelay: postOtpEmailApiResponse.data.retryDelay
+          retryDelay: postOtpEmailResponse.data.retryDelay
         })
       );
 
-      yield call(otpCountdownSlice.startCountdown, postOtpEmailApiResponse.data.retryDelay / 1000);
+      yield call(otpCountdownSlice.startCountdown, postOtpEmailResponse.data.retryDelay / 1000);
 
       yield put(authActions.setStage('confirmation'));
       return;
     }
 
-    const postSignInLoginApiResponse: SagaReturnType<
-      typeof apiSlice.endpoints.postSignInLogin.call
-    > = yield call(apiSlice.endpoints.postSignInLogin.call, {
+    const postSignInLoginResponse: SagaReturnType<
+      typeof apiSlice.endpoints.postSignInLogin.initiate
+    > = yield call(apiSlice.endpoints.postSignInLogin.initiate, {
       params: {
         [resource]: values.login,
         ...(resource === 'login' && { password: values.password })
@@ -60,18 +60,18 @@ export function* saga(action: OnSignInSubmitAction) {
     });
 
     if (
-      'needConfirmation' in postSignInLoginApiResponse.data &&
-      postSignInLoginApiResponse.data.needConfirmation &&
+      'needConfirmation' in postSignInLoginResponse.data &&
+      postSignInLoginResponse.data.needConfirmation &&
       resource === 'login'
     ) {
       yield put(authActions.setStage('selectConfirmation'));
       return;
     }
 
-    if ('profile' in postSignInLoginApiResponse.data) {
-      localStorage.setItem(COOKIE.ACCESS_TOKEN, postSignInLoginApiResponse.data.token);
+    if ('profile' in postSignInLoginResponse.data) {
+      localStorage.setItem(COOKIE.ACCESS_TOKEN, postSignInLoginResponse.data.token);
 
-      yield put(profileSlice.actions.setProfile(postSignInLoginApiResponse.data.profile));
+      yield put(profileSlice.actions.setProfile(postSignInLoginResponse.data.profile));
       yield put(sessionSlice.actions.setSession(true));
 
       yield toast.success('Sign in is successful 👍', {

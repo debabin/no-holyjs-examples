@@ -7,7 +7,7 @@ export const getOtpCountdown = (state: RootState) => state.auth!.otpCountdown;
 export const getSignInFormLoading = (state: RootState) =>
   state.api.postSignInLogin.status === 'pending' || state.api.postOtpEmail.status === 'pending';
 export const getConfirmationFormLoading = (state: RootState) =>
-  state.api.postSignInLogin.status === 'pending' || state.api.postOtpEmail.status === 'pending';
+  state.api.postTwoFactorAuthentication.status === 'pending';
 
 export const getSelectConfirmationFormLoading = (state: RootState) =>
   state.api.postOtpEmail.status === 'pending' || state.api.postOtpPhone.status === 'pending';

@@ -21,7 +21,7 @@ export const thunk = createAsyncThunk<void, void, { state: RootState }>(
         otp.type === 'email' ? apiSlice.endpoints.postOtpEmail : apiSlice.endpoints.postOtpPhone;
 
       const postOtpResponse = await dispatch(
-        postOtp.thunk({
+        postOtp.initiate({
           params: { [otp.type]: otp.resource } as Record<'email' | 'phone', string>
         })
       ).unwrap();
