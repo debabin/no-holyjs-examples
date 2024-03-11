@@ -1,4 +1,5 @@
 export const ROUTES = {
   INDEX: '/',
-  AUTH: '/auth'
+  AUTH: '/auth',
+  FIGMA: '/figma'
 } as const;

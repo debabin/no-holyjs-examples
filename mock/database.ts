@@ -1,6 +1,33 @@
+import { faker } from '@faker-js/faker';
 import type { RestRequestConfig } from 'mock-config-server';
 
-export const DATABASE: { otps: Otp[]; profiles: Profile[] } = {
+const FIGMA_CARDS = [];
+
+const randomIntFromInterval = () => Math.floor(Math.random() * (900 + 1));
+
+for (let i = 0; i <= 1000; i += 1) {
+  FIGMA_CARDS.push({
+    id: faker.number.int(),
+    position: {
+      x: randomIntFromInterval(),
+      y: randomIntFromInterval()
+    },
+    size: {
+      width: 300,
+      height: 200
+    },
+    title: faker.git.branch(),
+    description: faker.git.commitMessage(),
+    image: faker.image.avatarGitHub(),
+    reactions: {
+      '👍': faker.number.int({ min: 0, max: 250 }),
+      '👎': faker.number.int({ min: 0, max: 250 }),
+      '🔥': faker.number.int({ min: 0, max: 250 })
+    }
+  });
+}
+
+export const DATABASE: { otps: Otp[]; profiles: Profile[]; figmaCards: FigmaCard[] } = {
   otps: [],
   profiles: [
     {
@@ -14,7 +41,8 @@ export const DATABASE: { otps: Otp[]; profiles: Profile[] } = {
       role: 'admin',
       country: { id: 1, label: 'Russia', code: 'ru' }
     }
-  ]
+  ],
+  figmaCards: FIGMA_CARDS
 };
 
 export const getDatabaseConfig: RestRequestConfig = {

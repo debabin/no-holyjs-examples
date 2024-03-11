@@ -1,4 +1,5 @@
 export { getDatabaseConfig } from './database';
+export * from './getFigmaCardConfig';
 export * from './getProfileConfig';
 export * from './postOtpEmailConfig';
 export * from './postOtpPhoneConfig';

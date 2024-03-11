@@ -8,11 +8,12 @@ const mockServerConfig: MockServerConfig = {
     path: '/mock/static',
     prefix: '/static'
   },
-  interceptors: {
-    request: ({ setDelay }) => setDelay(1000)
-  },
+
   rest: {
-    configs: Object.values(requestConfigs)
+    configs: Object.values(requestConfigs),
+    interceptors: {
+      request: ({ setDelay }) => setDelay(1000)
+    }
   }
 };
 

@@ -30,3 +30,19 @@ interface Confirmation {
 interface RetryDelay {
   retryDelay: number;
 }
+
+interface FigmaCard {
+  id: number;
+  position: {
+    x: number;
+    y: number;
+  };
+  size: {
+    width: number;
+    height: number;
+  };
+  title: string;
+  description: string;
+  image: string;
+  reactions: Record<string, number>;
+}
