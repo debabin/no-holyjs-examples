@@ -5,7 +5,7 @@ const FIGMA_CARDS = [];
 
 const randomIntFromInterval = () => Math.floor(Math.random() * (900 + 1));
 
-for (let i = 0; i <= 1000; i += 1) {
+for (let i = 0; i <= 2; i += 1) {
   FIGMA_CARDS.push({
     id: faker.number.int(),
     position: {
@@ -27,7 +27,7 @@ for (let i = 0; i <= 1000; i += 1) {
   });
 }
 
-export const DATABASE: { otps: Otp[]; profiles: Profile[]; figmaCards: FigmaCard[] } = {
+export const DATABASE: { otps: Otp[]; profiles: Profile[]; githubCards: GithubCard[] } = {
   otps: [],
   profiles: [
     {
@@ -42,7 +42,7 @@ export const DATABASE: { otps: Otp[]; profiles: Profile[]; figmaCards: FigmaCard
       country: { id: 1, label: 'Russia', code: 'ru' }
     }
   ],
-  figmaCards: FIGMA_CARDS
+  githubCards: FIGMA_CARDS
 };
 
 export const getDatabaseConfig: RestRequestConfig = {

@@ -1,3 +1,4 @@
+export * from './figma/card';
 export * from './figma/cards';
 export * from './otp/email';
 export * from './otp/phone';

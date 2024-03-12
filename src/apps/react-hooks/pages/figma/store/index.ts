@@ -1,12 +1,13 @@
-import { getFigmaCards } from '@/utils/api';
+import { getFigmaCards, putFigmaCard } from '@/utils/api';
 
 import { createStore, emitChange } from './createStore';
+import { debounce } from './debounce';
 
 interface Store {
-  cards: Array<FigmaCard & { isDragging: boolean }>;
-  entries: Record<FigmaCard['id'], FigmaCard & { isDragging: boolean }>;
+  cards: Array<GithubCard & { isDragging: boolean }>;
+  entries: Record<GithubCard['id'], GithubCard & { isDragging: boolean }>;
   select: {
-    id: FigmaCard['id'] | null;
+    id: GithubCard['id'] | null;
     offset: {
       x: number;
       y: number;
@@ -31,7 +32,7 @@ const fetchCards = async () => {
   const getFigmaCardsResponse = await getFigmaCards();
 
   cardsStore.set(
-    getFigmaCardsResponse.data.figmaCards.map((card) => ({
+    getFigmaCardsResponse.data.githubCards.map((card) => ({
       ...card,
       isDragging: false
     }))
@@ -45,24 +46,46 @@ const fetchCards = async () => {
   loadingStore.set(false);
 };
 
+const updateCard = (id: number, card: Omit<Partial<GithubCard>, 'id'>) =>
+  putFigmaCard({ params: { ...card, id } });
+
+export const updateCardDebounced = debounce(updateCard, 500);
+
 export const positionChange = (position: { x: number; y: number }) => {
   const { id } = cardsSelect.get();
   if (!id) return false;
 
-  const card = cardsEntriesStore.get()[id];
+  const cardsEntries = cardsEntriesStore.get();
 
-  cardsEntriesStore.set({
-    ...cardsEntriesStore.get(),
-    [id]: {
-      ...card,
-      position: {
-        x: position.x + cardsSelect.get().offset.x - card.size.width / 2,
-        y: position.y + cardsSelect.get().offset.y - card.size.height / 2
-      }
+  const updatedCard = {
+    ...cardsEntries[id],
+    position: {
+      x: position.x + cardsSelect.get().offset.x - cardsEntries[id].size.width / 2,
+      y: position.y + cardsSelect.get().offset.y - cardsEntries[id].size.height / 2
     }
-  });
+  };
+
+  cardsEntriesStore.set({ ...cardsEntries, [id]: updatedCard });
 
   emitChange(`cardStore.${id}`);
+  updateCardDebounced(id, updatedCard);
+};
+
+export const incrementReaction = (id: number, reaction: string) => {
+  const cardsEntries = cardsEntriesStore.get();
+
+  const updatedCard = {
+    ...cardsEntries[id],
+    reactions: {
+      ...cardsEntries[id].reactions,
+      [reaction]: cardsEntries[id].reactions[reaction] + 1
+    }
+  };
+
+  cardsEntriesStore.set({ ...cardsEntries, [id]: updatedCard });
+
+  emitChange(`cardStore.${id}`);
+  updateCardDebounced(id, updatedCard);
 };
 
 fetchCards();

@@ -9,29 +9,39 @@ export const emitChange = (key: string) => {
   }
 };
 
-export const createStore = <T>(key: string, data: T) => {
-  listeners[key] = [];
+const subscribe = (key: string) => (listener: any) => {
+  listeners[key] = [...listeners[key], listener];
 
-  const emitChange = () => {
-    for (const listener of listeners[key]) {
-      listener();
+  return () => {
+    listeners[key] = listeners[key].filter((l: any) => l !== listener);
+  };
+};
+
+export const computedStore = <T>(key: string, data: () => T) => {
+  if (!listeners[key]) {
+    listeners[key] = [];
+  }
+
+  return {
+    subscribe: subscribe(key),
+    getSnapshot() {
+      return data();
     }
   };
-  const subscribe = (listener: any) => {
-    listeners[key] = [...listeners[key], listener];
+};
 
-    return () => {
-      listeners[key] = listeners[key].filter((l: any) => l !== listener);
-    };
-  };
+export const createStore = <T>(key: string, data: T) => {
+  if (!listeners[key]) {
+    listeners[key] = [];
+  }
 
   return {
     data,
-    emitChange,
-    subscribe,
+    emitChange: () => emitChange(key),
+    subscribe: subscribe(key),
     set(updatedData: T) {
       data = updatedData;
-      emitChange();
+      emitChange(key);
     },
     get() {
       return data;

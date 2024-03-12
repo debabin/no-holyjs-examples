@@ -31,7 +31,7 @@ interface RetryDelay {
   retryDelay: number;
 }
 
-interface FigmaCard {
+interface GithubCard {
   id: number;
   position: {
     x: number;

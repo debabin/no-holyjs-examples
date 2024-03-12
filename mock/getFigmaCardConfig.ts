@@ -7,7 +7,7 @@ export const getFigmaCardConfig: RestRequestConfig = {
   method: 'get',
   routes: [
     {
-      data: { figmaCards: DATABASE.figmaCards }
+      data: () => ({ githubCards: DATABASE.githubCards })
     }
   ]
 };

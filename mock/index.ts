@@ -7,3 +7,4 @@ export * from './postSignUpConfig';
 export * from './postSingInEmailConfig';
 export * from './postSingInLoginConfig';
 export * from './postTwoFactorAuthenticationConfig';
+export * from './putFigmaUpdateCardConfig';

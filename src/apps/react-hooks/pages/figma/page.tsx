@@ -1,33 +1,26 @@
-import { ExampleCard } from './components/Card';
-import { useFigmaPage } from './hooks/useFigmaPage';
+import { Loader2 } from 'lucide-react';
+
+import { Info, GithubCard } from './components/Info/Info';
+import { useStore } from './store/useStore';
+import { cardsStore, loadingStore } from './store';
 
 export const FigmaPage = () => {
-  const { state, functions } = useFigmaPage();
+  const cards = useStore(cardsStore);
+  const loading = useStore(loadingStore);
 
   return (
     <>
-      {/* <div>
-        <div className='flex items-center justify-between'>
-          <div className='text-3xl font-bold'>Figma {state.cards.length}</div>
-        </div>
-        <Button variant='outline' onClick={cardsStore.addCard}>
-          Add
-        </Button>
-      </div> */}
-      <div
-        className='relative h-screen w-full'
-        onMouseMove={(event) =>
-          functions.positionChange({
-            y: event.clientY,
-            x: event.clientX
-          })
-        }
-      >
-        {state.loading && <div>loading</div>}
-        {state.cards.map((card) => (
-          <ExampleCard key={card.id} id={card.id} />
+      <div className='relative h-screen w-full'>
+        {loading && (
+          <div className='flex h-full items-center justify-center'>
+            <Loader2 className='size-6 animate-spin' />
+          </div>
+        )}
+        {cards.map((card) => (
+          <GithubCard key={card.id} id={card.id} />
         ))}
       </div>
+      {!!cards.length && <Info />}
     </>
   );
 };
