@@ -22,8 +22,6 @@ export function* saga() {
       params: { [otp.type]: otp.resource } as Record<'email' | 'phone', string>
     });
 
-    apiSlice.test.postOtpEmail.initiate;
-
     if (postOtpResponse.data.retryDelay) {
       yield call(otpCountdownSlice.startCountdown, postOtpResponse.data.retryDelay / 1000);
 

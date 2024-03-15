@@ -7,7 +7,7 @@ interface StageState {
   value: Stage;
 }
 
-const initialState: StageState = { value: 'signIn' } satisfies StageState;
+const initialState: StageState = { value: 'signIn' };
 
 export const stageSlice = createSlice({
   name: 'stage',

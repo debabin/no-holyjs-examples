@@ -11,7 +11,7 @@ const initialState: OtpState = {
   type: 'email',
   resource: '',
   retryDelay: 0
-} satisfies OtpState;
+};
 
 export const otpSlice = createSlice({
   name: 'otp',

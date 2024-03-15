@@ -66,10 +66,10 @@ export const Info = () => {
           <SheetTrigger>
             <Button>Open</Button>
           </SheetTrigger>
-          <SheetContent>
+          <SheetContent className='flex justify-center overflow-y-auto p-4 sm:max-w-[450px]'>
             <SheetHeader>
               <SheetTitle>Cards</SheetTitle>
-              <div className='absolute right-10 top-20 z-[1000] h-full bg-white'>
+              <div className='flex flex-col gap-2'>
                 {cards.map((card) => (
                   <CardInfo key={card.id} id={card.id} />
                 ))}

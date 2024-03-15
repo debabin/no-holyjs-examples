@@ -28,12 +28,13 @@ export const GithubCard = ({ id }: GithubCardProps) => {
           x: event.clientX
         })
       }
-      onMouseDown={(event) =>
-        functions.setDragging(true, {
+      onMouseDown={(event) => {
+        functions.setOffset({
           x: state.card.position.x - event.clientX + state.card.size.width / 2,
           y: state.card.position.y - event.clientY + state.card.size.height / 2
-        })
-      }
+        });
+        functions.setDragging(true);
+      }}
       onMouseUp={() => functions.setDragging(false)}
     >
       <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>

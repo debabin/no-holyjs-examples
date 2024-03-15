@@ -3,6 +3,7 @@ import { toast } from 'sonner';
 
 import { createApi } from '@/apps/redux-saga-variant/redux/create-api';
 import {
+  getGithubCards,
   getProfile,
   postOtpEmail,
   postOtpPhone,
@@ -16,6 +17,7 @@ const DEFAULT_ERROR = 'Something went wrong';
 export const apiSlice = createApi({
   name: 'api',
   endpoints: (builder) => ({
+    getGithubCards: builder.mutation(getGithubCards),
     postOtpEmail: builder.mutation(postOtpEmail),
     getProfile: builder.mutation(getProfile),
     postOtpPhone: builder.mutation(postOtpPhone),

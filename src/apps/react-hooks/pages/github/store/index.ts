@@ -61,7 +61,7 @@ export const positionChange = (position: { x: number; y: number }) => {
     }
   };
 
-  cardsEntriesStore.set({ ...cardsEntries, [id]: updatedCard });
+  cardsEntries[id] = updatedCard;
 
   emitChange(`cardStore.${id}`);
   updateCardDebounced(id, updatedCard);
@@ -78,7 +78,7 @@ export const incrementReaction = (id: number, reaction: string) => {
     }
   };
 
-  cardsEntriesStore.set({ ...cardsEntries, [id]: updatedCard });
+  cardsEntries[id] = updatedCard;
 
   emitChange(`cardStore.${id}`);
   updateCardDebounced(id, updatedCard);

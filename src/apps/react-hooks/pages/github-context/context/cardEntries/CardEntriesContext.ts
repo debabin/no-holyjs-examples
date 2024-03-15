@@ -7,11 +7,7 @@ export interface CardEntiresContextProps {
   getById: (id: GithubCard['id']) => GithubCard & { isDragging: boolean };
   setCardEntires: (select: CardEntires) => void;
   incrementReaction: (id: number, reaction: string) => void;
-  positionChange: (
-    id: number,
-    position: { x: number; y: number },
-    offset: { x: number; y: number }
-  ) => void;
+  positionChange: (position: { x: number; y: number }) => void;
 }
 
 export const CardEntiresContext = React.createContext<CardEntiresContextProps>({

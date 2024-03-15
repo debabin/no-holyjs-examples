@@ -6,26 +6,19 @@ import { debounce } from './debounce';
 interface Store {
   cards: Array<GithubCard & { isDragging: boolean }>;
   entries: Record<GithubCard['id'], GithubCard & { isDragging: boolean }>;
-  select: {
-    id: GithubCard['id'] | null;
-    offset: {
-      x: number;
-      y: number;
-    };
+  offset: {
+    x: number;
+    y: number;
   };
+  selectedCardId: GithubCard['id'] | null;
   loading: boolean;
 }
 
 export const loadingStore = createStore<Store['loading']>('loadingStore', false);
 export const cardsStore = createStore<Store['cards']>('cardsStore', []);
 export const cardsEntriesStore = createStore<Store['entries']>('cardsEntriesStore', {});
-export const cardsSelect = createStore<Store['select']>('cardsSelect', {
-  id: null,
-  offset: {
-    x: 0,
-    y: 0
-  }
-});
+export const selectedCardIdStore = createStore<Store['selectedCardId']>('selectedCardId', null);
+export const offsetStore = createStore<Store['offset']>('selectedCardId', { x: 0, y: 0 });
 
 const fetchCards = async () => {
   loadingStore.set(true);
@@ -52,16 +45,19 @@ const updateCard = (id: number, card: Omit<Partial<GithubCard>, 'id'>) =>
 export const updateCardDebounced = debounce(updateCard, 500);
 
 export const positionChange = (position: { x: number; y: number }) => {
-  const { id } = cardsSelect.get();
+  const id = selectedCardIdStore.get();
   if (!id) return false;
 
   const cardsEntries = cardsEntriesStore.get();
+  const card = cardsEntries[id];
+
+  const offset = offsetStore.get();
 
   const updatedCard = {
-    ...cardsEntries[id],
+    ...card,
     position: {
-      x: position.x + cardsSelect.get().offset.x - cardsEntries[id].size.width / 2,
-      y: position.y + cardsSelect.get().offset.y - cardsEntries[id].size.height / 2
+      x: position.x + offset.x - card.size.width / 2,
+      y: position.y + offset.y - card.size.height / 2
     }
   };
 

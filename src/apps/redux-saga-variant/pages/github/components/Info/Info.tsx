@@ -1,29 +1,36 @@
-import { useGetGithubCardsQuery } from '@/apps/react-hooks/utils/api';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { Button } from '@/components/ui';
 import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 
-import { useCardEntries } from '../../context/cardEntries';
-import { useSelect } from '../../context/select';
+import { githubSagas } from '../../sagas';
+import { githubSelectors } from '../../slices';
 
 interface CardInfoProps {
   id: number;
 }
 
 const CardInfo = ({ id }: CardInfoProps) => {
-  const { getById, incrementReaction } = useCardEntries();
-
-  const card = getById(id);
+  const dispatch = useDispatch();
+  const card = useSelector(githubSelectors.getGithubCard(id));
 
   return (
-    <div className='my-2 flex gap-2'>
+    <div className='flex gap-2'>
       {card.title}
       {Object.entries(card.reactions).map(([reaction, value]) => (
         <Badge
           key={reaction}
           className='cursor-pointer select-none'
           variant='outline'
-          onClick={() => incrementReaction(card.id, reaction)}
+          onClick={() =>
+            dispatch(
+              githubSagas.incrementReaction.action({
+                id: card.id,
+                reaction
+              })
+            )
+          }
         >
           {reaction} {value}
         </Badge>
@@ -33,10 +40,10 @@ const CardInfo = ({ id }: CardInfoProps) => {
 };
 
 const ReactionCount = () => {
-  const { cardEntires } = useCardEntries();
+  const cardsEntities = useSelector(githubSelectors.getCardsEntities);
 
-  const reactionsCount = Object.values(cardEntires).reduce((acc, cardsEntry) => {
-    return acc + Object.values(cardsEntry.reactions).reduce((acc, value) => acc + value, 0);
+  const reactionsCount = Object.values(cardsEntities).reduce((acc, cardsEntity) => {
+    return acc + Object.values(cardsEntity.reactions).reduce((acc, value) => acc + value, 0);
   }, 0);
 
   return (
@@ -47,8 +54,8 @@ const ReactionCount = () => {
 };
 
 export const Info = () => {
-  const getGithubCardsQuery = useGetGithubCardsQuery();
-  const { select } = useSelect();
+  const cards = useSelector(githubSelectors.getCards);
+  const { id: selectedCardId } = useSelector(githubSelectors.getSelect);
 
   return (
     <div className='absolute left-5 top-20'>
@@ -66,7 +73,7 @@ export const Info = () => {
             <SheetHeader>
               <SheetTitle>Cards</SheetTitle>
               <div className='flex flex-col gap-2'>
-                {getGithubCardsQuery.data!.data.githubCards.map((card) => (
+                {cards.map((card) => (
                   <CardInfo key={card.id} id={card.id} />
                 ))}
               </div>
@@ -75,9 +82,9 @@ export const Info = () => {
         </Sheet>
       </div>
 
-      {select.id && (
+      {selectedCardId && (
         <p className='text-sm'>
-          selected: <b>{select.id}</b>
+          selected: <b>{selectedCardId}</b>
         </p>
       )}
     </div>
