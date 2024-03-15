@@ -1,5 +1,6 @@
 export const ROUTES = {
   INDEX: '/',
   AUTH: '/auth',
-  FIGMA: '/figma'
+  GITHUB: '/github',
+  GITHUB_CONTEXT: '/github-context'
 } as const;

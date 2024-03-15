@@ -10,15 +10,23 @@ import { Route as IndexImport } from './apps/react-hooks/routes/index'
 
 // Create Virtual Routes
 
-const FigmaLazyImport = createFileRoute('/figma')()
+const GithubContextLazyImport = createFileRoute('/github-context')()
+const GithubLazyImport = createFileRoute('/github')()
 
 // Create/Update Routes
 
-const FigmaLazyRoute = FigmaLazyImport.update({
-  path: '/figma',
+const GithubContextLazyRoute = GithubContextLazyImport.update({
+  path: '/github-context',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
-  import('./apps/react-hooks/routes/figma.lazy').then((d) => d.Route),
+  import('./apps/react-hooks/routes/github-context.lazy').then((d) => d.Route),
+)
+
+const GithubLazyRoute = GithubLazyImport.update({
+  path: '/github',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./apps/react-hooks/routes/github.lazy').then((d) => d.Route),
 )
 
 const AuthRoute = AuthImport.update({
@@ -47,8 +55,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthImport
       parentRoute: typeof rootRoute
     }
-    '/figma': {
-      preLoaderRoute: typeof FigmaLazyImport
+    '/github': {
+      preLoaderRoute: typeof GithubLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/github-context': {
+      preLoaderRoute: typeof GithubContextLazyImport
       parentRoute: typeof rootRoute
     }
   }
@@ -59,5 +71,6 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren([
   IndexRoute,
   AuthRoute,
-  FigmaLazyRoute,
+  GithubLazyRoute,
+  GithubContextLazyRoute,
 ])

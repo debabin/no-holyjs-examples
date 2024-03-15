@@ -1,9 +1,9 @@
+import { ThemeToggle } from '@react-hooks/components';
 import { createRootRouteWithContext, Outlet } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 import { Toaster } from 'sonner';
 
 import sibericancodeIcon from '@/assets/images/sibericancode.svg';
-import { ThemeToggle } from '@/components/ThemeToggle/ThemeToggle';
 
 interface RouterContext {
   isAuthenticated: boolean;
@@ -14,7 +14,7 @@ const TOASTER_DURATION = 5000;
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: () => (
     <>
-      <header className='absolute flex w-full items-center justify-between p-4'>
+      <header className='absolute z-[101] flex w-full items-center justify-between p-4'>
         <div className='flex items-center gap-2'>
           <img className='size-10 rounded' src={sibericancodeIcon} alt='sibericancode icon' />
         </div>

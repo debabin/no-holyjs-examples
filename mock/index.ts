@@ -1,5 +1,5 @@
 export { getDatabaseConfig } from './database';
-export * from './getFigmaCardConfig';
+export * from './getGithubCardConfig';
 export * from './getProfileConfig';
 export * from './postOtpEmailConfig';
 export * from './postOtpPhoneConfig';
@@ -7,4 +7,4 @@ export * from './postSignUpConfig';
 export * from './postSingInEmailConfig';
 export * from './postSingInLoginConfig';
 export * from './postTwoFactorAuthenticationConfig';
-export * from './putFigmaUpdateCardConfig';
+export * from './putGithubUpdateCardConfig';

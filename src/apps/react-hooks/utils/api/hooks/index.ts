@@ -1,3 +1,4 @@
+export * from './useGetGithubCardsQuery';
 export * from './useGetProfileQuery';
 export * from './usePostOtpEmailMutation';
 export * from './usePostOtpPhoneMutation';

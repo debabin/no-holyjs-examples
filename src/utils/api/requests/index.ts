@@ -1,5 +1,5 @@
-export * from './figma/card';
-export * from './figma/cards';
+export * from './github/card';
+export * from './github/cards';
 export * from './otp/email';
 export * from './otp/phone';
 export * from './profile';
