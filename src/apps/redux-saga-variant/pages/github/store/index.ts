@@ -1,7 +1,8 @@
 import { getGithubCards, putGithubCard } from '@/utils/api';
 
+import { debounce } from '../helpers/debounce';
+
 import { createStore, emitChange } from './createStore';
-import { debounce } from './debounce';
 
 interface Store {
   cards: Array<GithubCard & { isDragging: boolean }>;

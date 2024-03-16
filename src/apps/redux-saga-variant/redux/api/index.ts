@@ -10,13 +10,15 @@ import {
   postSignInEmail,
   postSignInLogin,
   postSignUp,
-  postTwoFactorAuthentication
+  postTwoFactorAuthentication,
+  putGithubCard
 } from '@/utils/api/requests';
 
 const DEFAULT_ERROR = 'Something went wrong';
 export const apiSlice = createApi({
   name: 'api',
   endpoints: (builder) => ({
+    putGithubCard: builder.mutation(putGithubCard),
     getGithubCards: builder.mutation(getGithubCards),
     postOtpEmail: builder.mutation(postOtpEmail),
     getProfile: builder.mutation(getProfile),

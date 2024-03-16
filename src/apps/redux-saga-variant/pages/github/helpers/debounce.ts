@@ -8,6 +8,7 @@ export const debounce = <Func extends (...args: any[]) => any>(func: Func, wait:
       cache.delete(args[0]);
     }
 
+    console.log('@');
     timeout = setTimeout(() => func(...args), wait);
     cache.set(args[0], timeout);
   } as Func;
