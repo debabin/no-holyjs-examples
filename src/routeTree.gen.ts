@@ -2,10 +2,10 @@
 
 // Import Routes
 
-import { Route as rootRoute } from './apps/redux-saga-variant/routes/__root'
-import { Route as GithubImport } from './apps/redux-saga-variant/routes/github'
-import { Route as AuthImport } from './apps/redux-saga-variant/routes/auth'
-import { Route as IndexImport } from './apps/redux-saga-variant/routes/index'
+import { Route as rootRoute } from './apps/redux-thunk-variant/routes/__root'
+import { Route as GithubImport } from './apps/redux-thunk-variant/routes/github'
+import { Route as AuthImport } from './apps/redux-thunk-variant/routes/auth'
+import { Route as IndexImport } from './apps/redux-thunk-variant/routes/index'
 
 // Create/Update Routes
 
@@ -13,21 +13,21 @@ const GithubRoute = GithubImport.update({
   path: '/github',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
-  import('./apps/redux-saga-variant/routes/github.lazy').then((d) => d.Route),
+  import('./apps/redux-thunk-variant/routes/github.lazy').then((d) => d.Route),
 )
 
 const AuthRoute = AuthImport.update({
   path: '/auth',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
-  import('./apps/redux-saga-variant/routes/auth.lazy').then((d) => d.Route),
+  import('./apps/redux-thunk-variant/routes/auth.lazy').then((d) => d.Route),
 )
 
 const IndexRoute = IndexImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
-  import('./apps/redux-saga-variant/routes/index.lazy').then((d) => d.Route),
+  import('./apps/redux-thunk-variant/routes/index.lazy').then((d) => d.Route),
 )
 
 // Populate the FileRoutesByPath interface

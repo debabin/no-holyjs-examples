@@ -46,7 +46,7 @@ export const updateCardDebounced = debounce(updateCard, 500);
 
 export const positionChange = (position: { x: number; y: number }) => {
   const id = selectedCardIdStore.get();
-  if (!id) return false;
+  if (!id) return;
 
   const cardsEntries = cardsEntriesStore.get();
   const card = cardsEntries[id];

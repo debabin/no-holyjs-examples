@@ -26,11 +26,9 @@ export const thunk = createAsyncThunk<void, OnSelectConfirmationSubmitPayload>(
           ? apiSlice.endpoints.postOtpEmail
           : apiSlice.endpoints.postOtpPhone;
 
-      const postOtpApiResponse = await dispatch(
-        postOtp.initiate({
-          params: { phone: values.resource }
-        })
-      ).unwrap();
+      const postOtpApiResponse = await postOtp.initiate({
+        params: { [selectedResource]: values.resource } as Record<'email' | 'phone', string>
+      });
 
       if (postOtpApiResponse.data.retryDelay) {
         dispatch(

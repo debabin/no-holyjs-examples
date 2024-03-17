@@ -20,7 +20,7 @@ export function* saga(action: PositionChangeAction) {
     const { id, offset }: SagaReturnType<typeof githubSelectors.getSelect> = yield select(
       githubSelectors.getSelect
     );
-    if (!id) return false;
+    if (!id) return;
 
     const card: SagaReturnType<ReturnType<typeof githubSelectors.getGithubCard>> = yield select(
       githubSelectors.getGithubCard(id)

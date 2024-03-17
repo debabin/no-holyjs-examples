@@ -2,8 +2,9 @@ import React from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useDispatch } from '@redux-thunk-variant/redux/hooks';
 import * as zod from 'zod';
+
+import { useDispatch } from '@/apps/redux-thunk-variant/redux/hooks';
 
 import { authActions, authSelectors } from '../../../slices';
 import { authThunks } from '../../../thunks';
@@ -16,7 +17,7 @@ interface SingInForm {
 
 export const useSignInForm = () => {
   const dispatch = useDispatch();
-  const loading = useSelector(authSelectors.getConfirmationFormLoading);
+  const loading = useSelector(authSelectors.getSignInFormLoading);
 
   const [selectedResource, setSelectedResource] = React.useState<'login' | 'email'>('login');
 

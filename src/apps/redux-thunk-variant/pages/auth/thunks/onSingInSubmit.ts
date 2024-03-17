@@ -27,11 +27,9 @@ export const thunk = createAsyncThunk<void, OnSignInSubmitPayload>(
       const { resource, values } = payload;
 
       if (resource === 'email') {
-        const postOtpEmailResponse = await dispatch(
-          apiSlice.endpoints.postOtpEmail.initiate({
-            params: { email: values.login }
-          })
-        ).unwrap();
+        const postOtpEmailResponse = await apiSlice.endpoints.postOtpEmail.initiate({
+          params: { email: values.login }
+        });
 
         if (!postOtpEmailResponse.data.retryDelay) return;
 
@@ -49,14 +47,12 @@ export const thunk = createAsyncThunk<void, OnSignInSubmitPayload>(
         return;
       }
 
-      const postSignInLoginResponse = await dispatch(
-        apiSlice.endpoints.postSignInLogin.initiate({
-          params: {
-            [resource]: values.login,
-            ...(resource === 'login' && { password: values.password })
-          } as Record<'email' | 'login', string>
-        })
-      ).unwrap();
+      const postSignInLoginResponse = await apiSlice.endpoints.postSignInLogin.initiate({
+        params: {
+          [resource]: values.login,
+          ...(resource === 'login' && { password: values.password })
+        } as Record<'email' | 'login', string>
+      });
 
       if (
         'needConfirmation' in postSignInLoginResponse.data &&

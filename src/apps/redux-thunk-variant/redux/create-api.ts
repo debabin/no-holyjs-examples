@@ -1,116 +1,97 @@
-import type { Draft, PayloadAction } from '@reduxjs/toolkit';
-import { combineReducers, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import type { Draft, PayloadAction, Reducer } from '@reduxjs/toolkit';
+import { combineSlices, createSlice } from '@reduxjs/toolkit';
+
+import { store } from './store';
 
 type ApiEndpointStatus = 'idle' | 'pending' | 'fulfilled' | 'rejected';
 interface ApiEndpointState<Data> {
   data: Data | null;
   status: ApiEndpointStatus;
   error: string | null;
-  currentRequestId?: string;
 }
 
-interface CreateApiSliceParams<Name, Endpoints> {
+interface CreateApiParams<Name extends string, EndpointsDefinitions extends Record<string, any>> {
   name: Name;
-  endpoints: Endpoints;
+  endpoints: (builder: Builder) => EndpointsDefinitions;
   onError?: (cause: Error) => void;
 }
 
-export const createApiSlice = <const Name, const Endpoints extends Record<string, any>>({
-  name,
-  endpoints,
-  onError
-}: CreateApiSliceParams<Name, Endpoints>) => {
-  const apiSlices = Object.entries(endpoints).map(
-    ([key, endpoint]: [keyof Endpoints, Endpoints[keyof Endpoints]]) => {
-      const initialState: ApiEndpointState<Awaited<ReturnType<typeof endpoint>>> = {
-        data: null,
-        status: 'idle',
-        error: null,
-        currentRequestId: undefined
-      };
+interface Builder {
+  mutation: <Request extends (...args: any[]) => any>(
+    request: Request
+  ) => { initiate: Request } & Omit<ReturnType<typeof createEndpointSlice>, 'initiate'>;
+  query: <Request extends (...args: any[]) => any>(
+    request: Request
+  ) => { initiate: Request } & Omit<ReturnType<typeof createEndpointSlice>, 'initiate'>;
+}
 
-      const thunk = createAsyncThunk(
-        `${name}/${key.toString()}`,
-        async (...params: Parameters<typeof endpoint>) => {
-          try {
-            const response = await endpoint(...params);
+const createEndpointSlice = <const E extends (...args: any) => any>(endpoint: E) => {
+  const initialState: ApiEndpointState<Awaited<ReturnType<E>>> = {
+    data: null,
+    status: 'idle',
+    error: null
+  };
 
-            return response as Awaited<ReturnType<typeof endpoint>>;
-          } catch (error) {
-            onError?.(error as Error);
-            throw error;
-          }
-        }
-      );
+  const apiEndpointSlice = createSlice({
+    name: endpoint.name,
+    initialState,
+    reducers: {
+      setStatus: (state, action: PayloadAction<ApiEndpointStatus>) => {
+        state.status = action.payload;
+      },
+      setData: (state, action: PayloadAction<Draft<Awaited<ReturnType<typeof endpoint>>>>) => {
+        state.data = action.payload;
+      }
+    }
+  });
 
-      const apiEndpointSlice = createSlice({
-        name: key.toString(),
-        initialState,
-        reducers: {
-          setStatus: (state, action: PayloadAction<ApiEndpointStatus>) => {
-            state.status = action.payload;
-          },
-          setData: (state, action: PayloadAction<Draft<Awaited<ReturnType<typeof endpoint>>>>) => {
-            state.data = action.payload;
-          }
-        },
-        extraReducers: (builder) => {
-          builder
-            .addCase(thunk.pending, (state, action) => {
-              if (state.status === 'idle') {
-                state.status = 'pending';
-                state.currentRequestId = action.meta.requestId;
-              }
-            })
-            .addCase(thunk.fulfilled, (state, action) => {
-              const { requestId } = action.meta;
-              if (state.status === 'pending' && state.currentRequestId === requestId) {
-                state.status = 'idle';
-                state.data = action.payload;
-                state.currentRequestId = undefined;
-              }
-            })
-            .addCase(thunk.rejected, (state, action) => {
-              const { requestId } = action.meta;
-              if (state.status === 'pending' && state.currentRequestId === requestId) {
-                state.status = 'idle';
-                state.error = action.error;
-                state.currentRequestId = undefined;
-              }
-            });
-        }
+  const initiate = ((params: Parameters<E>) => {
+    store.dispatch(apiEndpointSlice.actions.setStatus('pending'));
+
+    const response = endpoint(params)
+      .catch((error: any) => {
+        store.dispatch(apiEndpointSlice.actions.setStatus('rejected'));
+        throw error;
+      })
+      .finally(() => {
+        store.dispatch(apiEndpointSlice.actions.setStatus('fulfilled'));
+        store.dispatch(apiEndpointSlice.actions.setData(response));
       });
 
-      return {
-        key,
-        thunk,
-        ...apiEndpointSlice
-      };
-    }
-  );
+    return response as Awaited<ReturnType<E>>;
+  }) as E;
 
-  const slices = apiSlices.reduce(
-    (acc, slice) => {
-      acc[slice.key] = slice;
-      return acc;
-    },
-    {} as Record<keyof typeof endpoints, (typeof apiSlices)[number]>
-  );
+  return { ...apiEndpointSlice, initiate };
+};
 
-  const reducerMap = apiSlices.reduce(
-    (acc, { reducer, reducerPath }) => {
-      // @ts-ignore
-      acc[reducerPath] = reducer;
-      return acc;
-    },
-    {} as Record<keyof Endpoints, (typeof apiSlices)[number]['reducer']>
-  );
+const builder: Builder = {
+  mutation: <Request extends (...args: any[]) => any>(request: Request) =>
+    createEndpointSlice<Request>(request),
+  query: <Request extends (...args: any[]) => any>(request: Request) =>
+    createEndpointSlice<Request>(request)
+};
 
-  const apiReducer = combineReducers(reducerMap);
+export const createApi = <
+  const Name extends string,
+  EndpointsDefinitions extends Record<string, any>
+>({
+  name,
+  endpoints
+}: CreateApiParams<Name, EndpointsDefinitions>) => {
+  const endpointsDefinitions = endpoints(builder);
 
-  return {
-    endpoints: slices,
-    reducer: apiReducer,
-    reducerPath: name
+  const reducer = combineSlices(...Object.values(endpointsDefinitions));
+
+  return { endpoints: endpointsDefinitions, name, reducer } as {
+    endpoints: EndpointsDefinitions;
+    name: Name;
+    reducer: Reducer<
+      Record<
+        keyof EndpointsDefinitions,
+        ApiEndpointState<
+          Awaited<ReturnType<EndpointsDefinitions[keyof EndpointsDefinitions]['initiate']>>
+        >
+      >
+    >;
   };
 };

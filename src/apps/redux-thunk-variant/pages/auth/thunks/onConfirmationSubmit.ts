@@ -26,14 +26,13 @@ export const thunk = createAsyncThunk<void, OnConfirmationSubmitPayload, { state
       const { values } = payload;
       const otp = authSelectors.getOtp(state);
 
-      const postTwoFactorAuthenticationResponse = await dispatch(
-        apiSlice.endpoints.postTwoFactorAuthentication.initiate({
+      const postTwoFactorAuthenticationResponse =
+        await apiSlice.endpoints.postTwoFactorAuthentication.initiate({
           params: {
             otp: values.otp,
             source: otp.resource
           }
-        })
-      ).unwrap();
+        });
 
       if ('profile' in postTwoFactorAuthenticationResponse.data) {
         localStorage.setItem(COOKIE.ACCESS_TOKEN, postTwoFactorAuthenticationResponse.data.token);

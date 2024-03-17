@@ -16,7 +16,7 @@ interface SingInForm {
 
 export const useSignInForm = () => {
   const dispatch = useDispatch();
-  const loading = useSelector(authSelectors.getConfirmationFormLoading);
+  const loading = useSelector(authSelectors.getSignInFormLoading);
 
   const [selectedResource, setSelectedResource] = React.useState<'login' | 'email'>('login');
 

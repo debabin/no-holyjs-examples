@@ -19,16 +19,10 @@ interface CreateApiParams<Name extends string, EndpointsDefinitions extends Reco
 interface Builder {
   mutation: <Request extends (...args: any[]) => any>(
     request: Request
-  ) => { initiate: (...params: Parameters<Request>) => ReturnType<Request> } & Omit<
-    ReturnType<typeof createEndpointSlice>,
-    'initiate'
-  >;
+  ) => { initiate: Request } & Omit<ReturnType<typeof createEndpointSlice>, 'initiate'>;
   query: <Request extends (...args: any[]) => any>(
     request: Request
-  ) => { initiate: (...params: Parameters<Request>) => ReturnType<Request> } & Omit<
-    ReturnType<typeof createEndpointSlice>,
-    'initiate'
-  >;
+  ) => { initiate: Request } & Omit<ReturnType<typeof createEndpointSlice>, 'initiate'>;
 }
 
 const createEndpointSlice = <const E extends (...args: any) => any>(endpoint: E) => {
@@ -39,7 +33,7 @@ const createEndpointSlice = <const E extends (...args: any) => any>(endpoint: E)
   };
 
   const apiEndpointSlice = createSlice({
-    name: endpoint.name.toString(),
+    name: endpoint.name,
     initialState,
     reducers: {
       setStatus: (state, action: PayloadAction<ApiEndpointStatus>) => {
@@ -51,7 +45,7 @@ const createEndpointSlice = <const E extends (...args: any) => any>(endpoint: E)
     }
   });
 
-  const initiate = (...params: Parameters<E>) => {
+  const initiate = ((params: Parameters<E>) => {
     store.dispatch(apiEndpointSlice.actions.setStatus('pending'));
 
     const response = endpoint(params)
@@ -65,9 +59,16 @@ const createEndpointSlice = <const E extends (...args: any) => any>(endpoint: E)
       });
 
     return response as Awaited<ReturnType<E>>;
-  };
+  }) as E;
 
   return { ...apiEndpointSlice, initiate };
+};
+
+const builder: Builder = {
+  mutation: <Request extends (...args: any[]) => any>(request: Request) =>
+    createEndpointSlice<Request>(request),
+  query: <Request extends (...args: any[]) => any>(request: Request) =>
+    createEndpointSlice<Request>(request)
 };
 
 export const createApi = <
@@ -76,21 +77,21 @@ export const createApi = <
 >({
   name,
   endpoints
-}: CreateApiParams<Name, EndpointsDefinitions>): {
-  endpoints: EndpointsDefinitions;
-  name: Name;
-  reducer: Reducer;
-} => {
-  const builder: Builder = {
-    mutation: <Request extends (...args: any[]) => any>(request: Request) =>
-      createEndpointSlice<Request>(request),
-    query: <Request extends (...args: any[]) => any>(request: Request) =>
-      createEndpointSlice<Request>(request)
-  };
-
+}: CreateApiParams<Name, EndpointsDefinitions>) => {
   const endpointsDefinitions = endpoints(builder);
 
-  const apiReducer = combineSlices(...Object.values(endpointsDefinitions));
+  const reducer = combineSlices(...Object.values(endpointsDefinitions));
 
-  return { endpoints: endpointsDefinitions, name, reducer: apiReducer };
+  return { endpoints: endpointsDefinitions, name, reducer } as {
+    endpoints: EndpointsDefinitions;
+    name: Name;
+    reducer: Reducer<
+      Record<
+        keyof EndpointsDefinitions,
+        ApiEndpointState<
+          Awaited<ReturnType<EndpointsDefinitions[keyof EndpointsDefinitions]['initiate']>>
+        >
+      >
+    >;
+  };
 };

@@ -20,11 +20,9 @@ export const thunk = createAsyncThunk<void, void, { state: RootState }>(
       const postOtp =
         otp.type === 'email' ? apiSlice.endpoints.postOtpEmail : apiSlice.endpoints.postOtpPhone;
 
-      const postOtpResponse = await dispatch(
-        postOtp.initiate({
-          params: { [otp.type]: otp.resource } as Record<'email' | 'phone', string>
-        })
-      ).unwrap();
+      const postOtpResponse = await postOtp.initiate({
+        params: { [otp.type]: otp.resource } as Record<'email' | 'phone', string>
+      });
 
       if (postOtpResponse.data.retryDelay) {
         otpCountdownSlice.startCountdown(postOtpResponse.data.retryDelay / 1000);

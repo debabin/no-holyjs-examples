@@ -7,5 +7,5 @@ import { apiSlice } from './api';
 
 export interface LazyLoadedSlices {}
 export const rootReducer = combineSlices(sessionSlice, themeSlice, profileSlice, {
-  [apiSlice.reducerPath]: apiSlice.reducer
+  [apiSlice.name]: apiSlice.reducer
 }).withLazyLoadedSlices<LazyLoadedSlices>();

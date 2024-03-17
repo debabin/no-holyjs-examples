@@ -18,7 +18,7 @@ export function* saga() {
     const postOtp =
       otp.type === 'email' ? apiSlice.endpoints.postOtpEmail : apiSlice.endpoints.postOtpPhone;
 
-    const postOtpResponse: SagaReturnType<typeof postOtp.initiate> = yield postOtp.initiate({
+    const postOtpResponse: SagaReturnType<typeof postOtp.initiate> = yield call(postOtp.initiate, {
       params: { [otp.type]: otp.resource } as Record<'email' | 'phone', string>
     });
 

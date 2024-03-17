@@ -19,9 +19,7 @@ const init = async () => {
   const token = localStorage.getItem(COOKIE.ACCESS_TOKEN);
 
   if (token) {
-    const getProfileApiResponse = await store
-      .dispatch(apiSlice.endpoints.getProfile.initiate())
-      .unwrap();
+    const getProfileApiResponse = await apiSlice.endpoints.getProfile.initiate();
 
     store.dispatch(sessionSlice.actions.setSession(true));
     store.dispatch(themeSlice.actions.setTheme(defaultTheme));

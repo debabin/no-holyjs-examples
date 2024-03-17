@@ -2,8 +2,8 @@ import { createAction } from '@reduxjs/toolkit';
 import type { SagaReturnType } from 'redux-saga/effects';
 import { call, put, select } from 'redux-saga/effects';
 
+import { updateCardDebounced } from '../helpers/updateCardDebounced';
 import { githubActions, githubSelectors } from '../slices';
-import { updateCardDebounced } from '../store';
 
 export interface IncrementReactionPayload {
   id: number;
