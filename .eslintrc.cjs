@@ -5,6 +5,8 @@ module.exports = {
   overrides: [
     ...eslint.react.overrides,
     {
+      plugins: [...eslint.react.plugins, '@reatom'],
+      extends: [...eslint.react.extends, 'plugin:@reatom/recommended'],
       files: ['*.ts', '*.tsx'],
       parserOptions: {
         tsconfigRootDir: __dirname

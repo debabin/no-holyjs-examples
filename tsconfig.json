@@ -21,7 +21,8 @@
     "noFallthroughCasesInSwitch": true,
     "paths": {
       "@/*": ["./src/*"],
-      "@react-hooks/*": ["./src/apps/react-hooks/*"],
+      "@react-hooks-variant/*": ["./src/apps/react-hooks-variant/*"],
+      "@reatom-variant/*": ["./src/apps/reatom-variant/*"],
       "@redux-saga-variant/*": ["./src/apps/redux-saga-variant/*"],
       "@redux-thunk-variant/*": ["./src/apps/redux-thunk-variant/*"]
     }
