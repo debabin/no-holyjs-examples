@@ -14,7 +14,7 @@ import {
 } from '@/components/ui';
 
 import { hideResource } from './helpers/hideResource';
-import { useConfirmationForm } from './hooks/useConfirmation';
+import { useConfirmationForm } from './hooks/useConfirmationForm';
 
 export const ConfirmationForm = reatomComponent(({ ctx }) => {
   const loading = ctx.spy(confirmationSubmit.loading) || ctx.spy(otp.resend.pendingAtom) > 0;

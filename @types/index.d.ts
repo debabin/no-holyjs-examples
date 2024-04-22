@@ -8,6 +8,7 @@ interface Profile {
   password: string;
   firstName: string;
   lastName: string;
+  phone: string;
   role: ProfileRole;
   country: {
     id: number;

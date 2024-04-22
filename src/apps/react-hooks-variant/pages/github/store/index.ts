@@ -20,7 +20,7 @@ export const cardsEntriesStore = createStore<Store['entries']>('cardsEntriesStor
 export const selectedCardIdStore = createStore<Store['selectedCardId']>('selectedCardId', null);
 export const offsetStore = createStore<Store['offset']>('selectedCardId', { x: 0, y: 0 });
 
-const fetchCards = async () => {
+export const fetchCards = async () => {
   loadingStore.set(true);
   const getGithubCardsResponse = await getGithubCards();
 

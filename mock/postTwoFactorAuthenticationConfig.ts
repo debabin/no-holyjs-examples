@@ -19,7 +19,7 @@ export const postTwoFactorAuthenticationConfig: RestRequestConfig = {
         DATABASE.otps = DATABASE.otps.filter((otp) => existedOtp.id !== otp.id);
 
         const profile = DATABASE.profiles.find(
-          (profile) => profile.login === existedOtp.source || profile.email === existedOtp.source
+          (profile) => profile.phone === existedOtp.source || profile.email === existedOtp.source
         )!;
         const token = profile.id.toString();
         setCookie(COOKIE.ACCESS_TOKEN, token);

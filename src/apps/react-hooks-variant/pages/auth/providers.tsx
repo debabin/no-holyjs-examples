@@ -7,7 +7,7 @@ interface ProvidersProps {
   stage: Omit<StageProviderProps, 'children'>;
 }
 
-const Providers: React.FC<ProvidersProps> = ({ children, stage }) => (
+const Providers = ({ children, stage }: ProvidersProps) => (
   <StageProvider {...stage}>
     <OtpProvider>{children}</OtpProvider>
   </StageProvider>

@@ -5,12 +5,10 @@ import { ConfirmationForm } from './components/ConfirmationForm/ConfirmationForm
 import { SelectConfirmationForm } from './components/SelectConfirmationForm/SelectConfirmationForm';
 import { SignInForm } from './components/SignInForm/SignInForm';
 import { SignUpForm } from './components/SignUpForm/SignUpForm';
+import type { Stage } from './model';
 import { stage } from './model';
 
-const component: Record<
-  'signIn' | 'signUp' | 'selectConfirmation' | 'confirmation',
-  React.ReactNode
-> = {
+const component: Record<Stage, React.ReactNode> = {
   signIn: <SignInForm />,
   signUp: <SignUpForm />,
   selectConfirmation: <SelectConfirmationForm />,

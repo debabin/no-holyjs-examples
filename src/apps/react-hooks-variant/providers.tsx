@@ -15,14 +15,16 @@ export interface ProvidersProps {
   query: Omit<QueryProviderProps, 'children'>;
 }
 
-const Providers = ({ theme, session, profile, query, children }: ProvidersProps) => (
-  <ThemeProvider {...theme}>
-    <SessionProvider {...session}>
-      <ProfileProvider {...profile}>
-        <QueryProvider {...query}>{children}</QueryProvider>
-      </ProfileProvider>
-    </SessionProvider>
-  </ThemeProvider>
-);
+const Providers = ({ theme, session, profile, query, children }: ProvidersProps) => {
+  return (
+    <ThemeProvider {...theme}>
+      <SessionProvider {...session}>
+        <ProfileProvider {...profile}>
+          <QueryProvider {...query}>{children}</QueryProvider>
+        </ProfileProvider>
+      </SessionProvider>
+    </ThemeProvider>
+  );
+};
 
 export default Providers;

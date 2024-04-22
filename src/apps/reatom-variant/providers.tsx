@@ -7,8 +7,8 @@ export interface ProvidersProps {
   children: React.ReactNode;
 }
 
-const Providers = ({ children }: ProvidersProps) => (
-  <ReatomContext.Provider value={ctx}>{children}</ReatomContext.Provider>
-);
+const Providers = ({ children }: ProvidersProps) => {
+  return <ReatomContext.Provider value={ctx}>{children}</ReatomContext.Provider>;
+};
 
 export default Providers;

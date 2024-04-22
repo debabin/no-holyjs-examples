@@ -53,7 +53,6 @@ export const SignInForm = reatomComponent(({ ctx }) => {
                       autoCorrect='off'
                       disabled={loading}
                       {...field}
-                      // onChange={signInForm.onChange('login')}
                     />
                   </FormControl>
                   <FormMessage />

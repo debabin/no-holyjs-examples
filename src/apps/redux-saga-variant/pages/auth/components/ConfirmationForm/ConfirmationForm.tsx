@@ -11,7 +11,7 @@ import {
 } from '@/components/ui';
 
 import { hideResource } from './helpers/hideResource';
-import { useConfirmationForm } from './hooks/useConfirmation';
+import { useConfirmationForm } from './hooks/ConfirmationForm';
 
 export const ConfirmationForm = () => {
   const { form, state, functions } = useConfirmationForm();

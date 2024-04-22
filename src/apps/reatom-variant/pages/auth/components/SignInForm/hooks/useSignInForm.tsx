@@ -29,9 +29,9 @@ export const useSignInForm = () => {
     setSelectedResource(isEmail.success ? 'email' : 'login');
   }, [login]);
 
-  const onSubmit = signInForm.handleSubmit((values) => {
-    signInSubmit(ctx, { values, resource: selectedResource });
-  });
+  const onSubmit = signInForm.handleSubmit((values) =>
+    signInSubmit(ctx, { values, resource: selectedResource })
+  );
 
   const goToSignUp = () => stage(ctx, { value: 'signUp' });
 

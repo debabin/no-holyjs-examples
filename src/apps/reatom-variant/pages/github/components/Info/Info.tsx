@@ -11,8 +11,8 @@ interface CardInfoProps {
   card: GithubCardModel;
 }
 
-const CardInfo = reatomComponent<CardInfoProps>(({ ctx, card }) => {
-  return (
+const CardInfo = reatomComponent<CardInfoProps>(
+  ({ ctx, card }) => (
     <div className='flex gap-2'>
       {card.title}
       {Object.entries(ctx.spy(card.reactions)).map(([reaction, value]) => (
@@ -26,8 +26,9 @@ const CardInfo = reatomComponent<CardInfoProps>(({ ctx, card }) => {
         </Badge>
       ))}
     </div>
-  );
-}, 'CardInfo');
+  ),
+  'CardInfo'
+);
 
 const ReactionCount = reatomComponent(
   ({ ctx }) => (
