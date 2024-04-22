@@ -1,37 +1,22 @@
-import { action, atom, reatomAsync, withAssign, withDataAtom, withInit } from '@reatom/framework';
+import { action, atom, reatomAsync, reatomEnum, withAssign, withDataAtom } from '@reatom/framework';
 import { withLocalStorage } from '@reatom/persist-web-storage';
 
 import { COOKIE } from '@/utils';
 import { getProfile } from '@/utils/api';
 
-type Theme = 'light' | 'dark';
-
-export const theme = atom<Theme>('light', 'theme').pipe(
-  withInit((ctx, init) => {
-    const current = init(ctx);
-    theme.set(ctx, current);
-    return current;
-  }),
+export const theme = reatomEnum(['light', 'dark'], 'theme').pipe(
   withLocalStorage(COOKIE.THEME),
-  withAssign((_, name) => ({
-    set: action((_, theme: Theme) => {
-      const root = window.document.documentElement;
-      root.classList.remove('light', 'dark');
-      root.classList.add(theme);
-    }, `${name}.set`)
-  })),
   withAssign((original, name) => ({
     toggle: action((ctx) => {
-      if (ctx.get(original) === 'light') {
-        original(ctx, 'dark');
-      } else {
-        original(ctx, 'light');
-      }
+      original(ctx, (state) => (state === 'light' ? 'dark' : 'light'));
     }, `${name}.toggle`)
   }))
 );
-
-theme.onChange(theme.set);
+theme.onChange((_ctx, state) => {
+  const root = window.document.documentElement;
+  root.classList.remove('light', 'dark');
+  root.classList.add(state);
+});
 
 export const token = atom<null | string>(null, 'token').pipe(withLocalStorage(COOKIE.ACCESS_TOKEN));
 
