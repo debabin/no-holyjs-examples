@@ -10,7 +10,8 @@
     "format": "prettier --write \"**/*.{js,ts,tsx}\"",
     "stylelint": "stylelint \"**/*.css\"",
     "pretty": "yarn format && yarn lint --fix && yarn stylelint --fix",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "e2e-test": "playwright test"
   },
   "lint-staged": {
     "*.css": [
@@ -62,6 +63,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@playwright/test": "^1.44.1",
     "@reatom/eslint-plugin": "^3.4.3",
     "@siberiacancode/eslint": "^1.0.3",
     "@siberiacancode/prettier": "^1.0.1",
