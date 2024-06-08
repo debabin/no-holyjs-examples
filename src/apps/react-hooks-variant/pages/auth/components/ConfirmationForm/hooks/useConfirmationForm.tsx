@@ -12,7 +12,7 @@ import { useSession } from '@react-hooks-variant/utils/contexts/session';
 import { useNavigate } from '@tanstack/react-router';
 import { toast } from 'sonner';
 
-import { COOKIE } from '@/utils';
+import { COOKIE, ROUTES } from '@/utils';
 
 import { useOtp } from '../../../contexts/otp';
 import { useStage } from '../../../contexts/stage';
@@ -92,9 +92,10 @@ export const useConfirmationForm = () => {
       );
       setProfile(postTwoFactorAuthenticationMutationResponse.data.profile);
       flushSync(() => setSession(true));
+      console.log('@');
 
       navigate({
-        to: '/',
+        to: ROUTES.INDEX,
         replace: true
       });
     }

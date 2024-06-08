@@ -5,7 +5,10 @@ import { defineConfig } from 'vite';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), TanStackRouterVite({ routesDirectory: 'src/apps/reatom-variant/routes' })],
+  plugins: [
+    react(),
+    TanStackRouterVite({ routesDirectory: 'src/apps/react-hooks-variant/routes' })
+  ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

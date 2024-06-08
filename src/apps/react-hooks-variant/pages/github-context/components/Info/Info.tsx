@@ -1,4 +1,4 @@
-import { useGetGithubCardsQuery } from '@/apps/react-hooks/utils/api';
+import { useGetGithubCardsQuery } from '@/apps/react-hooks-variant/utils/api/hooks';
 import { Button } from '@/components/ui';
 import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';

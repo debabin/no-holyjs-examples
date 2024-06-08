@@ -1,13 +1,15 @@
+import { reatomComponent } from '@reatom/npm-react';
 import { RouterProvider } from '@tanstack/react-router';
 
-import { useSession } from '@/utils/contexts/session';
-
+import { session } from './model';
 import { router } from './router';
 
 import '@/assets/styles/globals.css';
 
-export const App = () => {
-  const { session } = useSession();
+export const App = reatomComponent(({ ctx }) => {
+  const sessionValue = ctx.spy(session);
 
-  return <RouterProvider router={router} context={{ isAuthenticated: session }} />;
-};
+  return (
+    <RouterProvider router={router} context={{ isAuthenticated: sessionValue.isAuthenticated }} />
+  );
+}, 'App');

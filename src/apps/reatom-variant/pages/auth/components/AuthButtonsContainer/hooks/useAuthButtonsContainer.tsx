@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-import { useProfile } from '@/utils/contexts/profile';
+// import { useProfile } from '@/utils/contexts/profile';
 
 export const useAuthButtonsContainer = () => {
   // const router = useRouter();
-  const { setProfile } = useProfile();
+  // const { setProfile } = useProfile();
   const onGoogleClick = () => {
     // @ts-ignore
     const client = window?.google?.accounts?.oauth2.initTokenClient({
@@ -23,11 +23,11 @@ export const useAuthButtonsContainer = () => {
           )
           .then((res) => {
             console.log('@', res);
-            setProfile({
-              firstName: res.data.given_name,
-              lastName: res.data.family_name,
-              ...res.data
-            });
+            // setProfile({
+            //   firstName: res.data.given_name,
+            //   lastName: res.data.family_name,
+            //   ...res.data
+            // });
             document.cookie = `googleAccessToken=${response.access_token}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/`;
             // router.replace('/profile');
           })
