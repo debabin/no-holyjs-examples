@@ -23,6 +23,7 @@ import {
 } from '@/components/ui';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { IDS } from '@/utils';
 
 import { AuthButtonsContainer } from '../AuthButtonsContainer/AuthButtonsContainer';
 
@@ -58,7 +59,7 @@ export const SignUpForm = () => {
                   </Label>
                   <FormControl>
                     <Input
-                      id='email'
+                      data-testid={IDS.INPUT.EMAIL}
                       placeholder='email@example.com'
                       autoCapitalize='none'
                       autoComplete='email'
@@ -81,7 +82,7 @@ export const SignUpForm = () => {
                   </Label>
                   <FormControl>
                     <Input
-                      id='login'
+                      data-testid={IDS.INPUT.LOGIN}
                       placeholder='your login'
                       autoCapitalize='none'
                       autoCorrect='off'
@@ -103,7 +104,7 @@ export const SignUpForm = () => {
                   </Label>
                   <FormControl>
                     <Input
-                      id='firstName'
+                      data-testid={IDS.INPUT.FIRST_NAME}
                       placeholder='your first perfect name'
                       autoCapitalize='none'
                       autoComplete='firstName'
@@ -126,7 +127,7 @@ export const SignUpForm = () => {
                   </Label>
                   <FormControl>
                     <Input
-                      id='lastName'
+                      data-testid={IDS.INPUT.LAST_NAME}
                       placeholder='your second amazing name'
                       autoCapitalize='none'
                       autoComplete='lastName'
@@ -148,6 +149,7 @@ export const SignUpForm = () => {
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
+                          data-testid={IDS.SELECT.COUNTRY}
                           variant='outline'
                           role='combobox'
                           className={cn(
@@ -176,6 +178,7 @@ export const SignUpForm = () => {
                         <CommandGroup>
                           {state.countries.map((country) => (
                             <CommandItem
+                              data-testid={`${IDS.SELECT.COUNTRY}-${country.code}`}
                               key={country.id}
                               value={country.label}
                               className='flex items-center  gap-2'
@@ -211,7 +214,7 @@ export const SignUpForm = () => {
                   </Label>
                   <FormControl>
                     <PasswordInput
-                      id='password'
+                      data-testid={IDS.INPUT.PASSWORD}
                       placeholder='your very secret password'
                       autoCapitalize='none'
                       autoComplete='password'
@@ -234,7 +237,7 @@ export const SignUpForm = () => {
                   </Label>
                   <FormControl>
                     <PasswordInput
-                      id='passwordConfirmation'
+                      data-testid={IDS.INPUT.PASSWORD_CONFIRMATION}
                       placeholder='confirm your password dude'
                       autoCapitalize='none'
                       autoComplete='passwordConfirmation'
@@ -253,7 +256,7 @@ export const SignUpForm = () => {
                 </FormItem>
               )}
             />
-            <Button className='w-full' disabled={state.loading}>
+            <Button className='w-full' disabled={state.loading} data-testid={IDS.BUTTON.SIGN_UP}>
               {state.loading && <SpinnerIcon className='mr-2 h-4 w-4 animate-spin' />}
               Sign up
             </Button>

@@ -30,7 +30,7 @@ export const useConfirmationForm = () => {
   const { setProfile } = useProfile();
 
   const countDownRef = React.useRef<NodeJS.Timeout>();
-  const [seconds, setSeconds] = React.useState(otp.retryDelay / 1000);
+  const [seconds, setSeconds] = React.useState(Math.round(otp.retryDelay / 1000));
 
   const postOtpEmailMutation = usePostOtpEmailMutation();
   const postOtpPhoneMutation = usePostOtpPhoneMutation();
@@ -57,7 +57,7 @@ export const useConfirmationForm = () => {
       params: { [otp.type]: otp.resource } as Record<'email' | 'phone', string>
     });
     if (postOtpMutationResponse.data.retryDelay) {
-      setSeconds(postOtpMutationResponse.data.retryDelay / 1000);
+      setSeconds(Math.round(postOtpMutationResponse.data.retryDelay / 1000));
       setOtp({
         ...otp,
         retryDelay: postOtpMutationResponse.data.retryDelay
@@ -92,8 +92,6 @@ export const useConfirmationForm = () => {
       );
       setProfile(postTwoFactorAuthenticationMutationResponse.data.profile);
       flushSync(() => setSession(true));
-      console.log('@');
-
       navigate({
         to: ROUTES.INDEX,
         replace: true

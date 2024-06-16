@@ -8,14 +8,14 @@ export const postOtpEmailConfig: RestRequestConfig = {
   interceptors: {
     response: (_, { request }) => {
       const { body } = request;
-      const email = DATABASE.otps.find(({ value }) => body.email === value);
+      const otp = DATABASE.otps.find(({ source }) => body.email === source);
 
-      if (email && email.endTime > Date.now()) {
-        return { retryDelay: email.endTime - Date.now() };
+      if (otp && otp.endTime > Date.now()) {
+        return { retryDelay: otp.endTime - Date.now() };
       }
 
-      if (email && email.endTime < Date.now()) {
-        DATABASE.otps = DATABASE.otps.filter(({ value }) => value !== body.email);
+      if (otp && otp.endTime < Date.now()) {
+        DATABASE.otps = DATABASE.otps.filter(({ source }) => source !== body.email);
       }
 
       const retryDelay = 15_000;

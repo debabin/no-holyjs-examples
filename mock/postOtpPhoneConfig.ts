@@ -8,14 +8,14 @@ export const postOtpPhoneConfig: RestRequestConfig = {
   interceptors: {
     response: (_, { request }) => {
       const { body } = request;
-      const phone = DATABASE.otps.find(({ value }) => body.phone === value);
+      const otp = DATABASE.otps.find(({ source }) => body.phone === source);
 
-      if (phone && phone.endTime > Date.now()) {
-        return { retryDelay: phone.endTime - Date.now() };
+      if (otp && otp.endTime > Date.now()) {
+        return { retryDelay: otp.endTime - Date.now() };
       }
 
-      if (phone && phone.endTime < Date.now()) {
-        DATABASE.otps = DATABASE.otps.filter(({ value }) => value !== body.email);
+      if (otp && otp.endTime < Date.now()) {
+        DATABASE.otps = DATABASE.otps.filter(({ source }) => source !== body.email);
       }
 
       const retryDelay = 15_000;

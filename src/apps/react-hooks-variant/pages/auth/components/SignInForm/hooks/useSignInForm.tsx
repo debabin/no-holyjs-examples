@@ -12,7 +12,7 @@ import { useNavigate } from '@tanstack/react-router';
 import { toast } from 'sonner';
 import * as zod from 'zod';
 
-import { COOKIE } from '@/utils';
+import { COOKIE, ROUTES } from '@/utils';
 
 import { useOtp } from '../../../contexts/otp';
 import { useStage } from '../../../contexts/stage';
@@ -91,7 +91,7 @@ export const useSignInForm = () => {
       });
 
       navigate({
-        to: '/',
+        to: ROUTES.INDEX,
         replace: true
       });
     }

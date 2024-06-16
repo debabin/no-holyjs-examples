@@ -10,6 +10,7 @@ import {
   Label,
   PasswordInput
 } from '@/components/ui';
+import { IDS } from '@/utils';
 
 import { AuthButtonsContainer } from '../AuthButtonsContainer/AuthButtonsContainer';
 
@@ -43,7 +44,7 @@ export const SignInForm = () => {
                   </Label>
                   <FormControl>
                     <Input
-                      id='login'
+                      data-testid={IDS.INPUT.LOGIN}
                       placeholder='write login or email'
                       autoCapitalize='none'
                       autoCorrect='off'
@@ -81,14 +82,24 @@ export const SignInForm = () => {
               />
             )}
 
-            <Button type='submit' className='w-full' disabled={state.loading}>
+            <Button
+              data-testid={IDS.BUTTON.SIGN_IN}
+              type='submit'
+              className='w-full'
+              disabled={state.loading}
+            >
               {state.loading && <SpinnerIcon className='mr-2 h-4 w-4 animate-spin' />}
               Sign in
             </Button>
           </form>
         </Form>
         <div className='flex justify-center'>
-          <Button disabled={state.loading} variant='link' onClick={functions.goToSignUp}>
+          <Button
+            data-testid={IDS.BUTTON.CREATE_NEW_ACCOUNT}
+            disabled={state.loading}
+            variant='link'
+            onClick={functions.goToSignUp}
+          >
             <span className='bg-background px-2 text-muted-foreground'>create new account</span>
           </Button>
         </div>
