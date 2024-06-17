@@ -41,6 +41,18 @@ export const DATABASE: { otps: Otp[]; profiles: Profile[]; githubCards: GithubCa
       role: 'admin',
       phone: '+7 123 123 1231',
       country: { id: 1, label: 'Russia', code: 'ru' }
+    },
+    {
+      id: 2,
+      firstName: 'dima',
+      avatar: 'http://localhost:31299/api/static/avatar.png',
+      login: 'siberiacancodeotp',
+      email: 'siberiacancode@example.com',
+      lastName: 'siberiacancode',
+      password: '123456',
+      role: 'admin',
+      phone: '+7 123 123 1231',
+      country: { id: 1, label: 'Russia', code: 'ru' }
     }
   ],
   githubCards: FIGMA_CARDS

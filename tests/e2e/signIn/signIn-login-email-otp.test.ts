@@ -9,19 +9,43 @@ test('Should sign in with email', async ({ page }) => {
 
   // expect(await page.screenshot()).toMatchSnapshot('SignInForm.png');
 
-  await page.getByTestId(IDS.INPUT.LOGIN).fill('siberiacancode@example.com');
+  await page.getByTestId(IDS.INPUT.LOGIN).fill('siberiacancodeotp');
+  await page.getByTestId(IDS.INPUT.PASSWORD).fill('123456');
+
+  const [requestPostSignInLogin] = await Promise.all([
+    page.waitForRequest(
+      (request) => request.method() === 'POST' && request.url().includes('/signin/login')
+    ),
+    page.getByTestId(IDS.BUTTON.SIGN_IN).click()
+  ]);
+
+  expect(requestPostSignInLogin.postDataJSON()).toEqual({
+    login: 'siberiacancodeotp',
+    password: '123456'
+  });
+
+  // expect(await page.screenshot()).toMatchSnapshot('SelectConfirmationForm.png');
+
+  await page.getByTestId(IDS.RADIO_BUTTON.EMAIL).click();
+  await page.getByTestId(IDS.CHECKBOX.TERMS).click();
+  await page.getByTestId(IDS.BUTTON.CONTINUE).click();
+
+  // expect(await page.screenshot()).toMatchSnapshot('ConfirmationFormEmailToOtp.png');
+
+  await page.getByTestId(IDS.INPUT.EMAIL).fill('siberiacancode@example.com');
+
   const [requestPostOtpEmail] = await Promise.all([
     page.waitForRequest(
       (request) => request.method() === 'POST' && request.url().includes('/otp/email')
     ),
-    page.getByTestId(IDS.BUTTON.SIGN_IN).click()
+    page.getByTestId(IDS.BUTTON.CONFIRM).click()
   ]);
 
   expect(requestPostOtpEmail.postDataJSON()).toEqual({
     email: 'siberiacancode@example.com'
   });
 
-  // expect(await page.screenshot()).toMatchSnapshot('ConfirmationFormOtpCode.png');
+  // expect(await page.screenshot()).toMatchSnapshot('ConfirmationFormOtp.png');
 
   await page.getByTestId(IDS.INPUT.OTP).fill('123456');
   const [requestPostTwoFactorAuthentication] = await Promise.all([
