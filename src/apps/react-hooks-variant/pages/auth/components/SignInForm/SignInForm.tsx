@@ -67,7 +67,7 @@ export const SignInForm = () => {
                     </Label>
                     <FormControl>
                       <PasswordInput
-                        id='password'
+                        data-testid={IDS.INPUT.PASSWORD}
                         placeholder='your very secret password'
                         autoCapitalize='none'
                         autoComplete='password'

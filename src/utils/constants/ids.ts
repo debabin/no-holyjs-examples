@@ -4,7 +4,9 @@ export const IDS = {
     SIGN_UP: 'button-signUp',
     SIGN_OUT: 'button-signOut',
     CREATE_NEW_ACCOUNT: 'button-createNewAccount',
-    CONFIRM: 'button-confirm'
+    CONFIRM: 'button-confirm',
+    CONTINUE: 'button-continue',
+    BACK: 'button-back'
   },
   INPUT: {
     EMAIL: 'input-email',
@@ -13,9 +15,17 @@ export const IDS = {
     LOGIN: 'input-login',
     PASSWORD: 'input-password',
     PASSWORD_CONFIRMATION: 'input-passwordConfirmation',
-    OTP: 'input-otp'
+    OTP: 'input-otp',
+    PHONE: 'input-phone'
   },
   SELECT: {
     COUNTRY: 'select-country'
+  },
+  RADIO_BUTTON: {
+    PHONE: 'radio-button-phone',
+    EMAIL: 'radio-button-email'
+  },
+  CHECKBOX: {
+    TERMS: 'checkbox-terms'
   }
 };

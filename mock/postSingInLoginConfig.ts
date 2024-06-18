@@ -12,15 +12,18 @@ export const postSingInLoginConfig: RestRequestConfig = {
       data: { needConfirmation: true },
       entities: {
         body: {
-          login: 'asd'
+          login: 'siberiacancodeotp'
         }
       }
     },
     {
-      data: { needConfirmation: false },
+      data: () => {
+        const profile = DATABASE.profiles.find((profile) => profile.login === 'siberiacancode')!;
+        return { profile, token: profile.id.toString() };
+      },
       entities: {
         body: {
-          login: 'asd2'
+          login: 'siberiacancode'
         }
       }
     },
