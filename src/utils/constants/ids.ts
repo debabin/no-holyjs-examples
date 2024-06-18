@@ -1,4 +1,8 @@
 export const IDS = {
+  PAGE: {
+    AUTH: 'page-auth',
+    INDEX: 'page-index'
+  },
   BUTTON: {
     SIGN_IN: 'button-signIn',
     SIGN_UP: 'button-signUp',

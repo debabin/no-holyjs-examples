@@ -36,18 +36,18 @@ export const SelectConfirmationForm = () => {
             onValueChange={(value: 'phone' | 'email') => functions.setSelectedResource(value)}
           >
             <div className='flex items-center space-x-2'>
-              <RadioGroupItem value='email' data-testid={IDS.RADIO_BUTTON.EMAIL} />
+              <RadioGroupItem value='email' id={IDS.RADIO_BUTTON.EMAIL} />
               <Label htmlFor='email'>email</Label>
             </div>
             <div className='flex items-center space-x-2'>
-              <RadioGroupItem value='phone' data-testid={IDS.RADIO_BUTTON.PHONE} />
+              <RadioGroupItem value='phone' id={IDS.RADIO_BUTTON.PHONE} />
               <Label htmlFor='phone'>phone</Label>
             </div>
           </RadioGroup>
 
           <div className='items-top flex space-x-2'>
             <Checkbox
-              data-testid={IDS.CHECKBOX.TERMS}
+              id={IDS.CHECKBOX.TERMS}
               checked={state.termsChecked}
               onCheckedChange={(checked) => functions.setTermsChecked(checked)}
             />
@@ -73,7 +73,7 @@ export const SelectConfirmationForm = () => {
           </div>
 
           <Button
-            data-testid={IDS.BUTTON.CONTINUE}
+            id={IDS.BUTTON.CONTINUE}
             className='w-full'
             disabled={!state.termsChecked}
             onClick={functions.onSelectContinue}
@@ -108,15 +108,11 @@ export const SelectConfirmationForm = () => {
                       <FormControl>
                         <>
                           {state.selectedResource === 'email' && (
-                            <Input
-                              data-testid={IDS.INPUT.EMAIL}
-                              placeholder='write email'
-                              {...field}
-                            />
+                            <Input id={IDS.INPUT.EMAIL} placeholder='write email' {...field} />
                           )}
                           {state.selectedResource === 'phone' && (
                             <PatternFormat
-                              data-testid={IDS.INPUT.PHONE}
+                              id={IDS.INPUT.PHONE}
                               format='+7 ### ### ####'
                               allowEmptyFormatting
                               customInput={Input}
@@ -133,13 +129,13 @@ export const SelectConfirmationForm = () => {
                   type='submit'
                   className='w-full'
                   disabled={state.loading}
-                  data-testid={IDS.BUTTON.CONFIRM}
+                  id={IDS.BUTTON.CONFIRM}
                 >
                   {state.loading && <SpinnerIcon className='mr-2 h-4 w-4 animate-spin' />}
                   Confirm
                 </Button>
                 <Button
-                  data-testid={IDS.BUTTON.BACK}
+                  id={IDS.BUTTON.BACK}
                   type='button'
                   variant='outline'
                   className='w-full'

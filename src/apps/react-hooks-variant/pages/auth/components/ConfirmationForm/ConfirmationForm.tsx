@@ -45,7 +45,7 @@ export const ConfirmationForm = () => {
                   </Label>
                   <FormControl>
                     <PasswordInput
-                      data-testid={IDS.INPUT.OTP}
+                      id={IDS.INPUT.OTP}
                       maxLength={6}
                       placeholder='your otp code'
                       autoCapitalize='none'
@@ -61,7 +61,7 @@ export const ConfirmationForm = () => {
             />
             <div className='flex flex-col gap-2'>
               <Button
-                data-testid={IDS.BUTTON.CONFIRM}
+                id={IDS.BUTTON.CONFIRM}
                 type='submit'
                 className='w-full'
                 disabled={state.loading}

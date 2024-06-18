@@ -2,12 +2,15 @@ import { expect, test } from '@playwright/test';
 
 import { IDS, ROUTES } from '@/utils';
 
-import { waitToast } from '../../helpers/waitToast';
+import { disableAnimation, snapshot, waitToast } from '../../helpers';
 
-test('Should sign in with login', async ({ page }) => {
-  await page.goto(ROUTES.INDEX);
+test('Should sign in login', async ({ page }) => {
+  await page.goto(ROUTES.AUTH);
+  await disableAnimation(page);
 
-  // expect(await page.screenshot()).toMatchSnapshot('SignInForm.png');
+  await expect(page.getByTestId(IDS.PAGE.AUTH)).toBeVisible();
+
+  await snapshot(page, 'SignInForm');
 
   await page.getByTestId(IDS.INPUT.LOGIN).fill('siberiacancode');
   await page.getByTestId(IDS.INPUT.PASSWORD).fill('123456');
@@ -16,7 +19,8 @@ test('Should sign in with login', async ({ page }) => {
     page.waitForRequest(
       (request) => request.method() === 'POST' && request.url().includes('/signin/login')
     ),
-    page.getByTestId(IDS.BUTTON.SIGN_IN).click()
+    page.getByTestId(IDS.BUTTON.SIGN_IN).click(),
+    page.waitForResponse((response) => response.url().includes('/signin/login'))
   ]);
 
   expect(requestPostSignInLogin.postDataJSON()).toEqual({
@@ -24,10 +28,11 @@ test('Should sign in with login', async ({ page }) => {
     password: '123456'
   });
 
-  // expect(await page.screenshot()).toMatchSnapshot('Profile.png');
-
+  await expect(page).toHaveURL(ROUTES.INDEX);
+  await expect(page.getByTestId(IDS.PAGE.INDEX)).toBeVisible();
   await waitToast(page, {
     title: 'Sign in is successful 👍',
     description: 'We are very glad to see you, have fun'
   });
+  await snapshot(page, 'Profile');
 });

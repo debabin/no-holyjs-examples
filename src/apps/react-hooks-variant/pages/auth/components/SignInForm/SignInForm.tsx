@@ -44,7 +44,7 @@ export const SignInForm = () => {
                   </Label>
                   <FormControl>
                     <Input
-                      data-testid={IDS.INPUT.LOGIN}
+                      id={IDS.INPUT.LOGIN}
                       placeholder='write login or email'
                       autoCapitalize='none'
                       autoCorrect='off'
@@ -67,7 +67,7 @@ export const SignInForm = () => {
                     </Label>
                     <FormControl>
                       <PasswordInput
-                        data-testid={IDS.INPUT.PASSWORD}
+                        id={IDS.INPUT.PASSWORD}
                         placeholder='your very secret password'
                         autoCapitalize='none'
                         autoComplete='password'
@@ -83,7 +83,7 @@ export const SignInForm = () => {
             )}
 
             <Button
-              data-testid={IDS.BUTTON.SIGN_IN}
+              id={IDS.BUTTON.SIGN_IN}
               type='submit'
               className='w-full'
               disabled={state.loading}
@@ -95,7 +95,7 @@ export const SignInForm = () => {
         </Form>
         <div className='flex justify-center'>
           <Button
-            data-testid={IDS.BUTTON.CREATE_NEW_ACCOUNT}
+            id={IDS.BUTTON.CREATE_NEW_ACCOUNT}
             disabled={state.loading}
             variant='link'
             onClick={functions.goToSignUp}

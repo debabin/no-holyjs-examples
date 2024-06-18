@@ -2,13 +2,15 @@ import { expect, test } from '@playwright/test';
 
 import { IDS, ROUTES } from '@/utils';
 
-import { waitToast } from '../helpers/waitToast';
+import { disableAnimation, snapshot, waitToast } from '../helpers';
 
 test('Should sign up', async ({ page }) => {
-  await page.goto(ROUTES.INDEX);
+  await page.goto(ROUTES.AUTH);
+  await disableAnimation(page);
+
   await page.getByTestId(IDS.BUTTON.CREATE_NEW_ACCOUNT).click();
 
-  //   expect(await page.screenshot()).toMatchSnapshot('SignUpForm.png');
+  await snapshot(page, 'SignUpForm');
 
   await page.getByTestId(IDS.INPUT.EMAIL).fill('siberia@example.com');
   await page.getByTestId(IDS.INPUT.LOGIN).fill('siberia');
@@ -25,7 +27,8 @@ test('Should sign up', async ({ page }) => {
     page.waitForRequest(
       (request) => request.method() === 'POST' && request.url().includes('/signup')
     ),
-    page.getByTestId(IDS.BUTTON.SIGN_UP).click()
+    page.getByTestId(IDS.BUTTON.SIGN_UP).click(),
+    page.waitForResponse((response) => response.url().includes('/signup'))
   ]);
 
   expect(requestPostSignUp.postDataJSON()).toEqual({
@@ -42,9 +45,9 @@ test('Should sign up', async ({ page }) => {
   });
 
   await expect(page).toHaveURL(ROUTES.AUTH);
-
   await waitToast(page, {
     title: 'Your account has been created 👍',
     description: 'We are very glad to see you, have fun'
   });
+  await snapshot(page, 'Profile');
 });

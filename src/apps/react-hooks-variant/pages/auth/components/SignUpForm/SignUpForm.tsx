@@ -59,7 +59,7 @@ export const SignUpForm = () => {
                   </Label>
                   <FormControl>
                     <Input
-                      data-testid={IDS.INPUT.EMAIL}
+                      id={IDS.INPUT.EMAIL}
                       placeholder='email@example.com'
                       autoCapitalize='none'
                       autoComplete='email'
@@ -82,7 +82,7 @@ export const SignUpForm = () => {
                   </Label>
                   <FormControl>
                     <Input
-                      data-testid={IDS.INPUT.LOGIN}
+                      id={IDS.INPUT.LOGIN}
                       placeholder='your login'
                       autoCapitalize='none'
                       autoCorrect='off'
@@ -104,7 +104,7 @@ export const SignUpForm = () => {
                   </Label>
                   <FormControl>
                     <Input
-                      data-testid={IDS.INPUT.FIRST_NAME}
+                      id={IDS.INPUT.FIRST_NAME}
                       placeholder='your first perfect name'
                       autoCapitalize='none'
                       autoComplete='firstName'
@@ -127,7 +127,7 @@ export const SignUpForm = () => {
                   </Label>
                   <FormControl>
                     <Input
-                      data-testid={IDS.INPUT.LAST_NAME}
+                      id={IDS.INPUT.LAST_NAME}
                       placeholder='your second amazing name'
                       autoCapitalize='none'
                       autoComplete='lastName'
@@ -149,7 +149,7 @@ export const SignUpForm = () => {
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
-                          data-testid={IDS.SELECT.COUNTRY}
+                          id={IDS.SELECT.COUNTRY}
                           variant='outline'
                           role='combobox'
                           className={cn(
@@ -178,13 +178,10 @@ export const SignUpForm = () => {
                         <CommandGroup>
                           {state.countries.map((country) => (
                             <CommandItem
-                              data-testid={`${IDS.SELECT.COUNTRY}-${country.code}`}
                               key={country.id}
                               value={country.label}
                               className='flex items-center  gap-2'
-                              onSelect={() => {
-                                form.setValue('country', country);
-                              }}
+                              onSelect={() => form.setValue('country', country)}
                             >
                               <Check
                                 className={cn(
@@ -193,7 +190,9 @@ export const SignUpForm = () => {
                                 )}
                               />
                               <Flag className='size-4' code={country.code} />
-                              {country.label}
+                              <span id={`${IDS.SELECT.COUNTRY}-${country.code}`}>
+                                {country.label}
+                              </span>
                             </CommandItem>
                           ))}
                         </CommandGroup>
@@ -214,7 +213,7 @@ export const SignUpForm = () => {
                   </Label>
                   <FormControl>
                     <PasswordInput
-                      data-testid={IDS.INPUT.PASSWORD}
+                      id={IDS.INPUT.PASSWORD}
                       placeholder='your very secret password'
                       autoCapitalize='none'
                       autoComplete='password'
@@ -237,7 +236,7 @@ export const SignUpForm = () => {
                   </Label>
                   <FormControl>
                     <PasswordInput
-                      data-testid={IDS.INPUT.PASSWORD_CONFIRMATION}
+                      id={IDS.INPUT.PASSWORD_CONFIRMATION}
                       placeholder='confirm your password dude'
                       autoCapitalize='none'
                       autoComplete='passwordConfirmation'
@@ -256,7 +255,7 @@ export const SignUpForm = () => {
                 </FormItem>
               )}
             />
-            <Button className='w-full' disabled={state.loading} data-testid={IDS.BUTTON.SIGN_UP}>
+            <Button className='w-full' disabled={state.loading} id={IDS.BUTTON.SIGN_UP}>
               {state.loading && <SpinnerIcon className='mr-2 h-4 w-4 animate-spin' />}
               Sign up
             </Button>
