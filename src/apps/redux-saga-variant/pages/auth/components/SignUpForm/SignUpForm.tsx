@@ -23,6 +23,7 @@ import {
 } from '@/components/ui';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { IDS } from '@/utils';
 
 import { AuthButtonsContainer } from '../AuthButtonsContainer/AuthButtonsContainer';
 
@@ -58,7 +59,7 @@ export const SignUpForm = () => {
                   </Label>
                   <FormControl>
                     <Input
-                      id='email'
+                      id={IDS.INPUT.EMAIL}
                       placeholder='email@example.com'
                       autoCapitalize='none'
                       autoComplete='email'
@@ -81,7 +82,7 @@ export const SignUpForm = () => {
                   </Label>
                   <FormControl>
                     <Input
-                      id='login'
+                      id={IDS.INPUT.LOGIN}
                       placeholder='your login'
                       autoCapitalize='none'
                       autoCorrect='off'
@@ -103,7 +104,7 @@ export const SignUpForm = () => {
                   </Label>
                   <FormControl>
                     <Input
-                      id='firstName'
+                      id={IDS.INPUT.FIRST_NAME}
                       placeholder='your first perfect name'
                       autoCapitalize='none'
                       autoComplete='firstName'
@@ -126,7 +127,7 @@ export const SignUpForm = () => {
                   </Label>
                   <FormControl>
                     <Input
-                      id='lastName'
+                      id={IDS.INPUT.LAST_NAME}
                       placeholder='your second amazing name'
                       autoCapitalize='none'
                       autoComplete='lastName'
@@ -211,7 +212,7 @@ export const SignUpForm = () => {
                   </Label>
                   <FormControl>
                     <PasswordInput
-                      id='password'
+                      id={IDS.INPUT.PASSWORD}
                       placeholder='your very secret password'
                       autoCapitalize='none'
                       autoComplete='password'
@@ -234,7 +235,7 @@ export const SignUpForm = () => {
                   </Label>
                   <FormControl>
                     <PasswordInput
-                      id='passwordConfirmation'
+                      id={IDS.INPUT.PASSWORD_CONFIRMATION}
                       placeholder='confirm your password dude'
                       autoCapitalize='none'
                       autoComplete='passwordConfirmation'
@@ -253,7 +254,7 @@ export const SignUpForm = () => {
                 </FormItem>
               )}
             />
-            <Button className='w-full' disabled={state.loading}>
+            <Button id={IDS.BUTTON.SIGN_UP} className='w-full' disabled={state.loading}>
               {state.loading && <SpinnerIcon className='mr-2 h-4 w-4 animate-spin' />}
               Sign up
             </Button>

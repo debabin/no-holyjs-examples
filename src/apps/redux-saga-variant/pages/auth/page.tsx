@@ -1,5 +1,7 @@
 import { useSelector } from 'react-redux';
 
+import { IDS } from '@/utils';
+
 import { ConfirmationForm } from './components/ConfirmationForm/ConfirmationForm';
 import { SelectConfirmationForm } from './components/SelectConfirmationForm/SelectConfirmationForm';
 import { SignInForm } from './components/SignInForm/SignInForm';
@@ -17,5 +19,5 @@ const component: Record<Stage, React.ReactNode> = {
 export const AuthPage = () => {
   const stage = useSelector(authSelectors.getStage);
 
-  return component[stage];
+  return <section id={IDS.PAGE.AUTH}>{component[stage]}</section>;
 };

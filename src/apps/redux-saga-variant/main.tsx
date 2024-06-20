@@ -12,10 +12,10 @@ import Providers from './providers';
 
 const defaultTheme = 'light';
 
-const rootElement = document.getElementById('root')!;
-const root = ReactDOM.createRoot(rootElement);
+export const init = async () => {
+  const rootElement = document.getElementById('root')!;
+  const root = ReactDOM.createRoot(rootElement);
 
-const init = async () => {
   const token = localStorage.getItem(COOKIE.ACCESS_TOKEN);
 
   if (token) {
@@ -35,5 +35,3 @@ const init = async () => {
     </Providers>
   );
 };
-
-init();

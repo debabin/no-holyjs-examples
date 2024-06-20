@@ -12,6 +12,7 @@ import {
 
 import { hideResource } from './helpers/hideResource';
 import { useConfirmationForm } from './hooks/ConfirmationForm';
+import { IDS } from '@/utils';
 
 export const ConfirmationForm = () => {
   const { form, state, functions } = useConfirmationForm();
@@ -44,7 +45,7 @@ export const ConfirmationForm = () => {
                   </Label>
                   <FormControl>
                     <PasswordInput
-                      id='otp'
+                      id={IDS.INPUT.OTP}
                       maxLength={6}
                       placeholder='your otp code'
                       autoCapitalize='none'
@@ -59,7 +60,12 @@ export const ConfirmationForm = () => {
               )}
             />
             <div className='flex flex-col gap-2'>
-              <Button type='submit' className='w-full' disabled={state.loading}>
+              <Button
+                id={IDS.BUTTON.CONFIRM}
+                type='submit'
+                className='w-full'
+                disabled={state.loading}
+              >
                 {state.loading && <SpinnerIcon className='mr-2 h-4 w-4 animate-spin' />}
                 Confirm
               </Button>

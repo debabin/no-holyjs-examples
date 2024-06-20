@@ -5,10 +5,10 @@ import { fetchProfile, token } from './model';
 import Providers from './providers';
 import { ctx } from './reatom';
 
-const rootElement = document.getElementById('root')!;
-const root = ReactDOM.createRoot(rootElement);
+export const init = async () => {
+  const rootElement = document.getElementById('root')!;
+  const root = ReactDOM.createRoot(rootElement);
 
-const init = async () => {
   if (ctx.get(token)) {
     await fetchProfile(ctx);
   }
@@ -19,5 +19,3 @@ const init = async () => {
     </Providers>
   );
 };
-
-init();

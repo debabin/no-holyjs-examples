@@ -10,7 +10,7 @@ import {
   CardTitle,
   Flag
 } from '@/components/ui';
-import { IDS } from '@/utils/constants';
+import { IDS } from '@/utils';
 
 import { useIndexPage } from './hooks/useIndexPage';
 

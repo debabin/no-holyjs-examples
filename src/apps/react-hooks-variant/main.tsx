@@ -10,33 +10,33 @@ import { App } from './app.tsx';
 import type { ProvidersProps } from './providers.tsx';
 import Providers from './providers.tsx';
 
-const defaultTheme = 'light';
+export const init = async () => {
+  const defaultTheme = 'light';
 
-const rootElement = document.getElementById('root')!;
-const root = ReactDOM.createRoot(rootElement);
+  const rootElement = document.getElementById('root')!;
+  const root = ReactDOM.createRoot(rootElement);
 
-const DEFAULT_ERROR = 'Something went wrong';
-const queryClient = new QueryClient({
-  defaultOptions: { queries: { refetchOnWindowFocus: false } },
-  queryCache: new QueryCache({
-    onError: (cause) => {
-      const { response } = cause as AxiosError<BaseResponse>;
-      toast.error(response?.data.message ?? DEFAULT_ERROR, {
-        cancel: { label: 'Close' }
-      });
-    }
-  }),
-  mutationCache: new MutationCache({
-    onError: (cause) => {
-      const { response } = cause as AxiosError<BaseResponse>;
-      toast.error(response?.data.message ?? DEFAULT_ERROR, {
-        cancel: { label: 'Close' }
-      });
-    }
-  })
-});
+  const DEFAULT_ERROR = 'Something went wrong';
+  const queryClient = new QueryClient({
+    defaultOptions: { queries: { refetchOnWindowFocus: false } },
+    queryCache: new QueryCache({
+      onError: (cause) => {
+        const { response } = cause as AxiosError<BaseResponse>;
+        toast.error(response?.data.message ?? DEFAULT_ERROR, {
+          cancel: { label: 'Close' }
+        });
+      }
+    }),
+    mutationCache: new MutationCache({
+      onError: (cause) => {
+        const { response } = cause as AxiosError<BaseResponse>;
+        toast.error(response?.data.message ?? DEFAULT_ERROR, {
+          cancel: { label: 'Close' }
+        });
+      }
+    })
+  });
 
-const init = async () => {
   const token = localStorage.getItem(COOKIE.ACCESS_TOKEN);
 
   const providersProps: Omit<ProvidersProps, 'children'> = {
@@ -62,5 +62,3 @@ const init = async () => {
     </Providers>
   );
 };
-
-init();

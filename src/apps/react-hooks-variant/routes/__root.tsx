@@ -1,6 +1,6 @@
 import { ThemeToggle } from '@react-hooks-variant/components';
 import { createRootRouteWithContext, Outlet } from '@tanstack/react-router';
-import { TanStackRouterDevtools } from '@tanstack/router-devtools';
+// import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 import { Toaster } from 'sonner';
 
 import sibericancodeIcon from '@/assets/images/sibericancode.svg';

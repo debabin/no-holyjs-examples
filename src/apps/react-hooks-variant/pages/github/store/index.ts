@@ -83,5 +83,3 @@ export const incrementReaction = (id: number, reaction: string) => {
   emitChange(`cardStore.${id}`);
   updateCardDebounced(id, updatedCard);
 };
-
-fetchCards();

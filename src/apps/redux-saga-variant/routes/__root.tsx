@@ -17,7 +17,6 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       <header className='absolute flex w-full items-center justify-between p-4'>
         <div className='flex items-center gap-2'>
           <img className='size-10 rounded' src={sibericancodeIcon} alt='sibericancode icon' />
-          redux saga
         </div>
         <div>
           <ThemeToggle />

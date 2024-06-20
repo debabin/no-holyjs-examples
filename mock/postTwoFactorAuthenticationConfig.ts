@@ -10,13 +10,11 @@ export const postTwoFactorAuthenticationConfig: RestRequestConfig = {
   interceptors: {
     response: (_, { request, setStatusCode, setCookie }) => {
       const { body } = request;
-      console.log('@body', body);
 
       const existedOtp = DATABASE.otps.find(
         (otp) => body.source === otp.source && body.otp === otp.value
       );
 
-      console.log('@existedOtp', existedOtp);
       if (existedOtp) {
         DATABASE.otps = DATABASE.otps.filter((otp) => existedOtp.id !== otp.id);
 

@@ -4,15 +4,26 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "dev:react-hooks": "cross-env APP='react-hooks-variant' concurrently \"yarn mock\" \"vite\"",
+    "dev:reatom": "cross-env APP='reatom-variant concurrently' \"yarn mock\" \"vite\"",
+    "dev:redux-saga": "cross-env APP='redux-saga-variant' concurrently \"yarn mock\" \"vite\"",
+    "dev:redux-thunk": "cross-env APP='redux-thunk-variant' concurrently \"yarn mock\" \"vite\"",
+    "e2e-test:react-hooks": "concurrently \"yarn dev:react-hooks\" \"playwright test -c playwright-e2e.config.ts\"",
+    "e2e-test:reatom": "concurrently \"yarn dev:reatom\" \"playwright test -c playwright-e2e.config.ts\"",
+    "e2e-test:redux-saga": "concurrently \"yarn dev:redux-saga\" \"playwright test -c playwright-e2e.config.ts\"",
+    "e2e-test:redux-thunk": "concurrently \"yarn dev:redux-thunk\" \"playwright test -c playwright-e2e.config.ts\"",
+    "components-test:react-hooks": "concurrently \"yarn dev:react-hooks\" \"playwright test -c playwright-ct.config.ts\"",
+    "components-test:reatom": "concurrently \"yarn dev:reatom\" \"playwright test -c playwright-ct.config.ts\"",
+    "components-test:redux-saga": "concurrently \"yarn dev:redux-saga\" \"playwright test -c playwright-ct.config.ts\"",
+    "components-test:redux-thunk": "concurrently \"yarn dev:redux-thunk\" \"playwright test -c playwright-ct.config.ts\"",
     "dev": "concurrently \"yarn mock\" \"vite\"",
     "build": "tsc && vite build",
     "mock": "mcs",
     "lint": "eslint . --ext ts --ext tsx --ext js",
-    "format": "prettier --write \"**/*.{js,ts,tsx}\"",
+    "format": "prettier --write \"**/*.{js,ts,tsx,html,css}\"",
     "stylelint": "stylelint \"**/*.css\"",
     "pretty": "yarn format && yarn lint --fix && yarn stylelint --fix",
-    "preview": "vite preview",
-    "e2e-test": "concurrently \"yarn dev\" \"playwright test\""
+    "preview": "vite preview"
   },
   "lint-staged": {
     "*.css": [
@@ -65,6 +76,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@playwright/experimental-ct-react": "^1.44.1",
     "@playwright/test": "^1.44.1",
     "@reatom/eslint-plugin": "^3.4.3",
     "@siberiacancode/eslint": "^1.0.3",
@@ -80,6 +92,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.17",
     "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
