@@ -12,8 +12,8 @@ test('Should sign in login with phone otp', async ({ page }) => {
 
   await snapshot(page, 'SignInForm');
 
-  await page.getByTestId(IDS.INPUT.LOGIN).fill('siberiacancodeotp');
-  await page.getByTestId(IDS.INPUT.PASSWORD).fill('123456');
+  await page.getByTestId(`${IDS.INPUT.LOGIN}-form-item`).fill('siberiacancodeotp');
+  await page.getByTestId(`${IDS.INPUT.PASSWORD}-form-item`).fill('123456');
 
   const [requestPostSignInLogin] = await Promise.all([
     page.waitForRequest(
@@ -36,7 +36,7 @@ test('Should sign in login with phone otp', async ({ page }) => {
 
   await snapshot(page, 'ConfirmationFormPhoneToOtp');
 
-  await page.getByTestId(IDS.INPUT.PHONE).fill('1231231231');
+  await page.getByTestId(`${IDS.INPUT.PHONE}-form-item`).fill('1231231231');
 
   const [requestPostOtpPhone] = await Promise.all([
     page.waitForRequest(
@@ -52,7 +52,7 @@ test('Should sign in login with phone otp', async ({ page }) => {
 
   await snapshot(page, 'ConfirmationFormOtp');
 
-  await page.getByTestId(IDS.INPUT.OTP).fill('123456');
+  await page.getByTestId(`${IDS.INPUT.OTP}-form-item`).fill('123456');
   const [requestPostTwoFactorAuthentication] = await Promise.all([
     page.waitForRequest(
       (request) => request.method() === 'POST' && request.url().includes('/twoFactorAuthentication')

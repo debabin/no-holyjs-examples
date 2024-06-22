@@ -12,16 +12,16 @@ test('Should sign up', async ({ page }) => {
 
   await snapshot(page, 'SignUpForm');
 
-  await page.getByTestId(IDS.INPUT.EMAIL).fill('siberia@example.com');
-  await page.getByTestId(IDS.INPUT.LOGIN).fill('siberia');
-  await page.getByTestId(IDS.INPUT.FIRST_NAME).fill('siberia');
-  await page.getByTestId(IDS.INPUT.LAST_NAME).fill('siberia');
+  await page.getByTestId(`${IDS.INPUT.EMAIL}-form-item`).fill('siberia@example.com');
+  await page.getByTestId(`${IDS.INPUT.LOGIN}-form-item`).fill('siberia');
+  await page.getByTestId(`${IDS.INPUT.FIRST_NAME}-form-item`).fill('siberia');
+  await page.getByTestId(`${IDS.INPUT.LAST_NAME}-form-item`).fill('siberia');
 
   await page.getByTestId(IDS.SELECT.COUNTRY).click();
   await page.getByTestId(`${IDS.SELECT.COUNTRY}-by`).click();
 
-  await page.getByTestId(IDS.INPUT.PASSWORD).fill('siberia');
-  await page.getByTestId(IDS.INPUT.PASSWORD_CONFIRMATION).fill('siberia');
+  await page.getByTestId(`${IDS.INPUT.PASSWORD}-form-item`).fill('siberia');
+  await page.getByTestId(`${IDS.INPUT.PASSWORD_CONFIRMATION}-form-item`).fill('siberia');
 
   const [requestPostSignUp] = await Promise.all([
     page.waitForRequest(

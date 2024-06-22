@@ -7,12 +7,10 @@ export interface ProvidersProps {
   children: React.ReactNode;
 }
 
-const Providers = ({ children }: ProvidersProps) => {
-  return (
-    <ReactReduxProvider store={store}>
-      <ThemeContainer>{children}</ThemeContainer>
-    </ReactReduxProvider>
-  );
-};
+const Providers = ({ children }: ProvidersProps) => (
+  <ReactReduxProvider store={store}>
+    <ThemeContainer>{children}</ThemeContainer>
+  </ReactReduxProvider>
+);
 
 export default Providers;

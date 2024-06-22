@@ -97,34 +97,45 @@ export const SelectConfirmationForm = () => {
                 }}
                 className='space-y-4'
               >
-                <FormField
-                  control={form.control}
-                  name='resource'
-                  render={({ field }) => (
-                    <FormItem>
-                      <Label className='sr-only' htmlFor='otp'>
-                        {state.selectedResource === 'email' ? 'Email' : 'Phone'}
-                      </Label>
-                      <FormControl>
-                        <>
-                          {state.selectedResource === 'email' && (
-                            <Input id={IDS.INPUT.EMAIL} placeholder='write email' {...field} />
-                          )}
-                          {state.selectedResource === 'phone' && (
-                            <PatternFormat
-                              id={IDS.INPUT.PHONE}
-                              format='+7 ### ### ####'
-                              allowEmptyFormatting
-                              customInput={Input}
-                              {...field}
-                            />
-                          )}
-                        </>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                {state.selectedResource === 'phone' && (
+                  <FormField
+                    control={form.control}
+                    name='resource'
+                    render={({ field }) => (
+                      <FormItem id={IDS.INPUT.PHONE}>
+                        <Label className='sr-only' htmlFor='phone'>
+                          Phone
+                        </Label>
+                        <FormControl>
+                          <PatternFormat
+                            format='+7 ### ### ####'
+                            allowEmptyFormatting
+                            customInput={Input}
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+                {state.selectedResource === 'email' && (
+                  <FormField
+                    control={form.control}
+                    name='resource'
+                    render={({ field }) => (
+                      <FormItem id={IDS.INPUT.EMAIL}>
+                        <Label className='sr-only' htmlFor='otp'>
+                          {state.selectedResource === 'email' ? 'Email' : 'Phone'}
+                        </Label>
+                        <FormControl>
+                          <Input placeholder='write email' {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
                 <Button
                   type='submit'
                   className='w-full'

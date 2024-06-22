@@ -4,7 +4,6 @@ import { ROUTES } from '@/utils/constants/routes';
 
 export const Route = createFileRoute(ROUTES.INDEX)({
   beforeLoad: ({ context }) => {
-    console.log('@@@@@@@@@');
     if (!context.isAuthenticated) {
       throw redirect({
         to: '/auth'

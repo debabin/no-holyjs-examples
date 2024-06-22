@@ -12,8 +12,8 @@ test('Should sign in login', async ({ page }) => {
 
   await snapshot(page, 'SignInForm');
 
-  await page.getByTestId(IDS.INPUT.LOGIN).fill('siberiacancode');
-  await page.getByTestId(IDS.INPUT.PASSWORD).fill('123456');
+  await page.getByTestId(`${IDS.INPUT.LOGIN}-form-item`).fill('siberiacancode');
+  await page.getByTestId(`${IDS.INPUT.PASSWORD}-form-item`).fill('123456');
 
   const [requestPostSignInLogin] = await Promise.all([
     page.waitForRequest(

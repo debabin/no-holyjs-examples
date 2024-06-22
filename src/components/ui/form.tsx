@@ -64,7 +64,7 @@ const useFormField = () => {
 const FormItem = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => {
     const id = React.useId();
-    const value = React.useMemo(() => ({ id }), [id]);
+    const value = React.useMemo(() => ({ id: props.id ?? id }), [id, props.id]);
 
     return (
       <FormItemContext.Provider value={value}>

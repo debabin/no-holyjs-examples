@@ -25,6 +25,7 @@ import {
 } from '@/components/ui';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { IDS } from '@/utils';
 
 import { AuthButtonsContainer } from '../AuthButtonsContainer/AuthButtonsContainer';
 
@@ -55,13 +56,12 @@ export const SignUpForm = reatomComponent(({ ctx }) => {
               control={form.control}
               name='email'
               render={({ field }) => (
-                <FormItem>
+                <FormItem id={IDS.INPUT.EMAIL}>
                   <Label className='sr-only' htmlFor='email'>
                     Email
                   </Label>
                   <FormControl>
                     <Input
-                      id='email'
                       placeholder='email@example.com'
                       autoCapitalize='none'
                       autoComplete='email'
@@ -78,13 +78,12 @@ export const SignUpForm = reatomComponent(({ ctx }) => {
               control={form.control}
               name='login'
               render={({ field }) => (
-                <FormItem>
+                <FormItem id={IDS.INPUT.LOGIN}>
                   <Label className='sr-only' htmlFor='login'>
                     Login
                   </Label>
                   <FormControl>
                     <Input
-                      id='login'
                       placeholder='your login'
                       autoCapitalize='none'
                       autoCorrect='off'
@@ -100,13 +99,12 @@ export const SignUpForm = reatomComponent(({ ctx }) => {
               control={form.control}
               name='firstName'
               render={({ field }) => (
-                <FormItem>
+                <FormItem id={IDS.INPUT.FIRST_NAME}>
                   <Label className='sr-only' htmlFor='firstName'>
                     First name
                   </Label>
                   <FormControl>
                     <Input
-                      id='firstName'
                       placeholder='your first perfect name'
                       autoCapitalize='none'
                       autoComplete='firstName'
@@ -123,13 +121,12 @@ export const SignUpForm = reatomComponent(({ ctx }) => {
               control={form.control}
               name='lastName'
               render={({ field }) => (
-                <FormItem>
+                <FormItem id={IDS.INPUT.LAST_NAME}>
                   <Label className='sr-only' htmlFor='lastName'>
                     Last name
                   </Label>
                   <FormControl>
                     <Input
-                      id='lastName'
                       placeholder='your second amazing name'
                       autoCapitalize='none'
                       autoComplete='lastName'
@@ -151,6 +148,7 @@ export const SignUpForm = reatomComponent(({ ctx }) => {
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
+                          id={IDS.SELECT.COUNTRY}
                           variant='outline'
                           role='combobox'
                           className={cn(
@@ -193,7 +191,9 @@ export const SignUpForm = reatomComponent(({ ctx }) => {
                                 )}
                               />
                               <Flag className='size-4' code={country.code} />
-                              {country.label}
+                              <span id={`${IDS.SELECT.COUNTRY}-${country.code}`}>
+                                {country.label}
+                              </span>
                             </CommandItem>
                           ))}
                         </CommandGroup>
@@ -208,13 +208,12 @@ export const SignUpForm = reatomComponent(({ ctx }) => {
               control={form.control}
               name='password'
               render={({ field }) => (
-                <FormItem>
+                <FormItem id={IDS.INPUT.PASSWORD}>
                   <Label className='sr-only' htmlFor='password'>
                     Password
                   </Label>
                   <FormControl>
                     <PasswordInput
-                      id='password'
                       placeholder='your very secret password'
                       autoCapitalize='none'
                       autoComplete='password'
@@ -231,13 +230,12 @@ export const SignUpForm = reatomComponent(({ ctx }) => {
               control={form.control}
               name='passwordConfirmation'
               render={({ field }) => (
-                <FormItem>
+                <FormItem id={IDS.INPUT.PASSWORD_CONFIRMATION}>
                   <Label className='sr-only' htmlFor='passwordConfirmation'>
                     Confirm password
                   </Label>
                   <FormControl>
                     <PasswordInput
-                      id='passwordConfirmation'
                       placeholder='confirm your password dude'
                       autoCapitalize='none'
                       autoComplete='passwordConfirmation'
@@ -256,7 +254,7 @@ export const SignUpForm = reatomComponent(({ ctx }) => {
                 </FormItem>
               )}
             />
-            <Button className='w-full' disabled={loading}>
+            <Button id={IDS.BUTTON.SIGN_UP} className='w-full' disabled={loading}>
               {loading && <SpinnerIcon className='mr-2 h-4 w-4 animate-spin' />}
               Sign up
             </Button>

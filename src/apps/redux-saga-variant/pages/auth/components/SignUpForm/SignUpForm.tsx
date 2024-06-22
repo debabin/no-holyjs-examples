@@ -53,13 +53,12 @@ export const SignUpForm = () => {
               control={form.control}
               name='email'
               render={({ field }) => (
-                <FormItem>
+                <FormItem id={IDS.INPUT.EMAIL}>
                   <Label className='sr-only' htmlFor='email'>
                     Email
                   </Label>
                   <FormControl>
                     <Input
-                      id={IDS.INPUT.EMAIL}
                       placeholder='email@example.com'
                       autoCapitalize='none'
                       autoComplete='email'
@@ -191,7 +190,9 @@ export const SignUpForm = () => {
                                 )}
                               />
                               <Flag className='size-4' code={country.code} />
-                              {country.label}
+                              <span id={`${IDS.SELECT.COUNTRY}-${country.code}`}>
+                                {country.label}
+                              </span>
                             </CommandItem>
                           ))}
                         </CommandGroup>
@@ -206,13 +207,12 @@ export const SignUpForm = () => {
               control={form.control}
               name='password'
               render={({ field }) => (
-                <FormItem>
+                <FormItem id={IDS.INPUT.PASSWORD}>
                   <Label className='sr-only' htmlFor='password'>
                     Password
                   </Label>
                   <FormControl>
                     <PasswordInput
-                      id={IDS.INPUT.PASSWORD}
                       placeholder='your very secret password'
                       autoCapitalize='none'
                       autoComplete='password'
@@ -229,13 +229,12 @@ export const SignUpForm = () => {
               control={form.control}
               name='passwordConfirmation'
               render={({ field }) => (
-                <FormItem>
+                <FormItem id={IDS.INPUT.PASSWORD_CONFIRMATION}>
                   <Label className='sr-only' htmlFor='passwordConfirmation'>
                     Confirm password
                   </Label>
                   <FormControl>
                     <PasswordInput
-                      id={IDS.INPUT.PASSWORD_CONFIRMATION}
                       placeholder='confirm your password dude'
                       autoCapitalize='none'
                       autoComplete='passwordConfirmation'

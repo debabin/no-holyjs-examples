@@ -12,7 +12,7 @@ test('Should sign in email', async ({ page }) => {
 
   await snapshot(page, 'SignInForm');
 
-  await page.getByTestId(IDS.INPUT.LOGIN).fill('siberiacancode@example.com');
+  await page.getByTestId(`${IDS.INPUT.LOGIN}-form-item`).fill('siberiacancode@example.com');
   const [requestPostOtpEmail] = await Promise.all([
     page.waitForRequest(
       (request) => request.method() === 'POST' && request.url().includes('/otp/email')
@@ -27,7 +27,7 @@ test('Should sign in email', async ({ page }) => {
 
   await snapshot(page, 'ConfirmationFormOtpCode');
 
-  await page.getByTestId(IDS.INPUT.OTP).fill('123456');
+  await page.getByTestId(`${IDS.INPUT.OTP}-form-item`).fill('123456');
   const [requestPostTwoFactorAuthentication] = await Promise.all([
     page.waitForRequest(
       (request) => request.method() === 'POST' && request.url().includes('/twoFactorAuthentication')

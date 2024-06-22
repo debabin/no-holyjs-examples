@@ -47,7 +47,6 @@ export const SignInForm = reatomComponent(({ ctx }) => {
                   </Label>
                   <FormControl>
                     <Input
-                      id='login'
                       placeholder='write login or email'
                       autoCapitalize='none'
                       autoCorrect='off'
@@ -70,7 +69,6 @@ export const SignInForm = reatomComponent(({ ctx }) => {
                     </Label>
                     <FormControl>
                       <PasswordInput
-                        id='password'
                         placeholder='your very secret password'
                         autoCapitalize='none'
                         autoComplete='password'

@@ -38,13 +38,12 @@ export const SignInForm = () => {
               control={form.control}
               name='login'
               render={({ field }) => (
-                <FormItem>
+                <FormItem id={IDS.INPUT.LOGIN}>
                   <Label className='sr-only' htmlFor='login'>
                     {state.isEmail ? 'email' : 'login'}
                   </Label>
                   <FormControl>
                     <Input
-                      id={IDS.INPUT.LOGIN}
                       placeholder='write login or email'
                       autoCapitalize='none'
                       autoCorrect='off'
@@ -61,13 +60,12 @@ export const SignInForm = () => {
                 control={form.control}
                 name='password'
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem id={IDS.INPUT.PASSWORD}>
                     <Label className='sr-only' htmlFor='password'>
                       Password
                     </Label>
                     <FormControl>
                       <PasswordInput
-                        id={IDS.INPUT.PASSWORD}
                         placeholder='your very secret password'
                         autoCapitalize='none'
                         autoComplete='password'

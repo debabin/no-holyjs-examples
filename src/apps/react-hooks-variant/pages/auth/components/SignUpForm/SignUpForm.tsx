@@ -53,13 +53,12 @@ export const SignUpForm = () => {
               control={form.control}
               name='email'
               render={({ field }) => (
-                <FormItem>
+                <FormItem id={IDS.INPUT.EMAIL}>
                   <Label className='sr-only' htmlFor='email'>
                     Email
                   </Label>
                   <FormControl>
                     <Input
-                      id={IDS.INPUT.EMAIL}
                       placeholder='email@example.com'
                       autoCapitalize='none'
                       autoComplete='email'
@@ -76,13 +75,12 @@ export const SignUpForm = () => {
               control={form.control}
               name='login'
               render={({ field }) => (
-                <FormItem>
+                <FormItem id={IDS.INPUT.LOGIN}>
                   <Label className='sr-only' htmlFor='login'>
                     Login
                   </Label>
                   <FormControl>
                     <Input
-                      id={IDS.INPUT.LOGIN}
                       placeholder='your login'
                       autoCapitalize='none'
                       autoCorrect='off'
@@ -98,13 +96,12 @@ export const SignUpForm = () => {
               control={form.control}
               name='firstName'
               render={({ field }) => (
-                <FormItem>
+                <FormItem id={IDS.INPUT.FIRST_NAME}>
                   <Label className='sr-only' htmlFor='firstName'>
                     First name
                   </Label>
                   <FormControl>
                     <Input
-                      id={IDS.INPUT.FIRST_NAME}
                       placeholder='your first perfect name'
                       autoCapitalize='none'
                       autoComplete='firstName'
@@ -121,13 +118,12 @@ export const SignUpForm = () => {
               control={form.control}
               name='lastName'
               render={({ field }) => (
-                <FormItem>
+                <FormItem id={IDS.INPUT.LAST_NAME}>
                   <Label className='sr-only' htmlFor='lastName'>
                     Last name
                   </Label>
                   <FormControl>
                     <Input
-                      id={IDS.INPUT.LAST_NAME}
                       placeholder='your second amazing name'
                       autoCapitalize='none'
                       autoComplete='lastName'
@@ -207,13 +203,12 @@ export const SignUpForm = () => {
               control={form.control}
               name='password'
               render={({ field }) => (
-                <FormItem>
+                <FormItem id={IDS.INPUT.PASSWORD}>
                   <Label className='sr-only' htmlFor='password'>
                     Password
                   </Label>
                   <FormControl>
                     <PasswordInput
-                      id={IDS.INPUT.PASSWORD}
                       placeholder='your very secret password'
                       autoCapitalize='none'
                       autoComplete='password'
@@ -230,13 +225,12 @@ export const SignUpForm = () => {
               control={form.control}
               name='passwordConfirmation'
               render={({ field }) => (
-                <FormItem>
+                <FormItem id={IDS.INPUT.PASSWORD_CONFIRMATION}>
                   <Label className='sr-only' htmlFor='passwordConfirmation'>
                     Confirm password
                   </Label>
                   <FormControl>
                     <PasswordInput
-                      id={IDS.INPUT.PASSWORD_CONFIRMATION}
                       placeholder='confirm your password dude'
                       autoCapitalize='none'
                       autoComplete='passwordConfirmation'
@@ -255,7 +249,7 @@ export const SignUpForm = () => {
                 </FormItem>
               )}
             />
-            <Button className='w-full' disabled={state.loading} id={IDS.BUTTON.SIGN_UP}>
+            <Button id={IDS.BUTTON.SIGN_UP} className='w-full' disabled={state.loading}>
               {state.loading && <SpinnerIcon className='mr-2 h-4 w-4 animate-spin' />}
               Sign up
             </Button>

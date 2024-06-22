@@ -39,13 +39,12 @@ export const ConfirmationForm = () => {
               control={form.control}
               name='otp'
               render={({ field }) => (
-                <FormItem>
+                <FormItem id={IDS.INPUT.OTP}>
                   <Label className='sr-only' htmlFor='otp'>
                     Password
                   </Label>
                   <FormControl>
                     <PasswordInput
-                      id={IDS.INPUT.OTP}
                       maxLength={6}
                       placeholder='your otp code'
                       autoCapitalize='none'
