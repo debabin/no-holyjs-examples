@@ -1,12 +1,9 @@
-import { TanStackRouterVite } from '@tanstack/router-vite-plugin';
-import react from '@vitejs/plugin-react';
 import path from 'path';
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 
-console.log('app variant:', process.env.APP, `src/apps/${process.env.APP}/routes`);
+console.log('app variant:', process.env.APP);
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), TanStackRouterVite({ routesDirectory: `src/apps/${process.env.APP}/routes` })],
   define: {
     'import.meta.env.VITE_APP': JSON.stringify(process.env.APP)
   },
@@ -19,9 +16,12 @@ export default defineConfig({
       '@reatom-variant': path.resolve(__dirname, './src/apps/reatom-variant')
     }
   },
-  server: {
-    proxy: {
-      '/api': 'http://localhost:31299'
-    }
+
+  test: {
+    root: './tests/unit',
+    globals: true,
+    environment: 'jsdom',
+    maxWorkers: 1,
+    minWorkers: 1
   }
 });

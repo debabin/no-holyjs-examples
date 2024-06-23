@@ -14,7 +14,7 @@ export interface OnSignInSubmitPayload {
   resource: 'email' | 'login';
   values: {
     login: string;
-    password: string;
+    password?: string;
   };
 }
 
@@ -30,7 +30,6 @@ export const thunk = createAsyncThunk<void, OnSignInSubmitPayload>(
         const postOtpEmailResponse = await apiSlice.endpoints.postOtpEmail.initiate({
           params: { email: values.login }
         });
-
         if (!postOtpEmailResponse.data.retryDelay) return;
 
         dispatch(

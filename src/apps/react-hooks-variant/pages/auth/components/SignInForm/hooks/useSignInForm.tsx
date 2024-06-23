@@ -25,6 +25,7 @@ interface SingInForm {
 
 export const useSignInForm = () => {
   const navigate = useNavigate();
+
   const { setOtp } = useOtp();
   const { setStage } = useStage();
   const { setSession } = useSession();
@@ -44,7 +45,6 @@ export const useSignInForm = () => {
   }, [login]);
 
   const postOtpEmailMutation = usePostOtpEmailMutation();
-
   const postSignInLoginMutation = usePostSignInLoginMutation();
 
   const onSubmit = signInForm.handleSubmit(async (values) => {
@@ -53,9 +53,7 @@ export const useSignInForm = () => {
         params: { email: values.login }
       });
 
-      if (!postOtpEmailMutationResponse.data.retryDelay) {
-        return;
-      }
+      if (!postOtpEmailMutationResponse.data.retryDelay) return;
 
       setOtp({
         type: 'email',

@@ -61,63 +61,71 @@ export const otp = atom<{ type: 'email' | 'phone'; resource: string; retryDelay:
   }))
 );
 
-export const signInSubmit = reatomAsync(async (ctx, payload) => {
-  try {
-    const { resource, values } = payload;
-
-    if (resource === 'email') {
-      const postOtpEmailResponse = await postOtpEmail({
-        params: { email: values.login }
-      });
-
-      if (!postOtpEmailResponse.data.retryDelay) return;
-
-      otp(ctx, {
-        type: 'email',
-        resource: values.login,
-        retryDelay: postOtpEmailResponse.data.retryDelay
-      });
-
-      otp.countdown.startTimer(ctx, postOtpEmailResponse.data.retryDelay / 1000);
-      stage(ctx, { value: 'confirmation' });
-      return;
+export const signInSubmit = reatomAsync(
+  async (
+    ctx,
+    payload: {
+      resource: 'email' | 'login';
+      values: { login: string; password?: string };
     }
+  ) => {
+    try {
+      const { resource, values } = payload;
+      if (resource === 'email') {
+        const postOtpEmailResponse = await postOtpEmail({
+          params: { email: values.login }
+        });
 
-    const postSignInLoginResponse = await postSignInLogin({
-      params: {
-        [resource]: values.login,
-        ...(resource === 'login' && { password: values.password })
-      } as Record<'email' | 'login', string>
-    });
+        if (!postOtpEmailResponse.data.retryDelay) return;
 
-    if (
-      'needConfirmation' in postSignInLoginResponse.data &&
-      postSignInLoginResponse.data.needConfirmation &&
-      resource === 'login'
-    ) {
-      stage(ctx, { value: 'selectConfirmation' });
-      return;
-    }
+        otp(ctx, {
+          type: 'email',
+          resource: values.login,
+          retryDelay: postOtpEmailResponse.data.retryDelay
+        });
 
-    if ('profile' in postSignInLoginResponse.data) {
-      token(ctx, postSignInLoginResponse.data.token);
-      fetchProfile.dataAtom(ctx, postSignInLoginResponse.data.profile);
-      session(ctx, { isAuthenticated: true });
+        otp.countdown.startTimer(ctx, postOtpEmailResponse.data.retryDelay / 1000);
+        stage(ctx, { value: 'confirmation' });
+        return;
+      }
 
-      toast.success('Sign in is successful 👍', {
-        cancel: { label: 'Close' },
-        description: 'We are very glad to see you, have fun'
+      const postSignInLoginResponse = await postSignInLogin({
+        params: {
+          [resource]: values.login,
+          ...(resource === 'login' && { password: values.password })
+        } as Record<'email' | 'login', string>
       });
 
-      router.navigate({
-        to: '/',
-        replace: true
-      });
+      if (
+        'needConfirmation' in postSignInLoginResponse.data &&
+        postSignInLoginResponse.data.needConfirmation &&
+        resource === 'login'
+      ) {
+        stage(ctx, { value: 'selectConfirmation' });
+        return;
+      }
+
+      if ('profile' in postSignInLoginResponse.data) {
+        token(ctx, postSignInLoginResponse.data.token);
+        fetchProfile.dataAtom(ctx, postSignInLoginResponse.data.profile);
+        session(ctx, { isAuthenticated: true });
+
+        toast.success('Sign in is successful 👍', {
+          cancel: { label: 'Close' },
+          description: 'We are very glad to see you, have fun'
+        });
+
+        router.navigate({
+          to: '/',
+          replace: true
+        });
+      }
+    } catch (error) {
+      console.error(error);
     }
-  } catch (error) {
-    console.error(error);
-  }
-}, 'signInSubmit').pipe(
+  },
+  'signInSubmit'
+).pipe(
   withAssign((original, name) => ({
     loading: atom((ctx) => ctx.spy(original.pendingAtom) > 0, `${name}.loading`)
   }))

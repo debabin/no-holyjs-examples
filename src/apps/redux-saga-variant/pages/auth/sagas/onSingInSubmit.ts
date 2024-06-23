@@ -16,7 +16,7 @@ export interface OnSignInSubmitPayload {
   resource: 'email' | 'login';
   values: {
     login: string;
-    password: string;
+    password?: string;
   };
 }
 
