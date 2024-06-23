@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev:react-hooks": "cross-env APP='react-hooks-variant' concurrently \"yarn mock\" \"vite\"",
-    "dev:reatom": "cross-env APP='reatom-variant concurrently' \"yarn mock\" \"vite\"",
+    "dev:reatom": "cross-env APP='reatom-variant' concurrently \"yarn mock\" \"vite\"",
     "dev:redux-saga": "cross-env APP='redux-saga-variant' concurrently \"yarn mock\" \"vite\"",
     "dev:redux-thunk": "cross-env APP='redux-thunk-variant' concurrently \"yarn mock\" \"vite\"",
     "unit-test": "vitest",
