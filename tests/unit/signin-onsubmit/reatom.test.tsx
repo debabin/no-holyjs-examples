@@ -2,10 +2,11 @@ import { createCtx } from '@reatom/framework';
 import { otp, signInSubmit, stage } from '@reatom-variant/pages/auth/model';
 import { startRestMockServer } from 'mock-config-server';
 
-import { POST_OTP_EMAIL_RESPONSE, POST_SIGNIN_LOGIN_RESPONSE } from './constants/data';
 import { fetchProfile, session, token } from '@/apps/reatom-variant/model';
 import { router } from '@/apps/reatom-variant/router';
 import { ROUTES } from '@/utils';
+
+import { POST_OTP_EMAIL_RESPONSE, POST_SIGNIN_LOGIN_RESPONSE } from './constants/data';
 
 let server: ReturnType<typeof startRestMockServer>;
 beforeAll(() => {
