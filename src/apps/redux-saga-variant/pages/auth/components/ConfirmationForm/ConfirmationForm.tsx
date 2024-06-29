@@ -9,10 +9,10 @@ import {
   Label,
   PasswordInput
 } from '@/components/ui';
+import { IDS } from '@/utils';
 
 import { hideResource } from './helpers/hideResource';
 import { useConfirmationForm } from './hooks/ConfirmationForm';
-import { IDS } from '@/utils';
 
 export const ConfirmationForm = () => {
   const { form, state, functions } = useConfirmationForm();

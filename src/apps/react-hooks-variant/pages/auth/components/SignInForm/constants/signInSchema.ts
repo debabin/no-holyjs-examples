@@ -1,7 +1,7 @@
 import * as z from 'zod';
 
 export const signInEmailSchema = z.object({
-  login: z.string().email({ message: 'Invalid email address' })
+  login: z.string().email()
 });
 
 export const signInLoginSchema = z.object({
