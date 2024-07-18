@@ -1,11 +1,12 @@
 import { startRestMockServer } from 'mock-config-server';
 
-import { POST_OTP_EMAIL_RESPONSE, POST_SIGNIN_LOGIN_RESPONSE } from './constants/data';
-import { createStore } from '@/apps/redux-thunk-variant/redux/store';
-import { onSignInSubmit } from '@/apps/redux-thunk-variant/pages/auth/thunks/onSingInSubmit';
 import { authPrefix, authReducer } from '@/apps/redux-thunk-variant/pages/auth/slices';
+import { onSignInSubmit } from '@/apps/redux-thunk-variant/pages/auth/thunks/onSingInSubmit';
+import { createStore } from '@/apps/redux-thunk-variant/redux/store';
 import { router } from '@/apps/redux-thunk-variant/router';
 import { COOKIE, ROUTES } from '@/utils';
+
+import { POST_OTP_EMAIL_RESPONSE, POST_SIGNIN_LOGIN_RESPONSE } from './constants/data';
 
 let server: ReturnType<typeof startRestMockServer>;
 beforeAll(() => {
@@ -67,8 +68,8 @@ test('Should sign in for email', async () => {
     })
   );
 
-  const stage = store.getState().auth!.stage;
-  const otp = store.getState().auth!.otp;
+  const { stage } = store.getState().auth!;
+  const { otp } = store.getState().auth!;
   expect(stage.value).toBe('confirmation');
   expect(otp).toEqual({
     type: 'email',
@@ -89,8 +90,8 @@ test('Should doesnt sign in for email when "/otp/email" error', async () => {
     onSignInSubmit.thunk({ resource: 'email', values: { login: 'error@example.com' } })
   );
 
-  const stage = store.getState().auth!.stage;
-  const otp = store.getState().auth!.otp;
+  const { stage } = store.getState().auth!;
+  const { otp } = store.getState().auth!;
   expect(stage.value).toBe('signIn');
   expect(otp).toEqual({
     type: 'email',
@@ -114,7 +115,7 @@ test('Should sign in for login when need confirmation', async () => {
     })
   );
 
-  const stage = store.getState().auth!.stage;
+  const { stage } = store.getState().auth!;
   expect(stage.value).toBe('selectConfirmation');
 });
 
@@ -133,8 +134,8 @@ test('Should sign in for login when dont need confirmation', async () => {
     })
   );
 
-  const session = store.getState().session;
-  const profile = store.getState().profile;
+  const { session } = store.getState();
+  const { profile } = store.getState();
   expect(localStorage.getItem(COOKIE.ACCESS_TOKEN)).toBe('siberiacancode');
   expect(session.isAuthenticated).toBe(true);
   expect(profile.value).toEqual({
@@ -167,7 +168,7 @@ test('Should doesnt sign in for login when "/signin/login" error', async () => {
     })
   );
 
-  const session = store.getState().session;
+  const { session } = store.getState();
 
   expect(session.isAuthenticated).toBe(false);
   expect(localStorage.getItem(COOKIE.ACCESS_TOKEN)).toBe(null);
