@@ -38,12 +38,13 @@ export const postSingInLoginConfig: RestRequestConfig = {
           }
 
           const { body } = request;
+
           const profile = DATABASE.profiles.find(
             (profile) => profile.login === body.login && profile.password === body.password
           );
           if (!profile) {
             setStatusCode(404);
-            return { success: false };
+            return { message: 'User not found' };
           }
 
           const token = profile.id.toString();

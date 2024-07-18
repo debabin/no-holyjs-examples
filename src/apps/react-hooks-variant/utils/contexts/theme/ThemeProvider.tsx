@@ -8,10 +8,7 @@ export interface ThemeProviderProps {
   children: React.ReactNode;
 }
 
-export const ThemeProvider: React.FC<ThemeProviderProps> = ({
-  children,
-  defaultTheme = 'dark'
-}) => {
+export const ThemeProvider = ({ children, defaultTheme = 'dark' }: ThemeProviderProps) => {
   const [theme, setTheme] = React.useState<Theme>(defaultTheme);
 
   React.useLayoutEffect(() => {

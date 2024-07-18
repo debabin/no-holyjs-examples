@@ -8,10 +8,7 @@ export interface StageProviderProps {
   children: React.ReactNode;
 }
 
-export const StageProvider: React.FC<StageProviderProps> = ({
-  children,
-  defaultStage = 'signIn'
-}) => {
+export const StageProvider = ({ children, defaultStage = 'signIn' }: StageProviderProps) => {
   const [stage, setStage] = React.useState<Stage>(defaultStage);
 
   const value = useMemo(() => ({ stage, setStage }), [stage]);

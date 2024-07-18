@@ -7,7 +7,7 @@ export interface ThemeProviderProps {
   children: React.ReactNode;
 }
 
-export const ThemeContainer: React.FC<ThemeProviderProps> = ({ children }) => {
+export const ThemeContainer = ({ children }: ThemeProviderProps) => {
   const theme = useSelector(themeSlice.selectors.getTheme);
 
   React.useLayoutEffect(() => {

@@ -7,10 +7,7 @@ export interface SessionProviderProps {
   children: React.ReactNode;
 }
 
-export const SessionProvider: React.FC<SessionProviderProps> = ({
-  children,
-  defaultSession = false
-}) => {
+export const SessionProvider = ({ children, defaultSession = false }: SessionProviderProps) => {
   const [session, setSession] = React.useState(defaultSession);
 
   const value = useMemo(() => ({ session, setSession }), [session]);

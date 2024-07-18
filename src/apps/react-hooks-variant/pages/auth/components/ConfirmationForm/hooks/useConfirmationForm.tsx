@@ -43,7 +43,6 @@ export const useConfirmationForm = () => {
 
   const postTwoFactorAuthenticationMutation = usePostTwoFactorAuthenticationMutation({
     options: {
-      onError: () => confirmationForm.setError('otp', { message: 'Invalid OTP' }),
       onSuccess: () =>
         toast.success('Sign in is successful 👍', {
           cancel: { label: 'Close' },
@@ -77,25 +76,29 @@ export const useConfirmationForm = () => {
   }, [seconds]);
 
   const onSubmit = confirmationForm.handleSubmit(async (values) => {
-    const postTwoFactorAuthenticationMutationResponse =
-      await postTwoFactorAuthenticationMutation.mutateAsync({
-        params: {
-          otp: values.otp,
-          source: otp.resource
-        }
-      });
+    try {
+      const postTwoFactorAuthenticationMutationResponse =
+        await postTwoFactorAuthenticationMutation.mutateAsync({
+          params: {
+            otp: values.otp,
+            source: otp.resource
+          }
+        });
 
-    if ('profile' in postTwoFactorAuthenticationMutationResponse.data) {
-      localStorage.setItem(
-        COOKIE.ACCESS_TOKEN,
-        postTwoFactorAuthenticationMutationResponse.data.token
-      );
-      setProfile(postTwoFactorAuthenticationMutationResponse.data.profile);
-      flushSync(() => setSession(true));
-      navigate({
-        to: ROUTES.INDEX,
-        replace: true
-      });
+      if ('profile' in postTwoFactorAuthenticationMutationResponse.data) {
+        localStorage.setItem(
+          COOKIE.ACCESS_TOKEN,
+          postTwoFactorAuthenticationMutationResponse.data.token
+        );
+        setProfile(postTwoFactorAuthenticationMutationResponse.data.profile);
+        flushSync(() => setSession(true));
+        navigate({
+          to: ROUTES.INDEX,
+          replace: true
+        });
+      }
+    } catch (error: any) {
+      confirmationForm.setError('otp', { message: error.response.data.message });
     }
   });
 

@@ -23,7 +23,13 @@ export const ConfirmationForm = reatomComponent(({ ctx }) => {
 
   const { form } = useConfirmationForm();
 
-  const handleFormSubmit = form.handleSubmit((values) => confirmationSubmit(ctx, { values }));
+  const handleFormSubmit = form.handleSubmit(async (values) => {
+    try {
+      await confirmationSubmit(ctx, { values });
+    } catch (error: any) {
+      form.setError('otp', { message: error.response.data.message });
+    }
+  });
 
   const onOtpResend = () => otp.resend(ctx);
 

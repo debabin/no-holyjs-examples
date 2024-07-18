@@ -158,27 +158,23 @@ export const selectConfirmationSubmit = reatomAsync(async (ctx, payload) => {
 );
 
 export const confirmationSubmit = reatomAsync(async (ctx, payload) => {
-  try {
-    const { values } = payload;
-    const postTwoFactorAuthenticationResponse = await postTwoFactorAuthentication({
-      params: {
-        otp: values.otp,
-        source: ctx.get(otp).resource
-      }
-    });
-
-    if ('profile' in postTwoFactorAuthenticationResponse.data) {
-      token(ctx, postTwoFactorAuthenticationResponse.data.token);
-      fetchProfile.dataAtom(ctx, postTwoFactorAuthenticationResponse.data.profile);
-      session(ctx, { isAuthenticated: true });
-
-      router.navigate({
-        to: '/',
-        replace: true
-      });
+  const { values } = payload;
+  const postTwoFactorAuthenticationResponse = await postTwoFactorAuthentication({
+    params: {
+      otp: values.otp,
+      source: ctx.get(otp).resource
     }
-  } catch (error) {
-    console.error(error);
+  });
+
+  if ('profile' in postTwoFactorAuthenticationResponse.data) {
+    token(ctx, postTwoFactorAuthenticationResponse.data.token);
+    fetchProfile.dataAtom(ctx, postTwoFactorAuthenticationResponse.data.profile);
+    session(ctx, { isAuthenticated: true });
+
+    router.navigate({
+      to: '/',
+      replace: true
+    });
   }
 }, 'confirmationSubmit').pipe(
   withAssign((original, name) => ({

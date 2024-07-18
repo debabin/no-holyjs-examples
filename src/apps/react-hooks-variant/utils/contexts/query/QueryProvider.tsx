@@ -4,6 +4,6 @@ export interface QueryProviderProps extends React.ComponentProps<typeof QueryCli
   children: React.ReactNode;
 }
 
-export const QueryProvider: React.FC<QueryProviderProps> = ({ children, client }) => (
+export const QueryProvider = ({ children, client }: QueryProviderProps) => (
   <QueryClientProvider client={client}>{children}</QueryClientProvider>
 );

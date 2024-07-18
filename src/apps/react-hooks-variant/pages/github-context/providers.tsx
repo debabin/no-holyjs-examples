@@ -7,7 +7,7 @@ interface ProvidersProps {
   cardEntries: Omit<CardEntiresProviderProps, 'children'>;
 }
 
-const Providers: React.FC<ProvidersProps> = ({ children, cardEntries }) => (
+const Providers = ({ children, cardEntries }: ProvidersProps) => (
   <SelectProvider>
     <CardEntiresProvider {...cardEntries}>{children}</CardEntiresProvider>
   </SelectProvider>

@@ -7,7 +7,7 @@ export interface ProfileProviderProps {
   children: React.ReactNode;
 }
 
-export const ProfileProvider: React.FC<ProfileProviderProps> = ({ children, defaultProfile }) => {
+export const ProfileProvider = ({ children, defaultProfile }: ProfileProviderProps) => {
   const [profile, setProfile] = React.useState<Profile>(defaultProfile!);
 
   const value = useMemo(() => ({ profile, setProfile }), [profile]);

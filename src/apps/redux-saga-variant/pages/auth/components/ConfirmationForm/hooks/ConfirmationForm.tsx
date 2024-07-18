@@ -26,7 +26,12 @@ export const useConfirmationForm = () => {
   const onOtpResend = () => dispatch(authSagas.onOtpResend.action());
 
   const onSubmit = confirmationForm.handleSubmit((values) =>
-    dispatch(authSagas.onConfirmationSubmit.action({ values }))
+    dispatch(
+      authSagas.onConfirmationSubmit.action({
+        values,
+        setError: (message) => confirmationForm.setError('otp', { message })
+      })
+    )
   );
 
   const goToSignUp = () => dispatch(authActions.setStage('signUp'));

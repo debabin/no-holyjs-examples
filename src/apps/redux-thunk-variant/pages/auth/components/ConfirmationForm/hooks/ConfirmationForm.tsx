@@ -25,15 +25,19 @@ export const useConfirmationForm = () => {
 
   const onOtpResend = () => dispatch(authThunks.onOtpResend.thunk());
 
-  const onSubmit = confirmationForm.handleSubmit((values) =>
-    dispatch(authThunks.onConfirmationSubmit.thunk({ values }))
-  );
+  const onSubmit = confirmationForm.handleSubmit(async (values) => {
+    const { payload }: any = await dispatch(authThunks.onConfirmationSubmit.thunk({ values }));
+
+    if (payload.response.data.message) {
+      confirmationForm.setError('otp', { message: payload.response.data.message });
+    }
+  });
 
   const goToSignUp = () => dispatch(authActions.setStage('signUp'));
 
   return {
     state: {
-      loading,
+      loading: loading && confirmationForm.formState.isSubmitting,
       otp,
       seconds: otpCountdown.seconds
     },

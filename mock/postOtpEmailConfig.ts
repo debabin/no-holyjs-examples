@@ -6,8 +6,15 @@ export const postOtpEmailConfig: RestRequestConfig = {
   path: '/otp/email',
   method: 'post',
   interceptors: {
-    response: (_, { request }) => {
+    response: (_, { request, setStatusCode }) => {
       const { body } = request;
+
+      const user = DATABASE.profiles.find((profile) => profile.email === body.email);
+      if (!user) {
+        setStatusCode(404);
+        return { message: 'User not found' };
+      }
+
       const otp = DATABASE.otps.find(({ source }) => body.email === source);
 
       if (otp && otp.endTime > Date.now()) {

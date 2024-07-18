@@ -27,7 +27,7 @@ export const postTwoFactorAuthenticationConfig: RestRequestConfig = {
       }
 
       setStatusCode(404);
-      return { success: false };
+      return { message: 'Incorrect otp code' };
     }
   },
   routes: [

@@ -13,10 +13,7 @@ export interface CardEntiresProviderProps {
   defaultCardEntires: CardEntires;
 }
 
-export const CardEntiresProvider: React.FC<CardEntiresProviderProps> = ({
-  children,
-  defaultCardEntires
-}) => {
+export const CardEntiresProvider = ({ children, defaultCardEntires }: CardEntiresProviderProps) => {
   const { select } = useSelect();
   const [cardEntires, setCardEntires] = React.useState<CardEntires>(defaultCardEntires);
 

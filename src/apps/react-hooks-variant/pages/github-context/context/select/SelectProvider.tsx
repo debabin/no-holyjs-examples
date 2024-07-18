@@ -7,7 +7,7 @@ export interface SelectProviderProps {
   children: React.ReactNode;
 }
 
-export const SelectProvider: React.FC<SelectProviderProps> = ({ children }) => {
+export const SelectProvider = ({ children }: SelectProviderProps) => {
   const [select, setSelect] = React.useState<Select>({
     id: null,
     offset: {

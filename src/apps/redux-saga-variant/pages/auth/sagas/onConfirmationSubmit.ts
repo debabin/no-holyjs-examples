@@ -14,6 +14,7 @@ export interface OnConfirmationSubmitPayload {
   values: {
     otp: string;
   };
+  setError: (message: string) => void;
 }
 
 export const action = createAction<OnConfirmationSubmitPayload>('auth.onConfirmationSubmit');
@@ -24,9 +25,8 @@ export type OnConfirmationSubmitAction = SagaAction<
 >;
 
 export function* saga(action: OnConfirmationSubmitAction) {
+  const { values, setError } = action.payload;
   try {
-    const { values } = action.payload;
-
     const otp: SagaReturnType<typeof authSelectors.getOtp> = yield select(authSelectors.getOtp);
 
     const postTwoFactorAuthenticationResponse: SagaReturnType<
@@ -52,8 +52,8 @@ export function* saga(action: OnConfirmationSubmitAction) {
         replace: true
       });
     }
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    setError(error.response.data.message);
   }
 }
 

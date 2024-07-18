@@ -45,8 +45,8 @@ export const thunk = createAsyncThunk<void, OnConfirmationSubmitPayload, { state
           replace: true
         });
       }
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      return error;
     }
   }
 );

@@ -8,7 +8,6 @@ const mockServerConfig: MockServerConfig = {
     path: '/mock/static',
     prefix: '/static'
   },
-
   rest: {
     configs: Object.values(requestConfigs),
     interceptors: {
