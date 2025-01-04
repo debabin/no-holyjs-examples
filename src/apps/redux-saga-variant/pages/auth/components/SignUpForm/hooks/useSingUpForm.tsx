@@ -1,7 +1,7 @@
-import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useDispatch } from '@redux-saga-variant/redux/hooks';
+import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 
 import { authSagas } from '../../../sagas';
 import { authSelectors } from '../../../slices';
@@ -11,11 +11,11 @@ import { COUNTRIES } from '../constants/countries';
 
 interface SingUpForm {
   email: string;
-  password: string;
-  passwordConfirmation: string;
-  login: string;
   firstName?: string;
   lastName?: string;
+  login: string;
+  password: string;
+  passwordConfirmation: string;
   country: {
     id: number;
     label: string;

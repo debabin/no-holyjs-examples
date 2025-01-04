@@ -1,9 +1,9 @@
 import React from 'react';
 
 export interface Otp {
-  type: 'email' | 'phone';
   resource: string;
   retryDelay: number;
+  type: 'email' | 'phone';
 }
 
 export interface OtpContextProps {

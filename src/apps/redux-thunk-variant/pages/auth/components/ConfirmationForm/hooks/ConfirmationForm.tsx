@@ -1,7 +1,7 @@
-import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useDispatch } from '@redux-thunk-variant/redux/hooks';
+import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 
 import { authActions, authSelectors } from '../../../slices';
 import { authThunks } from '../../../thunks';

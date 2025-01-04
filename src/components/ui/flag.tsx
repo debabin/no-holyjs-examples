@@ -5,9 +5,9 @@ const flags = {
     <svg
       {...props}
       ref={ref}
+      xmlns='http://www.w3.org/2000/svg'
       enableBackground='new 0 0 512 512'
       viewBox='0 0 512 512'
-      xmlns='http://www.w3.org/2000/svg'
     >
       <path
         d='m12.088 178.088c-7.842 24.568-12.089 50.741-12.088 77.91-.001 27.17 4.247 53.345 12.089 77.913l243.911 11.132 243.911-11.13c7.841-24.569 12.09-50.745 12.09-77.913-.001-27.17-4.248-53.344-12.09-77.913l-243.911-11.13z'
@@ -61,9 +61,9 @@ const flags = {
     <svg
       {...props}
       ref={ref}
+      xmlns='http://www.w3.org/2000/svg'
       enableBackground='new 0 0 512 512'
       viewBox='0 0 512 512'
-      xmlns='http://www.w3.org/2000/svg'
     >
       <circle cx='256' cy='256' fill='#338af3' r='256' />
       <path
@@ -99,9 +99,9 @@ const flags = {
     <svg
       {...props}
       ref={ref}
+      xmlns='http://www.w3.org/2000/svg'
       enableBackground='new 0 0 512 512'
       viewBox='0 0 512 512'
-      xmlns='http://www.w3.org/2000/svg'
     >
       <circle cx='256' cy='256' fill='#fcfcfc' r='256' />
       <g fill='#a2001d'>
@@ -141,9 +141,9 @@ const flags = {
     <svg
       {...props}
       ref={ref}
+      xmlns='http://www.w3.org/2000/svg'
       enableBackground='new 0 0 512 512'
       viewBox='0 0 512 512'
-      xmlns='http://www.w3.org/2000/svg'
     >
       <circle cx='256' cy='256' fill='#f0f0f0' r='256' />
       <path

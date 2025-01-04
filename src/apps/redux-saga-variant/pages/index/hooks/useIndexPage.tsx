@@ -1,6 +1,6 @@
-import { useSelector } from 'react-redux';
 import { useDispatch } from '@redux-saga-variant/redux/hooks';
 import { profileSlice } from '@redux-saga-variant/redux/slices/profile/slice';
+import { useSelector } from 'react-redux';
 
 import { indexSagas } from '../sagas';
 

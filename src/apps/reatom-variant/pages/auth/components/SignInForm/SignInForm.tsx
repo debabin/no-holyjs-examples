@@ -1,5 +1,5 @@
+import { signInSubmit } from '@reatom-variant/pages/auth/model';
 import { reatomComponent } from '@reatom/npm-react';
-import { signInSubmit } from '@reatom-variant/pages/auth/model.ts';
 
 import { SpinnerIcon } from '@/components/icons';
 import {
@@ -15,11 +15,10 @@ import {
 } from '@/components/ui';
 
 import { AuthButtonsContainer } from '../AuthButtonsContainer/AuthButtonsContainer';
-
 import { useSignInForm } from './hooks/useSignInForm';
 
 export const SignInForm = reatomComponent(({ ctx }) => {
-  const loading = ctx.spy(signInSubmit.loading);
+  const loading = ctx.spy(signInSubmit.loadingAtom);
   const { form, functions, state } = useSignInForm();
 
   return (
@@ -31,15 +30,13 @@ export const SignInForm = reatomComponent(({ ctx }) => {
       <div>
         <Form {...form}>
           <form
+            className='space-y-4'
             onSubmit={(event) => {
               event.preventDefault();
               functions.onSubmit();
             }}
-            className='space-y-4'
           >
             <FormField
-              control={form.control}
-              name='login'
               render={({ field }) => (
                 <FormItem>
                   <Label className='sr-only' htmlFor='login'>
@@ -47,21 +44,21 @@ export const SignInForm = reatomComponent(({ ctx }) => {
                   </Label>
                   <FormControl>
                     <Input
-                      placeholder='write login or email'
+                      disabled={loading}
                       autoCapitalize='none'
                       autoCorrect='off'
-                      disabled={loading}
+                      placeholder='write login or email'
                       {...field}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
+              name='login'
+              control={form.control}
             />
             {!state.isEmail && (
               <FormField
-                control={form.control}
-                name='password'
                 render={({ field }) => (
                   <FormItem>
                     <Label className='sr-only' htmlFor='password'>
@@ -69,21 +66,23 @@ export const SignInForm = reatomComponent(({ ctx }) => {
                     </Label>
                     <FormControl>
                       <PasswordInput
-                        placeholder='your very secret password'
+                        disabled={loading}
                         autoCapitalize='none'
                         autoComplete='password'
                         autoCorrect='off'
-                        disabled={loading}
+                        placeholder='your very secret password'
                         {...field}
                       />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
+                name='password'
+                control={form.control}
               />
             )}
 
-            <Button type='submit' className='w-full' disabled={loading}>
+            <Button className='w-full' disabled={loading} type='submit'>
               {loading && <SpinnerIcon className='mr-2 h-4 w-4 animate-spin' />}
               Sign in
             </Button>

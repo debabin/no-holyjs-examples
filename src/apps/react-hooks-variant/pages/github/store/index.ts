@@ -6,12 +6,12 @@ import { debounce } from './debounce';
 interface Store {
   cards: Array<GithubCard & { isDragging: boolean }>;
   entries: Record<GithubCard['id'], GithubCard & { isDragging: boolean }>;
+  loading: boolean;
+  selectedCardId: GithubCard['id'] | null;
   offset: {
     x: number;
     y: number;
   };
-  selectedCardId: GithubCard['id'] | null;
-  loading: boolean;
 }
 
 export const loadingStore = createStore<Store['loading']>('loadingStore', false);

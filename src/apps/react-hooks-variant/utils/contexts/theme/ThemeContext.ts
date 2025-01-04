@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type Theme = 'light' | 'dark';
+export type Theme = 'dark' | 'light';
 
 export interface ThemeContextProps {
   theme: Theme;

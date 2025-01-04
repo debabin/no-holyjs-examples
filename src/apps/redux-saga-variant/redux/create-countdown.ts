@@ -1,12 +1,13 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
+
 import { createSlice } from '@reduxjs/toolkit';
 
 import { store } from './store';
 
 interface CountdownState {
-  status: 'running' | 'waiting';
-  seconds: number;
   id?: NodeJS.Timeout;
+  seconds: number;
+  status: 'running' | 'waiting';
 }
 
 interface CreateCountdownSliceParams<Name> {

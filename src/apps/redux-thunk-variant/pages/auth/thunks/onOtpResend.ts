@@ -1,7 +1,8 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { apiSlice } from '@/apps/redux-thunk-variant/redux/api';
 import type { RootState } from '@/apps/redux-thunk-variant/redux/store';
+
+import { apiSlice } from '@/apps/redux-thunk-variant/redux/api';
 
 import { authActions, authSelectors } from '../slices';
 import { otpCountdownSlice } from '../slices/otpCountdown/slice';

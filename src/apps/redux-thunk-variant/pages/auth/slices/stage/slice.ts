@@ -1,7 +1,8 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
+
 import { createSlice } from '@reduxjs/toolkit';
 
-export type Stage = 'signIn' | 'signUp' | 'selectConfirmation' | 'confirmation';
+export type Stage = 'confirmation' | 'selectConfirmation' | 'signIn' | 'signUp';
 
 interface StageState {
   value: Stage;

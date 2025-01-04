@@ -1,8 +1,9 @@
-import type { MouseEventHandler } from 'react';
-import { useRef } from 'react';
-import { reatomComponent } from '@reatom/npm-react';
 import type { GithubCardModel } from '@reatom-variant/pages/github/model';
-import { dragging } from '@reatom-variant/pages/github/model';
+import type { MouseEventHandler } from 'react';
+
+import { draggingAtom } from '@reatom-variant/pages/github/model';
+import { reatomComponent } from '@reatom/npm-react';
+import { useRef } from 'react';
 
 import { Avatar, AvatarImage, Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
 import { Badge } from '@/components/ui/badge';
@@ -27,19 +28,19 @@ export const GithubCard = reatomComponent<GithubCardProps>(({ ctx, card }) => {
   };
 
   const handleMouseDown: MouseEventHandler<HTMLDivElement> = (event) => {
-    dragging(ctx, card);
+    draggingAtom(ctx, card);
     prevCoordRef.current = { x: event.clientX, y: event.clientY };
   };
 
   const handleMouseLeave: MouseEventHandler<HTMLDivElement> = () => {
-    dragging(ctx, null);
+    draggingAtom(ctx, null);
     prevCoordRef.current = null;
   };
 
   return (
     <Card
       style={{
-        zIndex: ctx.spy(card.isDragging) ? 50 : 1,
+        zIndex: ctx.spy(card.isDraggingAtom) ? 50 : 1,
         cursor: 'pointer',
         left: `${position.x}px`,
         top: `${position.y}px`,
@@ -48,15 +49,15 @@ export const GithubCard = reatomComponent<GithubCardProps>(({ ctx, card }) => {
         position: 'absolute',
         userSelect: 'none'
       }}
-      onMouseMove={handleMouseMove}
       onMouseDown={handleMouseDown}
       onMouseLeave={handleMouseLeave}
+      onMouseMove={handleMouseMove}
       onMouseUp={handleMouseLeave}
     >
       <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
         <CardTitle className='text-sm font-medium'>{card.id}</CardTitle>
         <Avatar className='h-10 w-10'>
-          <AvatarImage src={card.image} alt={card.title} />
+          <AvatarImage alt={card.title} src={card.image} />
         </Avatar>
       </CardHeader>
       <CardContent>

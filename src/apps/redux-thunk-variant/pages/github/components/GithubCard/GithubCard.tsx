@@ -22,12 +22,6 @@ export const GithubCard = ({ id }: GithubCardProps) => {
         position: 'absolute',
         userSelect: 'none'
       }}
-      onMouseMove={(event) =>
-        functions.positionChange({
-          y: event.clientY,
-          x: event.clientX
-        })
-      }
       onMouseDown={(event) => {
         functions.setOffset({
           x: state.card.position.x - event.clientX + state.card.size.width / 2,
@@ -35,12 +29,18 @@ export const GithubCard = ({ id }: GithubCardProps) => {
         });
         functions.setDragging(true);
       }}
+      onMouseMove={(event) =>
+        functions.positionChange({
+          y: event.clientY,
+          x: event.clientX
+        })
+      }
       onMouseUp={() => functions.setDragging(false)}
     >
       <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
         <CardTitle className='text-sm font-medium'>{state.card.id}</CardTitle>
         <Avatar className='h-10 w-10'>
-          <AvatarImage src={state.card.image} alt={state.card.title} />
+          <AvatarImage alt={state.card.title} src={state.card.image} />
         </Avatar>
       </CardHeader>
       <CardContent>

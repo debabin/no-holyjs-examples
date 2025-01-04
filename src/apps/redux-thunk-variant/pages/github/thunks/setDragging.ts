@@ -1,5 +1,6 @@
-import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import type { SagaReturnType } from 'redux-saga/effects';
+
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 
 import type { RootState } from '@/apps/redux-thunk-variant/redux/store';
 

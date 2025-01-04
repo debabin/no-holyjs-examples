@@ -1,4 +1,5 @@
 import type { Action, Atom, RecordAtom } from '@reatom/framework';
+
 import {
   action,
   atom,
@@ -15,20 +16,20 @@ import {
 
 import { getGithubCards, putGithubCard } from '@/utils/api';
 
-export type GithubCardModel = {
-  id: GithubCard['id'];
-  size: GithubCard['size'];
-  title: GithubCard['title'];
+export interface GithubCardModel {
   description: GithubCard['description'];
+  id: GithubCard['id'];
   image: GithubCard['image'];
+  incrementReaction: Action;
+  isDraggingAtom: Atom<boolean>;
   position: RecordAtom<{ x: number; y: number }>;
   reactions: RecordAtom<Record<string, number>>;
-  isDragging: Atom<boolean>;
-  reactionsCount: Atom<number>;
-  incrementReaction: Action;
-};
+  reactionsCountAtom: Atom<number>;
+  size: GithubCard['size'];
+  title: GithubCard['title'];
+}
 
-export const dragging = atom<null | GithubCardModel>(null, 'dragging');
+export const draggingAtom = atom<GithubCardModel | null>(null, 'draggingAtom');
 
 const reatomCard = (card: GithubCard): GithubCardModel => {
   const name = `card#${card.id}`;
@@ -36,16 +37,16 @@ const reatomCard = (card: GithubCard): GithubCardModel => {
   const position = reatomRecord(card.position, `${name}.position`);
   const reactions = reatomRecord(card.reactions, `${name}.reactions`);
 
-  const reactionsCount = atom((ctx) => {
+  const reactionsCountAtom = atom((ctx) => {
     return Object.values(ctx.spy(reactions)).reduce((a, b) => a + b);
   }, `${name}.reactionsCount`);
 
   const model: GithubCardModel = {
     ...card,
-    isDragging: atom((ctx) => model === ctx.spy(dragging), `${name}.isDragging`),
+    isDraggingAtom: atom((ctx) => model === ctx.spy(draggingAtom), `${name}.isDragging`),
     position,
     reactions,
-    reactionsCount,
+    reactionsCountAtom,
     incrementReaction: action((ctx, reaction: string) => {
       reactions.merge(ctx, {
         [reaction]: ctx.get(reactions)[reaction] + 1
@@ -57,9 +58,9 @@ const reatomCard = (card: GithubCard): GithubCardModel => {
     concurrent(async (ctx) => {
       await ctx.schedule(() => sleep(500));
       const card = omit(parseAtoms(ctx, model), [
-        'reactionsCount',
+        'reactionsCountAtom',
         'incrementReaction',
-        'isDragging'
+        'isDraggingAtom'
       ]);
       await putGithubCard({
         params: card
@@ -82,10 +83,10 @@ export const fetchCards = reatomAsync(async () => {
   withDataAtom([], (_, cards) => cards.map((card) => reatomCard(card))),
   withErrorAtom(),
   withAssign((original, name) => ({
-    loading: atom((ctx) => ctx.spy(original.pendingAtom) > 0, `${name}.loading`),
-    reactionsCount: atom((ctx) => {
+    loadingAtom: atom((ctx) => ctx.spy(original.pendingAtom) > 0, `${name}.loading`),
+    reactionsCountAtom: atom((ctx) => {
       const cards = ctx.spy(original.dataAtom);
-      return cards.reduce((a, { reactionsCount }) => a + ctx.spy(reactionsCount), 0);
+      return cards.reduce((a, { reactionsCountAtom }) => a + ctx.spy(reactionsCountAtom), 0);
     }, `${name}.reactionsCount`)
   }))
 );

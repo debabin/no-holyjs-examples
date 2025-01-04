@@ -1,5 +1,6 @@
-import { createAction } from '@reduxjs/toolkit';
 import type { SagaReturnType } from 'redux-saga/effects';
+
+import { createAction } from '@reduxjs/toolkit';
 import { put, select } from 'redux-saga/effects';
 
 import { githubActions, githubSelectors } from '../slices';

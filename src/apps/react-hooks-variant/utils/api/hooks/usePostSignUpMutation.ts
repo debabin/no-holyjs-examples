@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
 import type { PostSignUpRequestConfig } from '@/utils/api/requests/signup';
+
 import { postSignUp } from '@/utils/api/requests/signup';
 
 export const usePostSingUpMutation = (

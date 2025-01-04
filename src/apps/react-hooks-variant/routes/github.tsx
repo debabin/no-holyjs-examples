@@ -6,7 +6,6 @@ import { fetchCards } from '../pages/github/store';
 
 export const Route = createFileRoute(ROUTES.GITHUB)({
   beforeLoad: () => {
-    console.log('@');
     fetchCards();
   }
 });

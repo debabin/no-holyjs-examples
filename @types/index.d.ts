@@ -1,13 +1,13 @@
 type ProfileRole = 'admin' | 'user';
 
 interface Profile {
-  id: number;
-  email: string;
   avatar: string;
+  email: string;
+  firstName: string;
+  id: number;
+  lastName: string;
   login: string;
   password: string;
-  firstName: string;
-  lastName: string;
   phone: string;
   role: ProfileRole;
   country: {
@@ -18,10 +18,10 @@ interface Profile {
 }
 
 interface Otp {
+  endTime: number;
   id: number;
   source: string;
   value: string;
-  endTime: number;
 }
 
 interface Confirmation {
@@ -33,7 +33,11 @@ interface RetryDelay {
 }
 
 interface GithubCard {
+  description: string;
   id: number;
+  image: string;
+  reactions: Record<string, number>;
+  title: string;
   position: {
     x: number;
     y: number;
@@ -42,8 +46,4 @@ interface GithubCard {
     width: number;
     height: number;
   };
-  title: string;
-  description: string;
-  image: string;
-  reactions: Record<string, number>;
 }

@@ -1,9 +1,10 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 
+import type { RootState } from '@/apps/redux-thunk-variant/redux/store';
+
 import { apiSlice } from '@/apps/redux-thunk-variant/redux/api';
 import { profileSlice } from '@/apps/redux-thunk-variant/redux/slices/profile/slice';
 import { sessionSlice } from '@/apps/redux-thunk-variant/redux/slices/session/slice';
-import type { RootState } from '@/apps/redux-thunk-variant/redux/store';
 import { router } from '@/apps/redux-thunk-variant/router';
 import { COOKIE } from '@/utils/constants';
 

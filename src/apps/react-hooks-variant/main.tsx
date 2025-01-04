@@ -1,13 +1,15 @@
-import ReactDOM from 'react-dom/client';
-import { MutationCache, QueryCache, QueryClient } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
+
+import { MutationCache, QueryCache, QueryClient } from '@tanstack/react-query';
+import ReactDOM from 'react-dom/client';
 import { toast } from 'sonner';
 
 import { COOKIE } from '@/utils';
 import { getProfile } from '@/utils/api';
 
-import { App } from './app.tsx';
 import type { ProvidersProps } from './providers.tsx';
+
+import { App } from './app.tsx';
 import Providers from './providers.tsx';
 
 export const init = async () => {

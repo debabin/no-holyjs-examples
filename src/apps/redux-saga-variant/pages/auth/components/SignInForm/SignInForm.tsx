@@ -12,7 +12,6 @@ import {
 } from '@/components/ui';
 
 import { AuthButtonsContainer } from '../AuthButtonsContainer/AuthButtonsContainer';
-
 import { useSignInForm } from './hooks/useSignInForm';
 
 export const SignInForm = () => {
@@ -27,15 +26,13 @@ export const SignInForm = () => {
       <div>
         <Form {...form}>
           <form
+            className='space-y-4'
             onSubmit={(event) => {
               event.preventDefault();
               functions.onSubmit();
             }}
-            className='space-y-4'
           >
             <FormField
-              control={form.control}
-              name='login'
               render={({ field }) => (
                 <FormItem>
                   <Label className='sr-only' htmlFor='login'>
@@ -43,10 +40,10 @@ export const SignInForm = () => {
                   </Label>
                   <FormControl>
                     <Input
-                      placeholder='write login or email'
+                      disabled={state.loading}
                       autoCapitalize='none'
                       autoCorrect='off'
-                      disabled={state.loading}
+                      placeholder='write login or email'
                       {...field}
                       // onChange={signInForm.onChange('login')}
                     />
@@ -54,11 +51,11 @@ export const SignInForm = () => {
                   <FormMessage />
                 </FormItem>
               )}
+              name='login'
+              control={form.control}
             />
             {!state.isEmail && (
               <FormField
-                control={form.control}
-                name='password'
                 render={({ field }) => (
                   <FormItem>
                     <Label className='sr-only' htmlFor='password'>
@@ -66,21 +63,23 @@ export const SignInForm = () => {
                     </Label>
                     <FormControl>
                       <PasswordInput
-                        placeholder='your very secret password'
+                        disabled={state.loading}
                         autoCapitalize='none'
                         autoComplete='password'
                         autoCorrect='off'
-                        disabled={state.loading}
+                        placeholder='your very secret password'
                         {...field}
                       />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
+                name='password'
+                control={form.control}
               />
             )}
 
-            <Button type='submit' className='w-full' disabled={state.loading}>
+            <Button className='w-full' disabled={state.loading} type='submit'>
               {state.loading && <SpinnerIcon className='mr-2 h-4 w-4 animate-spin' />}
               Sign in
             </Button>

@@ -1,5 +1,5 @@
-import { reatomComponent } from '@reatom/npm-react';
 import { theme } from '@reatom-variant/model';
+import { reatomComponent } from '@reatom/npm-react';
 
 import { MoonIcon, SunIcon } from '@/components/icons';
 import { Toggle } from '@/components/ui';

@@ -1,5 +1,5 @@
-import { useSelector } from 'react-redux';
 import { Loader2 } from 'lucide-react';
+import { useSelector } from 'react-redux';
 
 import { GithubCard, Info } from './components';
 import { githubSelectors } from './slices';

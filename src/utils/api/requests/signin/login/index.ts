@@ -7,4 +7,4 @@ export interface PostSignInLoginParams {
 export type PostSignInLoginRequestConfig = RequestConfig<PostSignInLoginParams>;
 
 export const postSignInLogin = ({ params, config }: PostSignInLoginRequestConfig) =>
-  api.post<{ profile: Profile; token: string } | Confirmation>('signin/login', params, config);
+  api.post<Confirmation | { profile: Profile; token: string }>('signin/login', params, config);

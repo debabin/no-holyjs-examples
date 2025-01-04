@@ -1,8 +1,9 @@
+import type { CheckedState } from '@radix-ui/react-checkbox';
+
+import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { zodResolver } from '@hookform/resolvers/zod';
-import type { CheckedState } from '@radix-ui/react-checkbox';
 
 import { useDispatch } from '@/apps/redux-thunk-variant/redux/hooks';
 
@@ -19,9 +20,9 @@ export const useSelectConfirmationForm = () => {
   const loading = useSelector(authSelectors.getSelectConfirmationFormLoading);
 
   const [selectConfirmationFormStage, setSelectConfirmationFormStage] = React.useState<
-    'select' | 'form'
+    'form' | 'select'
   >('select');
-  const [selectedResource, setSelectedResource] = React.useState<'phone' | 'email'>('phone');
+  const [selectedResource, setSelectedResource] = React.useState<'email' | 'phone'>('phone');
   const [termsChecked, setTermsChecked] = React.useState<CheckedState>(false);
 
   const onSelectContinue = () => setSelectConfirmationFormStage('form');

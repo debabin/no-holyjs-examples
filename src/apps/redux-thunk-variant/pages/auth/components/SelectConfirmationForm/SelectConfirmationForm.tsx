@@ -32,28 +32,28 @@ export const SelectConfirmationForm = () => {
           <RadioGroup
             className='flex flex-col space-y-2'
             defaultValue={state.selectedResource}
-            onValueChange={(value: 'phone' | 'email') => functions.setSelectedResource(value)}
+            onValueChange={(value: 'email' | 'phone') => functions.setSelectedResource(value)}
           >
             <div className='flex items-center space-x-2'>
-              <RadioGroupItem value='email' id='email' />
+              <RadioGroupItem id='email' value='email' />
               <Label htmlFor='email'>email</Label>
             </div>
             <div className='flex items-center space-x-2'>
-              <RadioGroupItem value='phone' id='phone' />
+              <RadioGroupItem id='phone' value='phone' />
               <Label htmlFor='phone'>phone</Label>
             </div>
           </RadioGroup>
 
           <div className='items-top flex space-x-2'>
             <Checkbox
-              id='terms'
               checked={state.termsChecked}
+              id='terms'
               onCheckedChange={(checked) => functions.setTermsChecked(checked)}
             />
             <div className='grid gap-1.5 leading-none'>
               <label
-                htmlFor='terms'
                 className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                htmlFor='terms'
               >
                 Accept terms and conditions
               </label>
@@ -89,15 +89,13 @@ export const SelectConfirmationForm = () => {
           <div className='grid gap-2'>
             <Form {...form}>
               <form
+                className='space-y-4'
                 onSubmit={(event) => {
                   event.preventDefault();
                   functions.onSubmit();
                 }}
-                className='space-y-4'
               >
                 <FormField
-                  control={form.control}
-                  name='resource'
                   render={({ field }) => (
                     <FormItem>
                       <Label className='sr-only' htmlFor='otp'>
@@ -110,9 +108,9 @@ export const SelectConfirmationForm = () => {
                           )}
                           {state.selectedResource === 'phone' && (
                             <PatternFormat
-                              format='+7 ### ### ####'
                               allowEmptyFormatting
                               customInput={Input}
+                              format='+7 ### ### ####'
                               {...field}
                             />
                           )}
@@ -121,16 +119,18 @@ export const SelectConfirmationForm = () => {
                       <FormMessage />
                     </FormItem>
                   )}
+                  name='resource'
+                  control={form.control}
                 />
-                <Button type='submit' className='w-full' disabled={state.loading}>
+                <Button className='w-full' disabled={state.loading} type='submit'>
                   {state.loading && <SpinnerIcon className='mr-2 h-4 w-4 animate-spin' />}
                   Confirm
                 </Button>
                 <Button
-                  type='button'
-                  variant='outline'
                   className='w-full'
                   disabled={state.loading}
+                  type='button'
+                  variant='outline'
                   onClick={functions.onFormBack}
                 >
                   {state.loading && <SpinnerIcon className='mr-2 h-4 w-4 animate-spin' />}

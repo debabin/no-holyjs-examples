@@ -2,27 +2,27 @@
 
 // Import Routes
 
-import { Route as rootRoute } from './apps/reatom-variant/routes/__root';
-import { Route as GithubImport } from './apps/reatom-variant/routes/github';
-import { Route as AuthImport } from './apps/reatom-variant/routes/auth';
-import { Route as IndexImport } from './apps/reatom-variant/routes/index';
+import { Route as rootRoute } from './routes/__root';
+import { Route as GithubImport } from './routes/github';
+import { Route as AuthImport } from './routes/auth';
+import { Route as IndexImport } from './routes/index';
 
 // Create/Update Routes
 
 const GithubRoute = GithubImport.update({
   path: '/github',
   getParentRoute: () => rootRoute
-} as any).lazy(() => import('./apps/reatom-variant/routes/github.lazy').then((d) => d.Route));
+} as any).lazy(() => import('./routes/github.lazy').then((d) => d.Route));
 
 const AuthRoute = AuthImport.update({
   path: '/auth',
   getParentRoute: () => rootRoute
-} as any).lazy(() => import('./apps/reatom-variant/routes/auth.lazy').then((d) => d.Route));
+} as any).lazy(() => import('./routes/auth.lazy').then((d) => d.Route));
 
 const IndexRoute = IndexImport.update({
   path: '/',
   getParentRoute: () => rootRoute
-} as any).lazy(() => import('./apps/reatom-variant/routes/index.lazy').then((d) => d.Route));
+} as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route));
 
 // Populate the FileRoutesByPath interface
 

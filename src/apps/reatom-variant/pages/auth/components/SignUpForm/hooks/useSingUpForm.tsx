@@ -1,18 +1,18 @@
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCtx } from '@reatom/npm-react';
+import { useForm } from 'react-hook-form';
 
-import { signUpSubmit, stage } from '../../../model';
+import { signUpSubmit, stageAtom } from '../../../model';
 import { signUpSchema } from '../constants';
 import { COUNTRIES } from '../constants/countries';
 
 interface SingUpForm {
   email: string;
-  password: string;
-  passwordConfirmation: string;
-  login: string;
   firstName?: string;
   lastName?: string;
+  login: string;
+  password: string;
+  passwordConfirmation: string;
   country: {
     id: number;
     label: string;
@@ -30,7 +30,7 @@ export const useSignUpForm = () => {
     resolver: zodResolver(signUpSchema)
   });
 
-  const goToSignIn = () => stage(ctx, { value: 'signIn' });
+  const goToSignIn = () => stageAtom(ctx, { value: 'signIn' });
 
   const onSubmit = signUpForm.handleSubmit((values) => signUpSubmit(ctx, { values }));
 

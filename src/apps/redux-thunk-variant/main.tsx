@@ -1,14 +1,14 @@
-import ReactDOM from 'react-dom/client';
 import { store } from '@redux-thunk-variant/redux/store';
+import ReactDOM from 'react-dom/client';
 
 import { COOKIE } from '@/utils/constants';
 
+import { App } from './app';
+import Providers from './providers';
 import { apiSlice } from './redux/api';
 import { profileSlice } from './redux/slices/profile/slice';
 import { sessionSlice } from './redux/slices/session/slice';
 import { themeSlice } from './redux/slices/theme/slice';
-import { App } from './app';
-import Providers from './providers';
 
 const defaultTheme = 'light';
 

@@ -1,4 +1,5 @@
 import type { Stage } from '../../contexts/stage';
+
 import { useStage } from '../../contexts/stage';
 import { ConfirmationForm } from '../ConfirmationForm/ConfirmationForm';
 import { SelectConfirmationForm } from '../SelectConfirmationForm/SelectConfirmationForm';

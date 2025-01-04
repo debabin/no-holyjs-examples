@@ -1,13 +1,14 @@
 import type { Draft, PayloadAction, Reducer } from '@reduxjs/toolkit';
+
 import { combineSlices, createSlice } from '@reduxjs/toolkit';
 
 import { store } from './store';
 
-type ApiEndpointStatus = 'idle' | 'pending' | 'fulfilled' | 'rejected';
+type ApiEndpointStatus = 'fulfilled' | 'idle' | 'pending' | 'rejected';
 interface ApiEndpointState<Data> {
   data: Data | null;
-  status: ApiEndpointStatus;
   error: string | null;
+  status: ApiEndpointStatus;
 }
 
 interface CreateApiParams<Name extends string, EndpointsDefinitions extends Record<string, any>> {

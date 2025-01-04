@@ -8,15 +8,13 @@ test.describe('Email validation', () => {
 
   test('Should show "required" error', async ({ page }) => {
     await page.getByTestId(IDS.BUTTON.SIGN_UP).click();
-    await expect(page.getByTestId(`${IDS.INPUT.EMAIL}-form-item-message`)).toContainText(
-      'Required'
-    );
+    await expect(page.getByTestId(`${IDS.INPUT.EMAIL}-form-item-message`)).toContain('Required');
   });
 
   test('Should show "invalid email" error', async ({ page }) => {
     page.getByTestId(`${IDS.INPUT.EMAIL}-form-item`).fill('not email');
     await page.getByTestId(IDS.BUTTON.SIGN_UP).click();
-    await expect(page.getByTestId(`${IDS.INPUT.EMAIL}-form-item-message`)).toContainText(
+    await expect(page.getByTestId(`${IDS.INPUT.EMAIL}-form-item-message`)).toContain(
       'Invalid email address'
     );
   });

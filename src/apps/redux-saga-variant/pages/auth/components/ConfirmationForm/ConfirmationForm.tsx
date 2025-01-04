@@ -9,10 +9,10 @@ import {
   Label,
   PasswordInput
 } from '@/components/ui';
+import { IDS } from '@/utils';
 
 import { hideResource } from './helpers/hideResource';
 import { useConfirmationForm } from './hooks/ConfirmationForm';
-import { IDS } from '@/utils';
 
 export const ConfirmationForm = () => {
   const { form, state, functions } = useConfirmationForm();
@@ -29,15 +29,13 @@ export const ConfirmationForm = () => {
       <div className='grid gap-2'>
         <Form {...form}>
           <form
+            className='space-y-4'
             onSubmit={(event) => {
               event.preventDefault();
               functions.onSubmit();
             }}
-            className='space-y-4'
           >
             <FormField
-              control={form.control}
-              name='otp'
               render={({ field }) => (
                 <FormItem>
                   <Label className='sr-only' htmlFor='otp'>
@@ -45,26 +43,28 @@ export const ConfirmationForm = () => {
                   </Label>
                   <FormControl>
                     <PasswordInput
+                      disabled={state.loading}
                       id={IDS.INPUT.OTP}
                       maxLength={6}
-                      placeholder='your otp code'
                       autoCapitalize='none'
                       autoComplete='otp'
                       autoCorrect='off'
-                      disabled={state.loading}
+                      placeholder='your otp code'
                       {...field}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
+              name='otp'
+              control={form.control}
             />
             <div className='flex flex-col gap-2'>
               <Button
-                id={IDS.BUTTON.CONFIRM}
-                type='submit'
                 className='w-full'
                 disabled={state.loading}
+                id={IDS.BUTTON.CONFIRM}
+                type='submit'
               >
                 {state.loading && <SpinnerIcon className='mr-2 h-4 w-4 animate-spin' />}
                 Confirm
@@ -78,10 +78,10 @@ export const ConfirmationForm = () => {
               )}
               {!state.seconds && (
                 <Button
-                  type='button'
-                  variant='outline'
                   className='w-full'
                   disabled={state.loading}
+                  type='button'
+                  variant='outline'
                   onClick={functions.onOtpResend}
                 >
                   {state.loading && <SpinnerIcon className='mr-2 h-4 w-4 animate-spin' />}

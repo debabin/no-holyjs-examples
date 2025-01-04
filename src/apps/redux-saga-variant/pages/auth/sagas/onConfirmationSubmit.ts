@@ -1,5 +1,6 @@
-import { createAction } from '@reduxjs/toolkit';
 import type { SagaReturnType } from 'redux-saga/effects';
+
+import { createAction } from '@reduxjs/toolkit';
 import { call, put, select } from 'redux-saga/effects';
 
 import { apiSlice } from '@/apps/redux-saga-variant/redux/api';
@@ -11,10 +12,10 @@ import { COOKIE } from '@/utils/constants';
 import { authSelectors } from '../slices';
 
 export interface OnConfirmationSubmitPayload {
+  setError: (message: string) => void;
   values: {
     otp: string;
   };
-  setError: (message: string) => void;
 }
 
 export const action = createAction<OnConfirmationSubmitPayload>('auth.onConfirmationSubmit');

@@ -1,5 +1,6 @@
-import { createAction } from '@reduxjs/toolkit';
 import type { SagaReturnType } from 'redux-saga/effects';
+
+import { createAction } from '@reduxjs/toolkit';
 import { call, put } from 'redux-saga/effects';
 
 import { apiSlice } from '@/apps/redux-saga-variant/redux/api';
@@ -7,7 +8,7 @@ import { apiSlice } from '@/apps/redux-saga-variant/redux/api';
 import { authActions } from '../slices';
 
 export interface OnSelectConfirmationSubmitPayload {
-  selectedResource: 'phone' | 'email';
+  selectedResource: 'email' | 'phone';
   values: {
     resource: string;
   };

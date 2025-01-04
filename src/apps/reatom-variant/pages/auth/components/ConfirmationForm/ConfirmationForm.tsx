@@ -1,5 +1,5 @@
+import { confirmationSubmit, otpAtom } from '@reatom-variant/pages/auth/model';
 import { reatomComponent } from '@reatom/npm-react';
-import { confirmationSubmit, otp } from '@reatom-variant/pages/auth/model.ts';
 
 import { SpinnerIcon } from '@/components/icons';
 import {
@@ -17,9 +17,10 @@ import { hideResource } from './helpers/hideResource';
 import { useConfirmationForm } from './hooks/useConfirmationForm';
 
 export const ConfirmationForm = reatomComponent(({ ctx }) => {
-  const loading = ctx.spy(confirmationSubmit.loading) || ctx.spy(otp.resend.pendingAtom) > 0;
-  const seconds = Number((ctx.spy(otp.countdown) / 1000).toFixed(0));
-  const otpValue = ctx.spy(otp);
+  const loading =
+    ctx.spy(confirmationSubmit.loadingAtom) || ctx.spy(otpAtom.resend.pendingAtom) > 0;
+  const seconds = Number((ctx.spy(otpAtom.countdown) / 1000).toFixed(0));
+  const otpValue = ctx.spy(otpAtom);
 
   const { form } = useConfirmationForm();
 
@@ -31,7 +32,7 @@ export const ConfirmationForm = reatomComponent(({ ctx }) => {
     }
   });
 
-  const onOtpResend = () => otp.resend(ctx);
+  const onOtpResend = () => otpAtom.resend(ctx);
 
   return (
     <div className='mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]'>
@@ -44,10 +45,8 @@ export const ConfirmationForm = reatomComponent(({ ctx }) => {
       </div>
       <div className='grid gap-2'>
         <Form {...form}>
-          <form onSubmit={handleFormSubmit} className='space-y-4'>
+          <form className='space-y-4' onSubmit={handleFormSubmit}>
             <FormField
-              control={form.control}
-              name='otp'
               render={({ field }) => (
                 <FormItem>
                   <Label className='sr-only' htmlFor='otp'>
@@ -55,22 +54,24 @@ export const ConfirmationForm = reatomComponent(({ ctx }) => {
                   </Label>
                   <FormControl>
                     <PasswordInput
+                      disabled={loading}
                       id='otp'
                       maxLength={6}
-                      placeholder='your otp code'
                       autoCapitalize='none'
                       autoComplete='otp'
                       autoCorrect='off'
-                      disabled={loading}
+                      placeholder='your otp code'
                       {...field}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
+              name='otp'
+              control={form.control}
             />
             <div className='flex flex-col gap-2'>
-              <Button type='submit' className='w-full' disabled={loading}>
+              <Button className='w-full' disabled={loading} type='submit'>
                 {loading && <SpinnerIcon className='mr-2 h-4 w-4 animate-spin' />}
                 Confirm
               </Button>
@@ -83,10 +84,10 @@ export const ConfirmationForm = reatomComponent(({ ctx }) => {
               )}
               {!seconds && (
                 <Button
-                  type='button'
-                  variant='outline'
                   className='w-full'
                   disabled={loading}
+                  type='button'
+                  variant='outline'
                   onClick={onOtpResend}
                 >
                   {loading && <SpinnerIcon className='mr-2 h-4 w-4 animate-spin' />}

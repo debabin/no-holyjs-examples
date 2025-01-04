@@ -3,7 +3,7 @@ import * as zod from 'zod';
 
 import { ROUTES } from '@/utils/constants/routes';
 
-import { session } from '../model';
+import { sessionAtom } from '../model';
 import { ctx } from '../reatom';
 
 const authSearchSchema = zod.object({
@@ -13,7 +13,7 @@ const authSearchSchema = zod.object({
 export const Route = createFileRoute(ROUTES.AUTH)({
   validateSearch: authSearchSchema,
   beforeLoad: () => {
-    if (ctx.get(session).isAuthenticated) {
+    if (ctx.get(sessionAtom).isAuthenticated) {
       throw redirect({
         to: '/'
       });

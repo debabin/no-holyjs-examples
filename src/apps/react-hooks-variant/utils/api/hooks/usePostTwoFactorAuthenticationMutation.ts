@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
 import type { PostTwoFactorAuthenticationRequestConfig } from '@/utils/api/requests/twoFactorAuthentication';
+
 import { postTwoFactorAuthentication } from '@/utils/api/requests/twoFactorAuthentication';
 
 export const usePostTwoFactorAuthenticationMutation = (

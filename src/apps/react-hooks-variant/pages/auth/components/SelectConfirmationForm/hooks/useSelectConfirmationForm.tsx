@@ -1,8 +1,9 @@
+import type { CheckedState } from '@radix-ui/react-checkbox';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import { usePostOtpEmailMutation, usePostOtpPhoneMutation } from '@react-hooks-variant/utils/api';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import type { CheckedState } from '@radix-ui/react-checkbox';
-import { usePostOtpEmailMutation, usePostOtpPhoneMutation } from '@react-hooks-variant/utils/api';
 
 import { useOtp } from '../../../contexts/otp';
 import { useStage } from '../../../contexts/stage';
@@ -17,9 +18,9 @@ export const useSelectConfirmationForm = () => {
   const { setStage } = useStage();
 
   const [selectConfirmationFormStage, setSelectConfirmationFormStage] = React.useState<
-    'select' | 'form'
+    'form' | 'select'
   >('select');
-  const [selectedResource, setSelectedResource] = React.useState<'phone' | 'email'>('phone');
+  const [selectedResource, setSelectedResource] = React.useState<'email' | 'phone'>('phone');
   const [termsChecked, setTermsChecked] = React.useState<CheckedState>(false);
 
   const onSelectContinue = () => setSelectConfirmationFormStage('form');

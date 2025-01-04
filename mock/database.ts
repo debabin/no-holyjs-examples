@@ -1,5 +1,6 @@
-import { faker } from '@faker-js/faker';
 import type { RestRequestConfig } from 'mock-config-server';
+
+import { faker } from '@faker-js/faker';
 
 const FIGMA_CARDS = [];
 

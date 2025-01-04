@@ -1,7 +1,7 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { zodResolver } from '@hookform/resolvers/zod';
 import * as zod from 'zod';
 
 import { useDispatch } from '@/apps/redux-thunk-variant/redux/hooks';
@@ -19,7 +19,7 @@ export const useSignInForm = () => {
   const dispatch = useDispatch();
   const loading = useSelector(authSelectors.getSignInFormLoading);
 
-  const [selectedResource, setSelectedResource] = React.useState<'login' | 'email'>('login');
+  const [selectedResource, setSelectedResource] = React.useState<'email' | 'login'>('login');
 
   const signInForm = useForm<SingInForm>({
     resolver: zodResolver(selectedResource === 'email' ? signInEmailSchema : signInLoginSchema)

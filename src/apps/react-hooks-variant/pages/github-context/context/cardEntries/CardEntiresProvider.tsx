@@ -2,10 +2,10 @@ import React from 'react';
 
 import { putGithubCard } from '@/utils/api';
 
+import type { CardEntires } from './CardEntriesContext';
+
 import { debounce } from '../../utils/helpers/debounce';
 import { useSelect } from '../select';
-
-import type { CardEntires } from './CardEntriesContext';
 import { CardEntiresContext } from './CardEntriesContext';
 
 export interface CardEntiresProviderProps {

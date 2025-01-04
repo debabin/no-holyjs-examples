@@ -1,13 +1,13 @@
 import { startRestMockServer } from 'mock-config-server';
+import { call, put } from 'redux-saga/effects';
 
-import { POST_OTP_EMAIL_RESPONSE, POST_SIGNIN_LOGIN_RESPONSE } from './constants/data';
-import { createStore } from '@/apps/redux-saga-variant/redux/store';
 import { onSignInSubmit } from '@/apps/redux-saga-variant/pages/auth/sagas/onSingInSubmit';
 import { authActions, authPrefix, authReducer } from '@/apps/redux-saga-variant/pages/auth/slices';
-
-import { apiSlice } from '@/apps/redux-saga-variant/redux/api';
-import { call, put } from 'redux-saga/effects';
 import { otpCountdownSlice } from '@/apps/redux-saga-variant/pages/auth/slices/otpCountdown/slice';
+import { apiSlice } from '@/apps/redux-saga-variant/redux/api';
+import { createStore } from '@/apps/redux-saga-variant/redux/store';
+
+import { POST_OTP_EMAIL_RESPONSE, POST_SIGNIN_LOGIN_RESPONSE } from './constants/data';
 
 let server: ReturnType<typeof startRestMockServer>;
 beforeAll(() => {
@@ -61,7 +61,7 @@ afterAll(() => {
   server.destroy();
 });
 
-test('Should sign in for email', async () => {
+it('Should sign in for email', async () => {
   const store = createStore();
   store.rootReducer.inject({
     reducerPath: authPrefix,

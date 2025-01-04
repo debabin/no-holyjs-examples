@@ -1,5 +1,5 @@
-import React from 'react';
 import { reatomContext as ReatomContext } from '@reatom/npm-react';
+import React from 'react';
 
 import { ctx } from './reatom';
 

@@ -1,10 +1,10 @@
-import React from 'react';
-import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCtx } from '@reatom/npm-react';
+import React from 'react';
+import { useForm, useWatch } from 'react-hook-form';
 import * as zod from 'zod';
 
-import { signInSubmit, stage } from '../../../model';
+import { signInSubmit, stageAtom } from '../../../model';
 import { signInEmailSchema, signInLoginSchema } from '../constants';
 
 interface SingInForm {
@@ -15,7 +15,7 @@ interface SingInForm {
 export const useSignInForm = () => {
   const ctx = useCtx();
 
-  const [selectedResource, setSelectedResource] = React.useState<'login' | 'email'>('login');
+  const [selectedResource, setSelectedResource] = React.useState<'email' | 'login'>('login');
 
   const signInForm = useForm<SingInForm>({
     resolver: zodResolver(selectedResource === 'email' ? signInEmailSchema : signInLoginSchema)
@@ -33,7 +33,7 @@ export const useSignInForm = () => {
     signInSubmit(ctx, { values, resource: selectedResource })
   );
 
-  const goToSignUp = () => stage(ctx, { value: 'signUp' });
+  const goToSignUp = () => stageAtom(ctx, { value: 'signUp' });
 
   return {
     state: {

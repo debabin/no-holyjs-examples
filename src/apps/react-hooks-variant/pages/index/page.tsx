@@ -18,12 +18,12 @@ export const IndexPage = () => {
   const { state, functions } = useIndexPage();
 
   return (
-    <section id={IDS.PAGE.INDEX} className='w-full max-w-sm'>
+    <section className='w-full max-w-sm' id={IDS.PAGE.INDEX}>
       <Card className='w-full'>
         <CardHeader className='p-6'>
           <div className='flex items-center space-x-4'>
             <Avatar className='h-10 w-10'>
-              <AvatarImage src={state.profile.avatar} alt='profile' />
+              <AvatarImage alt='profile' src={state.profile.avatar} />
             </Avatar>
             <div className='grid gap-1.5'>
               <CardTitle className='text-sm'>{state.profile.login}</CardTitle>

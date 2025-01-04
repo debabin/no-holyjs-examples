@@ -1,11 +1,12 @@
 import { startRestMockServer } from 'mock-config-server';
 
-import { POST_OTP_EMAIL_RESPONSE, POST_SIGNIN_LOGIN_RESPONSE } from './constants/data';
-import { createStore } from '@/apps/redux-thunk-variant/redux/store';
-import { onSignInSubmit } from '@/apps/redux-thunk-variant/pages/auth/thunks/onSingInSubmit';
 import { authPrefix, authReducer } from '@/apps/redux-thunk-variant/pages/auth/slices';
+import { onSignInSubmit } from '@/apps/redux-thunk-variant/pages/auth/thunks/onSingInSubmit';
+import { createStore } from '@/apps/redux-thunk-variant/redux/store';
 import { router } from '@/apps/redux-thunk-variant/router';
 import { COOKIE, ROUTES } from '@/utils';
+
+import { POST_OTP_EMAIL_RESPONSE, POST_SIGNIN_LOGIN_RESPONSE } from './constants/data';
 
 let server: ReturnType<typeof startRestMockServer>;
 beforeAll(() => {
@@ -52,7 +53,7 @@ afterAll(() => {
   server.destroy();
 });
 
-test('Should sign in for email', async () => {
+it('Should sign in for email', async () => {
   const store = createStore();
   store.rootReducer.inject({
     reducerPath: authPrefix,
@@ -77,7 +78,7 @@ test('Should sign in for email', async () => {
   });
 });
 
-test('Should doesnt sign in for email when "/otp/email" error', async () => {
+it('Should doesnt sign in for email when "/otp/email" error', async () => {
   const store = createStore();
   store.rootReducer.inject({
     reducerPath: authPrefix,
@@ -99,7 +100,7 @@ test('Should doesnt sign in for email when "/otp/email" error', async () => {
   });
 });
 
-test('Should sign in for login when need confirmation', async () => {
+it('Should sign in for login when need confirmation', async () => {
   const store = createStore();
   store.rootReducer.inject({
     reducerPath: authPrefix,
@@ -118,7 +119,7 @@ test('Should sign in for login when need confirmation', async () => {
   expect(stage.value).toBe('selectConfirmation');
 });
 
-test('Should sign in for login when dont need confirmation', async () => {
+it('Should sign in for login when dont need confirmation', async () => {
   const store = createStore();
   store.rootReducer.inject({
     reducerPath: authPrefix,
@@ -152,7 +153,7 @@ test('Should sign in for login when dont need confirmation', async () => {
   expect(router.state.location.pathname).toBe(ROUTES.INDEX);
 });
 
-test('Should doesnt sign in for login when "/signin/login" error', async () => {
+it('Should doesnt sign in for login when "/signin/login" error', async () => {
   const store = createStore();
   store.rootReducer.inject({
     reducerPath: authPrefix,

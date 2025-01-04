@@ -1,6 +1,6 @@
-import { useSelector } from 'react-redux';
 import { useDispatch } from '@redux-saga-variant/redux/hooks';
 import { themeSlice } from '@redux-saga-variant/redux/slices/theme/slice';
+import { useSelector } from 'react-redux';
 
 import { MoonIcon, SunIcon } from '@/components/icons';
 import { Toggle } from '@/components/ui';

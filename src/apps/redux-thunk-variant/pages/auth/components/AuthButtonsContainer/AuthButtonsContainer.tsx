@@ -21,7 +21,7 @@ export const AuthButtonsContainer: React.FC<AuthButtonsContainerProps> = ({ load
         </div>
       </div>
       <div className='flex flex-col gap-2'>
-        <Button variant='outline' type='button' disabled={loading}>
+        <Button disabled={loading} type='button' variant='outline'>
           {loading ? (
             <SpinnerIcon className='mr-2 h-4 w-4 animate-spin' />
           ) : (
@@ -30,9 +30,9 @@ export const AuthButtonsContainer: React.FC<AuthButtonsContainerProps> = ({ load
           GitHub
         </Button>
         <Button
-          variant='outline'
-          type='button'
           disabled={loading}
+          type='button'
+          variant='outline'
           onClick={functions.onGoogleClick}
         >
           {loading ? (

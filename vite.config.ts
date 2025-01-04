@@ -1,12 +1,18 @@
 import { TanStackRouterVite } from '@tanstack/router-vite-plugin';
 import react from '@vitejs/plugin-react';
-import path from 'path';
+import path from 'node:path';
 import { defineConfig } from 'vite';
 
 console.log('app variant:', process.env.APP, `src/apps/${process.env.APP}/routes`);
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), TanStackRouterVite({ routesDirectory: `src/apps/${process.env.APP}/routes` })],
+  plugins: [
+    react(),
+    TanStackRouterVite({
+      routesDirectory: `src/apps/${process.env.APP}/routes`,
+      generatedRouteTree: `./src/apps/${process.env.APP}/route.ts`
+    })
+  ],
   define: {
     'import.meta.env.VITE_APP': JSON.stringify(process.env.APP)
   },

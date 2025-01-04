@@ -1,17 +1,17 @@
 import { api } from '../../instance';
 
-export type PostSignUpParams = {
+export interface PostSignUpParams {
   email: string;
-  login: string;
-  password: string;
   firstName?: string;
   lastName?: string;
+  login: string;
+  password: string;
   country: {
     id: number;
     label: string;
     code: string;
   };
-};
+}
 
 export type PostSignUpRequestConfig = RequestConfig<PostSignUpParams>;
 

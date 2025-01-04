@@ -1,8 +1,8 @@
 import { Loader2 } from 'lucide-react';
 
-import { useStore } from './store/useStore';
 import { GithubCard, Info } from './components';
 import { cardsStore, loadingStore } from './store';
+import { useStore } from './store/useStore';
 
 export const GithubPage = () => {
   const cards = useStore(cardsStore);

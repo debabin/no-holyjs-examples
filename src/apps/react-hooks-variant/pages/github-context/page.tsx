@@ -1,8 +1,8 @@
 import { Loader2 } from 'lucide-react';
 
-import { useGetGithubCardsQuery } from '../../utils/api';
-
 import type { CardEntires } from './context/cardEntries';
+
+import { useGetGithubCardsQuery } from '../../utils/api';
 import { GithubCard, Info } from './components';
 import Providers from './providers';
 

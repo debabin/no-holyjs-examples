@@ -1,10 +1,11 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
+
 import { createSlice } from '@reduxjs/toolkit';
 
 interface OtpState {
-  type: 'email' | 'phone';
   resource: string;
   retryDelay: number;
+  type: 'email' | 'phone';
 }
 
 const initialState: OtpState = {

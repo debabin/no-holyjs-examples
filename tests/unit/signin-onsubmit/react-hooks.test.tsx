@@ -5,7 +5,6 @@ import { startRestMockServer } from 'mock-config-server';
 import AuthProviders from '@/apps/react-hooks-variant/pages/auth/providers';
 
 import { Providers } from '../utils/setup';
-
 import { POST_OTP_EMAIL_RESPONSE } from './constants/data';
 
 vi.mock('axios');
@@ -17,7 +16,7 @@ const wrapper = (props: { children: React.ReactNode }) => (
   </Providers>
 );
 
-test('Should submit for email', async () => {
+it('Should submit for email', async () => {
   const server = await startRestMockServer({
     configs: [{ method: 'post', path: '/otp/email', routes: [{ data: POST_OTP_EMAIL_RESPONSE }] }]
   });

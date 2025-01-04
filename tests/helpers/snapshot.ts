@@ -1,4 +1,5 @@
 import type { Page } from '@playwright/test';
+
 import { expect } from '@playwright/test';
 
 export const snapshot = async (page: Page, name: string, locator?: string) => {

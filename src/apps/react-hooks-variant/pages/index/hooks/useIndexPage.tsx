@@ -1,7 +1,7 @@
-import { flushSync } from 'react-dom';
 import { useProfile } from '@react-hooks-variant/utils/contexts/profile';
 import { useSession } from '@react-hooks-variant/utils/contexts/session';
 import { useNavigate } from '@tanstack/react-router';
+import { flushSync } from 'react-dom';
 
 import { COOKIE } from '@/utils';
 

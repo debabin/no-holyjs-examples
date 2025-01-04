@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 
 import type { Otp } from './OtpContext';
+
 import { OtpContext } from './OtpContext';
 
 export interface OtpProviderProps {

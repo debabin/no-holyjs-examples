@@ -1,6 +1,6 @@
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { usePostSingUpMutation } from '@react-hooks-variant/utils/api';
+import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
 import { useStage } from '../../../contexts/stage';
@@ -9,11 +9,11 @@ import { COUNTRIES } from '../constants/countries';
 
 interface SingUpForm {
   email: string;
-  password: string;
-  passwordConfirmation: string;
-  login: string;
   firstName?: string;
   lastName?: string;
+  login: string;
+  password: string;
+  passwordConfirmation: string;
   country: {
     id: number;
     label: string;

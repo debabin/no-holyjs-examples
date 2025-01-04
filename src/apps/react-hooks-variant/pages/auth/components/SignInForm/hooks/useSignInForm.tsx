@@ -1,6 +1,3 @@
-import React from 'react';
-import { flushSync } from 'react-dom';
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   usePostOtpEmailMutation,
@@ -9,6 +6,9 @@ import {
 import { useProfile } from '@react-hooks-variant/utils/contexts/profile';
 import { useSession } from '@react-hooks-variant/utils/contexts/session';
 import { useNavigate } from '@tanstack/react-router';
+import React from 'react';
+import { flushSync } from 'react-dom';
+import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import * as zod from 'zod';
 
@@ -31,7 +31,7 @@ export const useSignInForm = () => {
   const { setSession } = useSession();
   const { setProfile } = useProfile();
 
-  const [selectedResource, setSelectedResource] = React.useState<'login' | 'email'>('login');
+  const [selectedResource, setSelectedResource] = React.useState<'email' | 'login'>('login');
 
   const signInForm = useForm<SingInForm>({
     resolver: zodResolver(selectedResource === 'email' ? signInEmailSchema : signInLoginSchema)

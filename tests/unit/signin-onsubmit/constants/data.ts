@@ -21,4 +21,4 @@ export const POST_SIGNIN_LOGIN_RESPONSE = {
   NEED_CONFIRMATION: {
     needConfirmation: true
   }
-} satisfies Record<string, { profile: Profile; token: string } | Confirmation>;
+} satisfies Record<string, Confirmation | { profile: Profile; token: string }>;

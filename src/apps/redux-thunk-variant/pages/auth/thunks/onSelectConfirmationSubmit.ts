@@ -5,7 +5,7 @@ import { apiSlice } from '@/apps/redux-thunk-variant/redux/api';
 import { authActions } from '../slices';
 
 export interface OnSelectConfirmationSubmitPayload {
-  selectedResource: 'phone' | 'email';
+  selectedResource: 'email' | 'phone';
   values: {
     resource: string;
   };

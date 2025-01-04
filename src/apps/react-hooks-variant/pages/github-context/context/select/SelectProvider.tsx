@@ -1,6 +1,7 @@
 import React from 'react';
 
 import type { Select } from './SelectContext';
+
 import { SelectContext } from './SelectContext';
 
 export interface SelectProviderProps {

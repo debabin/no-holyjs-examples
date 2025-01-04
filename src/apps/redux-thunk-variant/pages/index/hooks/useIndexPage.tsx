@@ -1,6 +1,6 @@
-import { useSelector } from 'react-redux';
 import { useDispatch } from '@redux-thunk-variant/redux/hooks';
 import { profileSlice } from '@redux-thunk-variant/redux/slices/profile/slice';
+import { useSelector } from 'react-redux';
 
 import { indexThunks } from '../thunks';
 

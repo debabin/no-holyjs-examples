@@ -1,7 +1,7 @@
+import { fetchProfile, sessionAtom, tokenAtom } from '@reatom-variant/model';
+import { router } from '@reatom-variant/router';
 import { atom, reatomAsync, withAssign } from '@reatom/framework';
 import { reatomTimer } from '@reatom/timer';
-import { fetchProfile, session, token } from '@reatom-variant/model';
-import { router } from '@reatom-variant/router';
 import { toast } from 'sonner';
 
 import {
@@ -12,17 +12,17 @@ import {
   postTwoFactorAuthentication
 } from '@/utils/api/requests';
 
-export type Stage = 'signIn' | 'signUp' | 'selectConfirmation' | 'confirmation';
+export type Stage = 'confirmation' | 'selectConfirmation' | 'signIn' | 'signUp';
 
-export const stage = atom<{ value: Stage }>({ value: 'signIn' }, 'stage');
+export const stageAtom = atom<{ value: Stage }>({ value: 'signIn' }, 'stageAtom');
 
-export const otp = atom<{ type: 'email' | 'phone'; resource: string; retryDelay: number }>(
+export const otpAtom = atom<{ type: 'email' | 'phone'; resource: string; retryDelay: number }>(
   {
     type: 'email',
     resource: '',
     retryDelay: 0
   },
-  'otp'
+  'otpAtom'
 ).pipe(
   withAssign((_, name) => ({
     // eslint-disable-next-line @reatom/reatom-prefix-rule
@@ -52,7 +52,7 @@ export const otp = atom<{ type: 'email' | 'phone'; resource: string; retryDelay:
             retryDelay: postOtpResponse.data.retryDelay
           });
 
-          stage(ctx, { value: 'confirmation' });
+          stageAtom(ctx, { value: 'confirmation' });
         }
       } catch (error) {
         console.error(error);
@@ -78,14 +78,14 @@ export const signInSubmit = reatomAsync(
 
         if (!postOtpEmailResponse.data.retryDelay) return;
 
-        otp(ctx, {
+        otpAtom(ctx, {
           type: 'email',
           resource: values.login,
           retryDelay: postOtpEmailResponse.data.retryDelay
         });
 
-        otp.countdown.startTimer(ctx, postOtpEmailResponse.data.retryDelay / 1000);
-        stage(ctx, { value: 'confirmation' });
+        otpAtom.countdown.startTimer(ctx, postOtpEmailResponse.data.retryDelay / 1000);
+        stageAtom(ctx, { value: 'confirmation' });
         return;
       }
 
@@ -101,14 +101,14 @@ export const signInSubmit = reatomAsync(
         postSignInLoginResponse.data.needConfirmation &&
         resource === 'login'
       ) {
-        stage(ctx, { value: 'selectConfirmation' });
+        stageAtom(ctx, { value: 'selectConfirmation' });
         return;
       }
 
       if ('profile' in postSignInLoginResponse.data) {
-        token(ctx, postSignInLoginResponse.data.token);
+        tokenAtom(ctx, postSignInLoginResponse.data.token);
         fetchProfile.dataAtom(ctx, postSignInLoginResponse.data.profile);
-        session(ctx, { isAuthenticated: true });
+        sessionAtom(ctx, { isAuthenticated: true });
 
         toast.success('Sign in is successful 👍', {
           cancel: { label: 'Close' },
@@ -127,7 +127,7 @@ export const signInSubmit = reatomAsync(
   'signInSubmit'
 ).pipe(
   withAssign((original, name) => ({
-    loading: atom((ctx) => ctx.spy(original.pendingAtom) > 0, `${name}.loading`)
+    loadingAtom: atom((ctx) => ctx.spy(original.pendingAtom) > 0, `${name}.loading`)
   }))
 );
 
@@ -140,20 +140,20 @@ export const selectConfirmationSubmit = reatomAsync(async (ctx, payload) => {
       params: { [selectedResource]: values.resource } as Record<'email' | 'phone', string>
     });
     if (postOtpApiResponse.data.retryDelay) {
-      otp(ctx, {
+      otpAtom(ctx, {
         type: selectedResource,
         resource: values.resource,
         retryDelay: postOtpApiResponse.data.retryDelay
       });
-      otp.countdown.startTimer(ctx, postOtpApiResponse.data.retryDelay / 1000);
-      stage(ctx, { value: 'confirmation' });
+      otpAtom.countdown.startTimer(ctx, postOtpApiResponse.data.retryDelay / 1000);
+      stageAtom(ctx, { value: 'confirmation' });
     }
   } catch (error) {
     console.error(error);
   }
 }, 'selectConfirmationSubmit').pipe(
   withAssign((original, name) => ({
-    loading: atom((ctx) => ctx.spy(original.pendingAtom) > 0, `${name}.loading`)
+    loadingAtom: atom((ctx) => ctx.spy(original.pendingAtom) > 0, `${name}.loading`)
   }))
 );
 
@@ -162,14 +162,14 @@ export const confirmationSubmit = reatomAsync(async (ctx, payload) => {
   const postTwoFactorAuthenticationResponse = await postTwoFactorAuthentication({
     params: {
       otp: values.otp,
-      source: ctx.get(otp).resource
+      source: ctx.get(otpAtom).resource
     }
   });
 
   if ('profile' in postTwoFactorAuthenticationResponse.data) {
-    token(ctx, postTwoFactorAuthenticationResponse.data.token);
+    tokenAtom(ctx, postTwoFactorAuthenticationResponse.data.token);
     fetchProfile.dataAtom(ctx, postTwoFactorAuthenticationResponse.data.profile);
-    session(ctx, { isAuthenticated: true });
+    sessionAtom(ctx, { isAuthenticated: true });
 
     router.navigate({
       to: '/',
@@ -178,7 +178,7 @@ export const confirmationSubmit = reatomAsync(async (ctx, payload) => {
   }
 }, 'confirmationSubmit').pipe(
   withAssign((original, name) => ({
-    loading: atom((ctx) => ctx.spy(original.pendingAtom) > 0, `${name}.loading`)
+    loadingAtom: atom((ctx) => ctx.spy(original.pendingAtom) > 0, `${name}.loading`)
   }))
 );
 
@@ -195,12 +195,12 @@ export const signUpSubmit = reatomAsync(async (ctx, payload) => {
       description: 'We are very glad to see you, have fun'
     });
 
-    stage(ctx, { value: 'signIn' });
+    stageAtom(ctx, { value: 'signIn' });
   } catch (error) {
     console.error(error);
   }
 }, 'signUpSubmit').pipe(
   withAssign((original, name) => ({
-    loading: atom((ctx) => ctx.spy(original.pendingAtom) > 0, `${name}.loading`)
+    loadingAtom: atom((ctx) => ctx.spy(original.pendingAtom) > 0, `${name}.loading`)
   }))
 );

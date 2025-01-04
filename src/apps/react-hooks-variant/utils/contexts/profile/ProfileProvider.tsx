@@ -3,8 +3,8 @@ import React, { useMemo } from 'react';
 import { ProfileContext } from './ProfileContext';
 
 export interface ProfileProviderProps {
-  defaultProfile?: Profile;
   children: React.ReactNode;
+  defaultProfile?: Profile;
 }
 
 export const ProfileProvider = ({ children, defaultProfile }: ProfileProviderProps) => {

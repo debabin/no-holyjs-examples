@@ -18,18 +18,20 @@ theme.onChange((_ctx, state) => {
   root.classList.add(state);
 });
 
-export const token = atom<null | string>(null, 'token').pipe(withLocalStorage(COOKIE.ACCESS_TOKEN));
+export const tokenAtom = atom<string | null>(null, 'tokenAtom').pipe(
+  withLocalStorage(COOKIE.ACCESS_TOKEN)
+);
 
-export const session = atom(
+export const sessionAtom = atom(
   {
     isAuthenticated: false
   },
-  'session'
+  'sessionAtom'
 );
 
 export const fetchProfile = reatomAsync(async (ctx) => {
   const getProfileApiResponse = await getProfile();
-  session(ctx, { isAuthenticated: true });
+  sessionAtom(ctx, { isAuthenticated: true });
 
   return getProfileApiResponse.data.profile;
 }, 'fetchProfile').pipe(withDataAtom({} as Profile));

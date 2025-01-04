@@ -5,7 +5,8 @@ import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 
 import type { GithubCardModel } from '../../model';
-import { dragging, fetchCards } from '../../model';
+
+import { draggingAtom, fetchCards } from '../../model';
 
 interface CardInfoProps {
   card: GithubCardModel;
@@ -33,7 +34,7 @@ const CardInfo = reatomComponent<CardInfoProps>(
 const ReactionCount = reatomComponent(
   ({ ctx }) => (
     <p className='text-sm'>
-      reactions count: <b>{ctx.spy(fetchCards.reactionsCount)}</b>
+      reactions count: <b>{ctx.spy(fetchCards.reactionsCountAtom)}</b>
     </p>
   ),
   'ReactionCount'
@@ -41,7 +42,7 @@ const ReactionCount = reatomComponent(
 
 export const Info = reatomComponent(({ ctx }) => {
   const cards = ctx.spy(fetchCards.dataAtom);
-  const draggingCard = ctx.spy(dragging);
+  const draggingCard = ctx.spy(draggingAtom);
 
   return (
     <div className='absolute left-5 top-20'>

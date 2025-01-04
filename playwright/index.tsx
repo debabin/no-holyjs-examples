@@ -1,6 +1,7 @@
+import type { AxiosError } from 'axios';
+
 import { beforeMount } from '@playwright/experimental-ct-react/hooks';
 import { MutationCache, QueryCache, QueryClient } from '@tanstack/react-query';
-import type { AxiosError } from 'axios';
 import { toast } from 'sonner';
 
 import ReactHooksProviders from '@/apps/react-hooks-variant/providers';
@@ -33,17 +34,17 @@ const queryClient = new QueryClient({
 
 const ReactHooksWrapper = ({ children }: { children: React.ReactNode }) => (
   <ReactHooksProviders
-    theme={{
-      defaultTheme: 'light'
-    }}
-    session={{
-      defaultSession: false
-    }}
     query={{
       client: queryClient
     }}
+    theme={{
+      defaultTheme: 'light'
+    }}
     profile={{
       defaultProfile: undefined
+    }}
+    session={{
+      defaultSession: false
     }}
   >
     {children}

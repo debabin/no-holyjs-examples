@@ -3,8 +3,8 @@ import React, { useMemo } from 'react';
 import { SessionContext } from './SessionContext';
 
 export interface SessionProviderProps {
-  defaultSession?: boolean;
   children: React.ReactNode;
+  defaultSession?: boolean;
 }
 
 export const SessionProvider = ({ children, defaultSession = false }: SessionProviderProps) => {

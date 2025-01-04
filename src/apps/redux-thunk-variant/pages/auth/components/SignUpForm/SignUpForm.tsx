@@ -26,7 +26,6 @@ import { cn } from '@/lib/utils';
 import { IDS } from '@/utils';
 
 import { AuthButtonsContainer } from '../AuthButtonsContainer/AuthButtonsContainer';
-
 import { useSignUpForm } from './hooks/useSingUpForm';
 
 export const SignUpForm = () => {
@@ -43,15 +42,13 @@ export const SignUpForm = () => {
       <div className='grid gap-2'>
         <Form {...form}>
           <form
+            className='space-y-6'
             onSubmit={async (event) => {
               event.preventDefault();
               await functions.onSubmit();
             }}
-            className='space-y-6'
           >
             <FormField
-              control={form.control}
-              name='email'
               render={({ field }) => (
                 <FormItem id={IDS.INPUT.EMAIL}>
                   <Label className='sr-only' htmlFor='email'>
@@ -59,21 +56,21 @@ export const SignUpForm = () => {
                   </Label>
                   <FormControl>
                     <Input
-                      placeholder='email@example.com'
+                      disabled={state.loading}
                       autoCapitalize='none'
                       autoComplete='email'
                       autoCorrect='off'
-                      disabled={state.loading}
+                      placeholder='email@example.com'
                       {...field}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
+              name='email'
+              control={form.control}
             />
             <FormField
-              control={form.control}
-              name='login'
               render={({ field }) => (
                 <FormItem id={IDS.INPUT.LOGIN}>
                   <Label className='sr-only' htmlFor='login'>
@@ -81,20 +78,20 @@ export const SignUpForm = () => {
                   </Label>
                   <FormControl>
                     <Input
-                      placeholder='your login'
+                      disabled={state.loading}
                       autoCapitalize='none'
                       autoCorrect='off'
-                      disabled={state.loading}
+                      placeholder='your login'
                       {...field}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
+              name='login'
+              control={form.control}
             />
             <FormField
-              control={form.control}
-              name='firstName'
               render={({ field }) => (
                 <FormItem id={IDS.INPUT.FIRST_NAME}>
                   <Label className='sr-only' htmlFor='firstName'>
@@ -102,21 +99,21 @@ export const SignUpForm = () => {
                   </Label>
                   <FormControl>
                     <Input
-                      placeholder='your first perfect name'
+                      disabled={state.loading}
                       autoCapitalize='none'
                       autoComplete='firstName'
                       autoCorrect='off'
-                      disabled={state.loading}
+                      placeholder='your first perfect name'
                       {...field}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
+              name='firstName'
+              control={form.control}
             />
             <FormField
-              control={form.control}
-              name='lastName'
               render={({ field }) => (
                 <FormItem id={IDS.INPUT.LAST_NAME}>
                   <Label className='sr-only' htmlFor='lastName'>
@@ -124,39 +121,39 @@ export const SignUpForm = () => {
                   </Label>
                   <FormControl>
                     <Input
-                      placeholder='your second amazing name'
+                      disabled={state.loading}
                       autoCapitalize='none'
                       autoComplete='lastName'
                       autoCorrect='off'
-                      disabled={state.loading}
+                      placeholder='your second amazing name'
                       {...field}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
+              name='lastName'
+              control={form.control}
             />
             <FormField
-              control={form.control}
-              name='country'
               render={({ field }) => (
                 <FormItem className='flex flex-col'>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
-                          id={IDS.SELECT.COUNTRY}
-                          variant='outline'
-                          role='combobox'
                           className={cn(
                             'w-[200px] w-full justify-between',
                             !field.value && 'text-muted-foreground'
                           )}
+                          id={IDS.SELECT.COUNTRY}
+                          variant='outline'
+                          role='combobox'
                         >
                           <div className='flex items-center gap-2'>
                             <Flag
                               className='size-4'
-                              code={field.value.code as 'ru' | 'by' | 'kz' | 'uz'}
+                              code={field.value.code as 'by' | 'kz' | 'ru' | 'uz'}
                             />
                             {
                               state.countries.find((country) => country.id === field.value.id)!
@@ -175,8 +172,8 @@ export const SignUpForm = () => {
                           {state.countries.map((country) => (
                             <CommandItem
                               key={country.id}
-                              value={country.label}
                               className='flex items-center  gap-2'
+                              value={country.label}
                               onSelect={() => {
                                 form.setValue('country', country);
                               }}
@@ -200,10 +197,10 @@ export const SignUpForm = () => {
                   <FormMessage />
                 </FormItem>
               )}
+              name='country'
+              control={form.control}
             />
             <FormField
-              control={form.control}
-              name='password'
               render={({ field }) => (
                 <FormItem id={IDS.INPUT.PASSWORD}>
                   <Label className='sr-only' htmlFor='password'>
@@ -211,21 +208,21 @@ export const SignUpForm = () => {
                   </Label>
                   <FormControl>
                     <PasswordInput
-                      placeholder='your very secret password'
+                      disabled={state.loading}
                       autoCapitalize='none'
                       autoComplete='password'
                       autoCorrect='off'
-                      disabled={state.loading}
+                      placeholder='your very secret password'
                       {...field}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
+              name='password'
+              control={form.control}
             />
             <FormField
-              control={form.control}
-              name='passwordConfirmation'
               render={({ field }) => (
                 <FormItem id={IDS.INPUT.PASSWORD_CONFIRMATION}>
                   <Label className='sr-only' htmlFor='passwordConfirmation'>
@@ -233,11 +230,11 @@ export const SignUpForm = () => {
                   </Label>
                   <FormControl>
                     <PasswordInput
-                      placeholder='confirm your password dude'
+                      disabled={state.loading}
                       autoCapitalize='none'
                       autoComplete='passwordConfirmation'
                       autoCorrect='off'
-                      disabled={state.loading}
+                      placeholder='confirm your password dude'
                       {...field}
                     />
                   </FormControl>
@@ -250,8 +247,10 @@ export const SignUpForm = () => {
                   <FormMessage />
                 </FormItem>
               )}
+              name='passwordConfirmation'
+              control={form.control}
             />
-            <Button id={IDS.BUTTON.SIGN_UP} className='w-full' disabled={state.loading}>
+            <Button className='w-full' disabled={state.loading} id={IDS.BUTTON.SIGN_UP}>
               {state.loading && <SpinnerIcon className='mr-2 h-4 w-4 animate-spin' />}
               Sign up
             </Button>

@@ -1,11 +1,12 @@
 import React from 'react';
 
 import type { Theme } from './ThemeContext';
+
 import { ThemeContext } from './ThemeContext';
 
 export interface ThemeProviderProps {
-  defaultTheme?: Theme;
   children: React.ReactNode;
+  defaultTheme?: Theme;
 }
 
 export const ThemeProvider = ({ children, defaultTheme = 'dark' }: ThemeProviderProps) => {

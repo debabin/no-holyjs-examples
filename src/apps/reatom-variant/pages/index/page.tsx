@@ -1,5 +1,5 @@
-import { reatomComponent } from '@reatom/npm-react';
 import { fetchProfile } from '@reatom-variant/model';
+import { reatomComponent } from '@reatom/npm-react';
 
 import {
   Avatar,
@@ -25,7 +25,7 @@ export const IndexPage = reatomComponent(({ ctx }) => {
       <CardHeader className='p-6'>
         <div className='flex items-center space-x-4'>
           <Avatar className='h-10 w-10'>
-            <AvatarImage src={profile.avatar} alt='profile' />
+            <AvatarImage alt='profile' src={profile.avatar} />
           </Avatar>
           <div className='grid gap-1.5'>
             <CardTitle className='text-sm'>{profile.login}</CardTitle>

@@ -1,9 +1,10 @@
 import type { Page } from '@playwright/test';
+
 import { expect } from '@playwright/test';
 
 interface WaitToastParams {
-  title?: string;
   description?: string;
+  title?: string;
 }
 
 export const waitToast = async (page: Page, params?: WaitToastParams) => {

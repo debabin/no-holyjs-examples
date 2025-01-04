@@ -33,28 +33,28 @@ export const SelectConfirmationForm = () => {
           <RadioGroup
             className='flex flex-col space-y-2'
             defaultValue={state.selectedResource}
-            onValueChange={(value: 'phone' | 'email') => functions.setSelectedResource(value)}
+            onValueChange={(value: 'email' | 'phone') => functions.setSelectedResource(value)}
           >
             <div className='flex items-center space-x-2'>
-              <RadioGroupItem value='email' id={IDS.RADIO_BUTTON.EMAIL} />
+              <RadioGroupItem id={IDS.RADIO_BUTTON.EMAIL} value='email' />
               <Label htmlFor='email'>email</Label>
             </div>
             <div className='flex items-center space-x-2'>
-              <RadioGroupItem value='phone' id={IDS.RADIO_BUTTON.PHONE} />
+              <RadioGroupItem id={IDS.RADIO_BUTTON.PHONE} value='phone' />
               <Label htmlFor='phone'>phone</Label>
             </div>
           </RadioGroup>
 
           <div className='items-top flex space-x-2'>
             <Checkbox
-              id={IDS.CHECKBOX.TERMS}
               checked={state.termsChecked}
+              id={IDS.CHECKBOX.TERMS}
               onCheckedChange={(checked) => functions.setTermsChecked(checked)}
             />
             <div className='grid gap-1.5 leading-none'>
               <label
-                htmlFor='terms'
                 className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                htmlFor='terms'
               >
                 Accept terms and conditions
               </label>
@@ -73,9 +73,9 @@ export const SelectConfirmationForm = () => {
           </div>
 
           <Button
-            id={IDS.BUTTON.CONTINUE}
             className='w-full'
             disabled={!state.termsChecked}
+            id={IDS.BUTTON.CONTINUE}
             onClick={functions.onSelectContinue}
           >
             Continue
@@ -91,16 +91,14 @@ export const SelectConfirmationForm = () => {
           <div className='grid gap-2'>
             <Form {...form}>
               <form
+                className='space-y-4'
                 onSubmit={(event) => {
                   event.preventDefault();
                   functions.onSubmit();
                 }}
-                className='space-y-4'
               >
                 {state.selectedResource === 'phone' && (
                   <FormField
-                    control={form.control}
-                    name='resource'
                     render={({ field }) => (
                       <FormItem id={IDS.INPUT.PHONE}>
                         <Label className='sr-only' htmlFor='phone'>
@@ -108,21 +106,21 @@ export const SelectConfirmationForm = () => {
                         </Label>
                         <FormControl>
                           <PatternFormat
-                            format='+7 ### ### ####'
                             allowEmptyFormatting
                             customInput={Input}
+                            format='+7 ### ### ####'
                             {...field}
                           />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
+                    name='resource'
+                    control={form.control}
                   />
                 )}
                 {state.selectedResource === 'email' && (
                   <FormField
-                    control={form.control}
-                    name='resource'
                     render={({ field }) => (
                       <FormItem id={IDS.INPUT.EMAIL}>
                         <Label className='sr-only' htmlFor='otp'>
@@ -134,23 +132,25 @@ export const SelectConfirmationForm = () => {
                         <FormMessage />
                       </FormItem>
                     )}
+                    name='resource'
+                    control={form.control}
                   />
                 )}
                 <Button
-                  type='submit'
                   className='w-full'
                   disabled={state.loading}
                   id={IDS.BUTTON.CONFIRM}
+                  type='submit'
                 >
                   {state.loading && <SpinnerIcon className='mr-2 h-4 w-4 animate-spin' />}
                   Confirm
                 </Button>
                 <Button
+                  className='w-full'
+                  disabled={state.loading}
                   id={IDS.BUTTON.BACK}
                   type='button'
                   variant='outline'
-                  className='w-full'
-                  disabled={state.loading}
                   onClick={functions.onFormBack}
                 >
                   {state.loading && <SpinnerIcon className='mr-2 h-4 w-4 animate-spin' />}

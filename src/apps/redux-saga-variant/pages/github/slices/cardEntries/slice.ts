@@ -1,4 +1,5 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
+
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 
 const cardEntriesAdapter = createEntityAdapter({

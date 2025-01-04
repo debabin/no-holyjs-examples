@@ -1,6 +1,3 @@
-import React from 'react';
-import { flushSync } from 'react-dom';
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   usePostOtpEmailMutation,
@@ -10,6 +7,9 @@ import {
 import { useProfile } from '@react-hooks-variant/utils/contexts/profile';
 import { useSession } from '@react-hooks-variant/utils/contexts/session';
 import { useNavigate } from '@tanstack/react-router';
+import React from 'react';
+import { flushSync } from 'react-dom';
+import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
 import { COOKIE, ROUTES } from '@/utils';

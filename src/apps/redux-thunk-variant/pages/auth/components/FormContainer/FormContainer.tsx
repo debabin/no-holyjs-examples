@@ -1,7 +1,8 @@
 import { useSelector } from 'react-redux';
 
-import { authSelectors } from '../../slices';
 import type { Stage } from '../../slices/stage/slice';
+
+import { authSelectors } from '../../slices';
 import { ConfirmationForm } from '../ConfirmationForm/ConfirmationForm';
 import { SelectConfirmationForm } from '../SelectConfirmationForm/SelectConfirmationForm';
 import { SignInForm } from '../SignInForm/SignInForm';

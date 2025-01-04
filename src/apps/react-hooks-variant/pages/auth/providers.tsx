@@ -1,5 +1,6 @@
-import { OtpProvider } from './contexts/otp';
 import type { StageProviderProps } from './contexts/stage';
+
+import { OtpProvider } from './contexts/otp';
 import { StageProvider } from './contexts/stage';
 
 interface ProvidersProps {
