@@ -19,9 +19,9 @@ import {
   PasswordInput,
   Popover,
   PopoverContent,
-  PopoverTrigger
+  PopoverTrigger,
+  Button
 } from '@/components/ui';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { IDS } from '@/utils';
 

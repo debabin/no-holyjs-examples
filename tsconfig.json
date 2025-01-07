@@ -23,10 +23,10 @@
     "strict": true,
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "noEmit": true,
-    "skipLibCheck": true,
     "isolatedModules": true,
-    "noUnusedParameters": true
+    "skipLibCheck": true
   },
   "references": [{ "path": "./tsconfig.node.json" }],
   "include": ["**/*.ts", "**/*.tsx"]

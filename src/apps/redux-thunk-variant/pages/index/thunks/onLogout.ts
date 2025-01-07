@@ -10,7 +10,6 @@ export const thunk = createAsyncThunk(action.type, (_, { dispatch }) => {
   dispatch(sessionSlice.actions.setSession(false));
   localStorage.removeItem(COOKIE.ACCESS_TOKEN);
 
-  localStorage.removeItem(COOKIE.ACCESS_TOKEN);
   router.navigate({
     to: '/auth',
     replace: true

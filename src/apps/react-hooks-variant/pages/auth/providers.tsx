@@ -8,10 +8,8 @@ interface ProvidersProps {
   stage: Omit<StageProviderProps, 'children'>;
 }
 
-const Providers = ({ children, stage }: ProvidersProps) => (
+export const Providers = ({ children, stage }: ProvidersProps) => (
   <StageProvider {...stage}>
     <OtpProvider>{children}</OtpProvider>
   </StageProvider>
 );
-
-export default Providers;

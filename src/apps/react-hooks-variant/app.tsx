@@ -1,6 +1,6 @@
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 
-import { routeTree } from '../../routeTree.gen';
+import { routeTree } from './route';
 import { useSession } from './utils/contexts/session';
 
 import '@/assets/styles/globals.css';

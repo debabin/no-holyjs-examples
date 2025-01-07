@@ -25,6 +25,13 @@ export const postSingInLoginConfig: RestRequestConfig = {
         body: {
           login: 'siberiacancode'
         }
+      },
+      interceptors: {
+        response: (data, { setCookie }) => {
+          const token = DATABASE.profiles.find((profile) => profile.login === 'siberiacancode')!.id.toString();
+          setCookie(COOKIE.ACCESS_TOKEN, token);
+          return data
+        }
       }
     },
     {
