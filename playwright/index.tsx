@@ -10,6 +10,14 @@ import ReduxSagaProviders from '@/apps/redux-saga-variant/providers';
 import ReduxThunkProviders from '@/apps/redux-thunk-variant/providers';
 
 import '@/assets/styles/globals.css';
+import { SignInForm } from '@/apps/react-hooks-variant/pages/auth/components/SignInForm/SignInForm';
+import {
+  createRootRoute,
+  Outlet,
+  createRoute,
+  createRouter,
+  RouterProvider
+} from '@tanstack/react-router';
 
 const DEFAULT_ERROR = 'Something went wrong';
 const queryClient = new QueryClient({
@@ -31,6 +39,24 @@ const queryClient = new QueryClient({
     }
   })
 });
+
+const withRouter = (component: any) => {
+  const rootRoute = createRootRoute({
+    component: Outlet
+  });
+
+  const indexRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/',
+    component
+  });
+
+  const routeTree = rootRoute.addChildren([indexRoute]);
+  const router = createRouter({ routeTree });
+
+  // this is rtl's render
+  return <RouterProvider router={router} />;
+};
 
 const ReactHooksWrapper = ({ children }: { children: React.ReactNode }) => (
   <ReactHooksProviders
@@ -64,14 +90,16 @@ const ReduxThunkWrapper = ({ children }: { children: React.ReactNode }) => (
 );
 
 // eslint-disable-next-line @typescript-eslint/require-await
-beforeMount(async ({ App }) => (
-  <ReduxThunkWrapper>
-    <ReduxSagaWrapper>
-      <ReactHooksWrapper>
-        <ReatomWrapper>
-          <App />
-        </ReatomWrapper>
-      </ReactHooksWrapper>
-    </ReduxSagaWrapper>
-  </ReduxThunkWrapper>
-));
+beforeMount(async ({ App }) =>
+  withRouter(() => (
+    <ReduxThunkWrapper>
+      <ReduxSagaWrapper>
+        <ReactHooksWrapper>
+          <ReatomWrapper>
+            <App />
+          </ReatomWrapper>
+        </ReactHooksWrapper>
+      </ReduxSagaWrapper>
+    </ReduxThunkWrapper>
+  ))
+);

@@ -68,8 +68,8 @@ it('Should sign in for email', async () => {
     })
   );
 
-  const stage = store.getState().auth!.stage;
-  const otp = store.getState().auth!.otp;
+  const { stage } = store.getState().auth!;
+  const { otp } = store.getState().auth!;
   expect(stage.value).toBe('confirmation');
   expect(otp).toEqual({
     type: 'email',
@@ -90,8 +90,8 @@ it('Should doesnt sign in for email when "/otp/email" error', async () => {
     onSignInSubmit.thunk({ resource: 'email', values: { login: 'error@example.com' } })
   );
 
-  const stage = store.getState().auth!.stage;
-  const otp = store.getState().auth!.otp;
+  const { stage } = store.getState().auth!;
+  const { otp } = store.getState().auth!;
   expect(stage.value).toBe('signIn');
   expect(otp).toEqual({
     type: 'email',
@@ -115,7 +115,7 @@ it('Should sign in for login when need confirmation', async () => {
     })
   );
 
-  const stage = store.getState().auth!.stage;
+  const { stage } = store.getState().auth!;
   expect(stage.value).toBe('selectConfirmation');
 });
 
@@ -134,8 +134,8 @@ it('Should sign in for login when dont need confirmation', async () => {
     })
   );
 
-  const session = store.getState().session;
-  const profile = store.getState().profile;
+  const { session } = store.getState();
+  const { profile } = store.getState();
   expect(localStorage.getItem(COOKIE.ACCESS_TOKEN)).toBe('siberiacancode');
   expect(session.isAuthenticated).toBe(true);
   expect(profile.value).toEqual({
@@ -168,7 +168,7 @@ it('Should doesnt sign in for login when "/signin/login" error', async () => {
     })
   );
 
-  const session = store.getState().session;
+  const { session } = store.getState();
 
   expect(session.isAuthenticated).toBe(false);
   expect(localStorage.getItem(COOKIE.ACCESS_TOKEN)).toBe(null);
