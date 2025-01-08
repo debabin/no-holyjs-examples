@@ -7,5 +7,8 @@ export const getSelect = (state: RootState) => state.github!.select;
 export const getGithubPageLoading = (state: RootState) =>
   state.api.getGithubCards.status === 'pending';
 
-export const getGithubCard = (id: number) => (state: RootState) =>
-  state.github!.cardEntries.entities[id];
+export const getGithubCard = (id: number) => (state: RootState) => {
+  // console.log('@getGithubCard');
+  return state.github!.cardEntries.entities[id];
+}
+

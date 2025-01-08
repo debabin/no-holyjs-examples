@@ -2,11 +2,10 @@ import { expect, test } from '@playwright/test';
 
 import { IDS, ROUTES } from '@/utils';
 
-import { disableAnimation, snapshot, waitToast } from '../../helpers';
+import { snapshot, waitToast } from '../../helpers';
 
 test('Should sign in login', async ({ page }) => {
   await page.goto(ROUTES.AUTH);
-  await disableAnimation(page);
 
   await expect(page.getByTestId(IDS.PAGE.AUTH)).toBeVisible();
 

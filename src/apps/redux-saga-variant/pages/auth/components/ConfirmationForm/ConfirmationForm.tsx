@@ -12,7 +12,7 @@ import {
 import { IDS } from '@/utils';
 
 import { hideResource } from './helpers/hideResource';
-import { useConfirmationForm } from './hooks/ConfirmationForm';
+import { useConfirmationForm } from './hooks/useConfirmationForm';
 
 export const ConfirmationForm = () => {
   const { form, state, functions } = useConfirmationForm();

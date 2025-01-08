@@ -10,7 +10,6 @@ import ReduxSagaProviders from '@/apps/redux-saga-variant/providers';
 import ReduxThunkProviders from '@/apps/redux-thunk-variant/providers';
 
 import '@/assets/styles/globals.css';
-import { SignInForm } from '@/apps/react-hooks-variant/pages/auth/components/SignInForm/SignInForm';
 import {
   createRootRoute,
   Outlet,

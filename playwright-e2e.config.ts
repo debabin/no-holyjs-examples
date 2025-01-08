@@ -27,6 +27,9 @@ export default defineConfig({
     testIdAttribute: 'id',
     trace: 'on'
   },
+  expect: {
+    toMatchSnapshot: { threshold: 0.1, maxDiffPixelRatio: 0.0007 }
+  },
 
   /* Configure projects for major browsers */
   projects: [

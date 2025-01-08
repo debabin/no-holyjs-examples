@@ -28,9 +28,11 @@ export const postSingInLoginConfig: RestRequestConfig = {
       },
       interceptors: {
         response: (data, { setCookie }) => {
-          const token = DATABASE.profiles.find((profile) => profile.login === 'siberiacancode')!.id.toString();
+          const token = DATABASE.profiles
+            .find((profile) => profile.login === 'siberiacancode')!
+            .id.toString();
           setCookie(COOKIE.ACCESS_TOKEN, token);
-          return data
+          return data;
         }
       }
     },

@@ -3,6 +3,9 @@ export const IDS = {
     AUTH: 'page-auth',
     INDEX: 'page-index'
   },
+  FORM: {
+    CONFIRMATION_FORM: 'form-confirmationForm'
+  },
   BUTTON: {
     SIGN_IN: 'button-signIn',
     SIGN_UP: 'button-signUp',

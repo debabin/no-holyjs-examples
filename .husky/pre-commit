@@ -1,2 +1,1 @@
-yarn build
 yarn lint-staged

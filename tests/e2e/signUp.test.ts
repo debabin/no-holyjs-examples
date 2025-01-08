@@ -2,11 +2,10 @@ import { expect, test } from '@playwright/test';
 
 import { IDS, ROUTES } from '@/utils';
 
-import { disableAnimation, snapshot, waitToast } from '../helpers';
+import { snapshot, waitToast } from '../helpers';
 
 test('Should sign up', async ({ page }) => {
   await page.goto(ROUTES.AUTH);
-  await disableAnimation(page);
 
   await page.getByTestId(IDS.BUTTON.CREATE_NEW_ACCOUNT).click();
 

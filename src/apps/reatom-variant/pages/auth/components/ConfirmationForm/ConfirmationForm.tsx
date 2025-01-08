@@ -15,6 +15,7 @@ import {
 
 import { hideResource } from './helpers/hideResource';
 import { useConfirmationForm } from './hooks/useConfirmationForm';
+import { IDS } from '@/utils';
 
 export const ConfirmationForm = reatomComponent(({ ctx }) => {
   const loading =
@@ -35,7 +36,7 @@ export const ConfirmationForm = reatomComponent(({ ctx }) => {
   const onOtpResend = () => otpAtom.resend(ctx);
 
   return (
-    <div className='mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]'>
+    <div id={IDS.FORM.CONFIRMATION_FORM} className='mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]'>
       <div className='flex flex-col space-y-2 text-center'>
         <h1 className='text-2xl font-semibold tracking-tight'>Two factor authentication</h1>
         <p className='text-sm text-muted-foreground'>

@@ -2,7 +2,7 @@ import { useSignInForm } from '@react-hooks-variant/pages/auth/components/SignIn
 import { act, renderHook } from '@testing-library/react';
 import { startRestMockServer } from 'mock-config-server';
 
-import AuthProviders from '@/apps/react-hooks-variant/pages/auth/providers';
+import { Providers as AuthProviders } from '@/apps/react-hooks-variant/pages/auth/providers';
 
 import { Providers } from '../utils/setup';
 import { POST_OTP_EMAIL_RESPONSE } from './constants/data';

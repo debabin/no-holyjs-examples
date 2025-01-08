@@ -6,7 +6,7 @@ const FIGMA_CARDS = [];
 
 const randomIntFromInterval = () => Math.floor(Math.random() * (900 + 1));
 
-for (let i = 0; i <= 4; i += 1) {
+for (let i = 0; i <= 1000; i += 1) {
   FIGMA_CARDS.push({
     id: faker.number.int(),
     position: {

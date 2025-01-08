@@ -146,9 +146,10 @@ export const SignUpForm = () => {
                       <FormControl>
                         <Button
                           className={cn(
-                            'w-[200px] w-full justify-between',
+                            'w-full justify-between',
                             !field.value && 'text-muted-foreground'
                           )}
+                          id={IDS.SELECT.COUNTRY}
                           variant='outline'
                           role='combobox'
                         >
@@ -168,13 +169,13 @@ export const SignUpForm = () => {
                     </PopoverTrigger>
                     <PopoverContent className='w-[280px] p-0'>
                       <Command>
-                        <CommandInput placeholder='Search language...' />
-                        <CommandEmpty>No language found.</CommandEmpty>
+                        <CommandInput placeholder='Search country...' />
+                        <CommandEmpty>No country found.</CommandEmpty>
                         <CommandGroup>
                           {state.countries.map((country) => (
                             <CommandItem
                               key={country.id}
-                              className='flex items-center  gap-2'
+                              className='flex items-center gap-2'
                               value={country.label}
                               onSelect={() => {
                                 form.setValue('country', country);
