@@ -19,14 +19,16 @@ interface CreateApiParams<Name extends string, EndpointsDefinitions extends Reco
 
 interface Builder {
   mutation: <Request extends (...args: any[]) => any>(
+    name: string,
     request: Request
   ) => { initiate: Request } & Omit<ReturnType<typeof createEndpointSlice>, 'initiate'>;
   query: <Request extends (...args: any[]) => any>(
+    name: string,
     request: Request
   ) => { initiate: Request } & Omit<ReturnType<typeof createEndpointSlice>, 'initiate'>;
 }
 
-const createEndpointSlice = <const E extends (...args: any) => any>(endpoint: E) => {
+const createEndpointSlice = <const E extends (...args: any) => any>(name: string, endpoint: E) => {
   const initialState: ApiEndpointState<Awaited<ReturnType<E>>> = {
     data: null,
     status: 'idle',
@@ -34,7 +36,7 @@ const createEndpointSlice = <const E extends (...args: any) => any>(endpoint: E)
   };
 
   const apiEndpointSlice = createSlice({
-    name: endpoint.name,
+    name,
     initialState,
     reducers: {
       setStatus: (state, action: PayloadAction<ApiEndpointStatus>) => {
@@ -66,10 +68,10 @@ const createEndpointSlice = <const E extends (...args: any) => any>(endpoint: E)
 };
 
 const builder: Builder = {
-  mutation: <Request extends (...args: any[]) => any>(request: Request) =>
-    createEndpointSlice<Request>(request),
-  query: <Request extends (...args: any[]) => any>(request: Request) =>
-    createEndpointSlice<Request>(request)
+  mutation: <Request extends (...args: any[]) => any>(name: string, request: Request) =>
+    createEndpointSlice<Request>(name, request),
+  query: <Request extends (...args: any[]) => any>(name: string, request: Request) =>
+    createEndpointSlice<Request>(name, request)
 };
 
 export const createApi = <
