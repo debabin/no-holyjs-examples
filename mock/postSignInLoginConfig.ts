@@ -4,7 +4,7 @@ import { COOKIE } from '@/utils';
 
 import { DATABASE } from './database';
 
-export const postSingInLoginConfig: RestRequestConfig = {
+export const postSignInLoginConfig: RestRequestConfig = {
   path: '/signin/login',
   method: 'post',
   routes: [
