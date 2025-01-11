@@ -17,6 +17,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       <header className='absolute z-[30] flex w-full items-center justify-between p-4'>
         <div className='flex items-center gap-2'>
           <img alt='sibericancode icon' className='size-10 rounded' src={sibericancodeIcon} />
+          <span>react-hooks</span>
         </div>
         <div>
           <ThemeToggle />
